@@ -9,7 +9,7 @@ Util classes:
 */
 import {buttons} from '../styles/buttons-utils';
 import {flex} from '../styles/flex-utils';
-import {fonts, textColour} from '../styles/text-utils';
+import {fonts, colours} from '../styles/text-utils';
 import {images} from '../styles/image-utils';
 import {background} from '../styles/background-utils';
 

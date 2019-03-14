@@ -37,7 +37,7 @@ export const fonts = StyleSheet.create({
   }
 });
 
-export const textColour = StyleSheet.create({
+export const colours = StyleSheet.create({
   red: {
       color: '#f44336'
   },

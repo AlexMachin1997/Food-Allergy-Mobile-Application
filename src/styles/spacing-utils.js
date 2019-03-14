@@ -19,7 +19,7 @@ export const spacing = StyleSheet.create({
     },
 
     ContainerSpacing: {
-        margin: 20
+        margin: 25
     },
 
     headerRight: {

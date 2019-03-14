@@ -20,8 +20,9 @@ import {images} from '../styles/image-utils';
 // Component properties
 const iconSize = 55;
 const headings = fonts.title2;
-const paragraphs = fonts.callout;
-const captions = fonts.caption1;
+const bodyText = fonts.body;
+
+const bodyTextSpacing = spacing.smallBottom;
 const centerHeadings = flex.alignItemsCenter;
 const flexRow = flex.row;
 
@@ -40,12 +41,12 @@ class About extends Component {
         </View>
 
         <View>
-          <Text style={paragraphs}>
-            Food allergy assistant was built with one objective in sight, to allow allergens to shop without worrying about their allergies.
+          <Text style={[bodyText,bodyTextSpacing]}>
+            Food allergy assistant was built with one objective in mind, to allow allergens to shop without worrying about their allergies.
           </Text>
 
-          <Text style={paragraphs}>
-            If you suffer from an allergy and want piece of mind then this is the right application for you.
+          <Text style={[bodyText, bodyTextSpacing]}>
+            If your suffering from allergies then Food Allergy Assistant has got covered. Have a look at some of the most benefical features below.
           </Text>        
         </View>
 
@@ -61,8 +62,8 @@ class About extends Component {
             </View>
 
             <View style={flex.justifyContentCenter}>
-              <Text style={captions}>
-              Maintain a shopping list with all the items you want. (Requires you to be authenticated for suitability rating)
+              <Text style={bodyText}>
+              Maintain a shopping list with all the items you want.
               </Text>
             </View>
           </View>
@@ -73,8 +74,8 @@ class About extends Component {
             </View>
 
             <View style={flex.justifyContentCenter}>
-              <Text style={captions}>
-              Search for items via a barcode reader or live search
+              <Text style={bodyText}>
+              Search for items via a barcode reader or live search.
               </Text>
             </View>
           </View>
@@ -85,8 +86,8 @@ class About extends Component {
             </View>
 
             <View style={flex.justifyContentCenter}>
-              <Text style={captions}>
-                Get alerted when you find an item that's not suitable for you (Requires you to be authenticated)
+              <Text style={bodyText}>
+                Get alerted when you find an item that's not suitable for you.
               </Text>
             </View>
           </View>

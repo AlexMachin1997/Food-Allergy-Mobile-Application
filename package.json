@@ -4,7 +4,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "devtools": "react-devtools"
   },
   "dependencies": {
     "react": "16.6.3",
@@ -13,10 +14,12 @@
     "react-native-paper": "^2.13.0",
     "react-native-typography": "^1.4.0",
     "react-native-vector-icons": "^6.3.0",
-    "react-navigation": "^3.3.2"
+    "react-navigation": "^3.3.2",
+    "react-navigation-material-bottom-tabs": "^1.0.0"
   },
   "devDependencies": {
     "babel-jest": "24.1.0",
+    "react-devtools": "^3.6.1",
     "jest": "24.1.0",
     "metro-react-native-babel-preset": "0.52.0",
     "react-test-renderer": "16.6.3"

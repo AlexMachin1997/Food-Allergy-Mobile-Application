@@ -9,14 +9,13 @@ class Login extends Component {
             Login Component
         </Text>
         <Button
-          onPress={() => this.props.navigation.navigate('Register')}
-          title="Go to Register"
+          onPress={() => this.props.navigation.navigate('authStack')}
+          title="Login"
           color="#841584"
         />
       </View>
     );
   }
 }
-
 
 export default Login;

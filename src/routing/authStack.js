@@ -27,12 +27,12 @@ const AuthStack = createStackNavigator(
     initialRouteName: 'Help',
     defaultNavigationOptions: ({navigation}) => ({
       headerLeft: (
-        <TouchableOpacity style={[spacing.headerLeft]}>
+        <TouchableOpacity style={[spacing.smallLeft]}>
           <Icon name="menu" size={30}/>
         </TouchableOpacity>
       ),
       headerRight: (
-        <TouchableOpacity onPress={()=> {navigation.navigate('Settings')}} style={[spacing.headerRight]}>
+        <TouchableOpacity onPress={()=> {navigation.navigate('Settings')}} style={[spacing.smallRight]}>
           <Icon name="settings" size={30}/>
         </TouchableOpacity>
       ),    

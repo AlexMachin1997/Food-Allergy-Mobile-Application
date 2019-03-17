@@ -9,8 +9,7 @@ const guestStack = createStackNavigator({
     Register: RegisterScreen
   },
   {
-    initialRouteName: 'Login',
-    headerMode: 'none'
+    initialRouteName: 'Login'
 });
 
 export default guestStack;

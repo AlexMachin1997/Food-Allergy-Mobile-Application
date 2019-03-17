@@ -24,6 +24,12 @@ const button = [buttons.HomeButtons, buttons.large];
 
 // Home component
 class Home extends Component { 
+
+  static navigationOptions = {
+    headerMode: 'none',
+    header: null
+  }
+
   render() {
     return (
       /* 

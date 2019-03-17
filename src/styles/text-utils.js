@@ -52,3 +52,16 @@ export const colours = StyleSheet.create({
   }
 });
 
+
+export const align = StyleSheet.create({
+  right: {
+    textAlign: 'right'
+  },
+  left: {
+    textAlign: 'left'
+  },
+  center: {
+    textAlign: 'center'
+  }
+})
+

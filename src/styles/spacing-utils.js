@@ -17,6 +17,10 @@ export const spacing = StyleSheet.create({
     mediumTop: {
         marginTop: 40
     },
+    
+    mediumBottom: {
+        marginBottom: 40
+    },
 
     ContainerSpacing: {
         margin: 25

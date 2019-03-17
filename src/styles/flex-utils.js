@@ -2,20 +2,16 @@ import { StyleSheet } from 'react-native'
 
 export const flex = StyleSheet.create({
     
-    enableFlex: {
-        flex: 1
-    },
-
-    column: {
-        flexDirection: 'column'
-    },
-
-    flexBasis: {
-        flexBasis: 0
+    flex: {
+        flex:1
     },
 
     row: {
         flexDirection: 'row'
+    },
+
+    grow: {
+        flexGrow:1
     },
 
     //align-items: flex-start | flex-end | center | baseline | stretch

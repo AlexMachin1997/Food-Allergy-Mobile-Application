@@ -1,13 +1,13 @@
 // React dependencies
 import React from 'react';
-import {SafeAreaView, View, ScrollView, Dimensions, Image} from 'react-native';
+import {SafeAreaView, View, ScrollView, Text, Image} from 'react-native';
 
 // React navigation 
 import {DrawerItems} from 'react-navigation';
 
 
 // Assets
-import AppIcon from '../assets/Icon.png';
+import AppIcon from '../../assets/Icon.png';
 
 const CustomDrawer = (props) => (
     <SafeAreaView style={{flex: 1}}>
@@ -16,7 +16,6 @@ const CustomDrawer = (props) => (
         </View>
         <ScrollView>
             <DrawerItems {...props}/>
-            
         </ScrollView>
     </SafeAreaView>
 );

@@ -9,7 +9,7 @@ import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 import SettingsScreen from '../screens/settings';
 import EditProfileScreen from '../screens/editProfile';
 import HelpScreen from '../screens/help';
-import CustomDrawer from '../Components/CustomDrawer';
+import CustomDrawer from '../Components/Drawer/CustomDrawer';
 
 
 // Icons

@@ -4,12 +4,12 @@ import RegisterScreen from '../screens/register';
 import {createStackNavigator} from 'react-navigation'
 
 const guestStack = createStackNavigator({
-    Home: HomeScreen,
-    Login: LoginScreen,
-    Register: RegisterScreen
+    home: HomeScreen,
+    login: LoginScreen,
+    register: RegisterScreen
   },
   {
-    initialRouteName: 'Login'
+    initialRouteName: 'home'
 });
 
 export default guestStack;

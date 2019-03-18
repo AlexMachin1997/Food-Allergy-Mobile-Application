@@ -19,7 +19,7 @@ import AppIcon from '../assets/Icon.png';
 import { Button} from 'react-native-paper';
 
 // Generic utils
-const button = [buttons.HomeButtons, buttons.large];
+const homeButton = [buttons.HomeButtons, buttons.large];
 
 
 // Home component
@@ -32,10 +32,29 @@ class Home extends Component {
 
   render() {
     return (
+
       /* 
-      ScrollView:
-      - To center a child item within a ScrollView component you need flexFrow set to 1
+        Component overviews with resources:
+
+        ScrollView:
+        - Allows content to be scrolled in the event the content exceeds the screen height.
+        - Often in very rare cases content will overflow the screen but not actually enable the functionlaity. To solve this add an additional view to the bottom with a fixed hieght
+        - For more information about this component visit https://facebook.github.io/react-native/docs/scrollview#docsNav
+
+        View:
+        - Is the wrapper, it's the equivalent of a div tag in web development the only difference being React-Natives is more messy
+        - For more information about this component visit https://facebook.github.io/react-native/docs/view
+                
+        Text:
+        - Renders a string of text, its the equivalent of a p tag in web development
+        - For more information about this component visit https://facebook.github.io/react-native/docs/text 
+       
+        Button (react-native paper):
+        - Pre-made material button
+        - Accepts a number of props, though for this project only mode, compact, style, color, onPress and accessabiltyLabel were used
+        - For more information about this component visit https://callstack.github.io/react-native-paper/button.html       
       */
+         
       <ScrollView contentContainerStyle={[flex.alignItemsCenter, flex.justifyContentCenter, flex.grow]}>
         <View>
           <Text style={[colours.black, fonts.title1]}>Food Allergy Assistant</Text>
@@ -46,13 +65,13 @@ class Home extends Component {
         </View>
 
         <View style={{marginBottom: 10}}>
-         <Button mode="contained" compact={true} style={button} color="#0277bd" onPress={()=> {this.props.navigation.navigate('Login')}} accessibilityLabel="Login with an existing account">
+         <Button mode="contained" compact={true} style={homeButton} color="#0277bd" onPress={()=> {this.props.navigation.navigate('login')}} accessibilityLabel="Login with an existing account">
            Login
           </Button>
         </View>
 
         <View>
-          <Button mode="contained" compact={true} style={button} color="#0277bd" onPress={()=> {this.props.navigation.navigate('Register')}} accessibilityLabel="Sign up for a free account">
+          <Button mode="contained" compact={true} style={homeButton} color="#0277bd" onPress={()=> {this.props.navigation.navigate('register')}} accessibilityLabel="Sign up for a free account">
            Sign up
           </Button>
         </View>

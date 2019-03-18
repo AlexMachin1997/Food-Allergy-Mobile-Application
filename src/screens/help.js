@@ -7,19 +7,24 @@ Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../styles/buttons-utils';
 import {flex} from '../styles/flex-utils';
 import {fonts, colours} from '../styles/text-utils';
-import {images} from '../styles/image-utils';
 import {spacing} from '../styles/spacing-utils';
 
 import {Button, Divider} from 'react-native-paper';
 
+// General utils
 const section = [spacing.smallTop, spacing.smallBottom]
-const heading = [fonts.headline]
-const body = [fonts.body]
 
+// Heading utils
+const heading = [fonts.headline]
+
+// Main body utils 
+const body = [fonts.body];
+
+// Divider styling
 const DividerStyling = {height:1, marginTop:10};
+
 
 
 class Help extends Component {

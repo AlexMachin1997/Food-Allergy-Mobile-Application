@@ -1,13 +1,12 @@
 // React dependencies
 import React, {Component} from 'react';
-import {Text, View, AsyncStorage, ScrollView, Dimensions} from 'react-native';
+import {Text, View, AsyncStorage, ScrollView} from 'react-native';
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {flex} from '../styles/flex-utils';
 import {fonts} from '../styles/text-utils';
 import {spacing} from '../styles/spacing-utils';
 import {buttons} from '../styles/buttons-utils';
@@ -19,10 +18,11 @@ import {Button, Divider} from 'react-native-paper';
 const Action = {marginBottom: 5, marginTop: 5};
 const ActionTitle = [fonts.title3]
 const ActionBody = [fonts.callout];
+const ActionButton = [buttons.large];
 
-// General properties
+
+// Divider properties
 const DividerStyling = {height:1, marginTop:10};
-const {height} = Dimensions.get('window');
 
 
 class Settings extends Component {
@@ -32,25 +32,51 @@ class Settings extends Component {
     title: 'Settings',
   };
 
-  // This components own 
-  state = {
-    screenHeight: height
+  deleteAccount = async () => {
+    this.props.navigation.navigate('guestStack');
   }
 
-  onContentSizeChange = (contentWidth, contentHeight) => {
-    this.setState({screenHeight:contentHeight })
-  };
+  logout = async () => {
+    this.props.navigation.navigate('guestStack');
+  }
+
+  deleteStorage = async () => {
+    this.props.navigation.navigate('guestStack');
+  }
+
 
   render() {
-    const scrollEnabled = this.state.screenHeight > height;
     return (
-      <ScrollView contentContainerStyle={[spacing.ContainerSpacing]} scrollEnabled={scrollEnabled} onContentSizeChange={this.onContentSizeChange}>
+
+      /* 
+        Component overviews with resources:
+
+        ScrollView:
+        - Allows content to be scrolled in the event the content exceeds the screen height.
+        - Often in very rare cases content will overflow the screen but not actually enable the functionlaity. To solve this add an additional view to the bottom with a fixed hieght
+        - For more information about this component visit https://facebook.github.io/react-native/docs/scrollview
+
+        View:
+        - Is the wrapper, it's the equivalent of a div tag in web development the only difference being React-Natives is more messy
+        - For more information about this component visit https://facebook.github.io/react-native/docs/view
+                  
+        Text:
+        - Renders a string of text, its the equivalent of a p tag in web development
+        - For more information about this component visit https://facebook.github.io/react-native/docs/text 
+        
+        Button (react-native paper):
+        - Pre-made material button
+        - Accepts a number of props, though for this project only mode, compact, style, color, onPress and accessabiltyLabel were used
+        - For more information about this component visit https://callstack.github.io/react-native-paper/button.html       
+      */
+
+      <ScrollView contentContainerStyle={[spacing.ContainerSpacing]}>
         <View>
 
           <View style={Action}>
             <Text style={ActionTitle}>Account deletion</Text>
             <Text style={ActionBody}>Permanently delete your account and all of it's content</Text>
-            <Button mode="contained" style={[buttons.large]} color="#FF0000" compact={true} onPress={()=> {}} accessibilityLabel="Delete account button">
+            <Button mode="contained" style={ActionButton} color="#FF0000" compact={true} onPress={this.deleteAccount} accessibilityLabel="Delete account button">
               Delete account
             </Button>
           </View>     
@@ -60,7 +86,7 @@ class Settings extends Component {
           <View style={Action}>
             <Text style={ActionTitle}>Delete contents</Text>
             <Text style={ActionBody}>Permanently delete all your application contents </Text>
-            <Button mode="contained" style={[buttons.large]} color="#FF0000" compact={true} onPress={()=> {}} accessibilityLabel="Delete internal storage contents">
+            <Button mode="contained" style={ActionButton} color="#FF0000" compact={true} onPress={this.deleteStorage} accessibilityLabel="Delete internal storage contents">
               Delete data
             </Button>
           </View>
@@ -70,7 +96,7 @@ class Settings extends Component {
           <View style={Action}>
             <Text style={ActionTitle}>Logout</Text>
             <Text style={ActionBody}>End your current session, you will be redirected </Text>
-            <Button mode="contained" style={[buttons.large]} color="#FF0000" compact={true} onPress={()=> {this.props.navigation.navigate('guestStack')}} accessibilityLabel="Logout">
+            <Button mode="contained" style={ActionButton} color="#FF0000" compact={true} onPress={this.logout} accessibilityLabel="Logout">
               Logout
             </Button>
           </View>     

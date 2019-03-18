@@ -13,30 +13,30 @@ Utility classes:
 */
 import {buttons} from '../styles/buttons-utils';
 import {flex} from '../styles/flex-utils';
-import {fonts, colours, align} from '../styles/text-utils';
+import {fonts, align} from '../styles/text-utils';
 import {spacing} from '../styles/spacing-utils';
-import {images} from '../styles/image-utils';
 import {border, radius, width} from '../styles/border'
 
 
 // Sections
-const section = [spacing.smallBottom, spacing.smallTop]
+const Section = [spacing.smallBottom, spacing.smallTop]
+const SignUpLabelSection = [spacing.mediumTop];
 
 // Labels 
-const formLabel = [fonts.title3]
-const signUpLabel = [align.center, fonts.title3, spacing.smallBottom]
+const FormLabel = [fonts.title3]
+const SignUpLabel = [align.center, fonts.title3, spacing.smallBottom]
 
 // Buttons
-const button = [buttons.large]
+const Buttons = [buttons.large]
 
 // Headings 
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3]
 
 // Inputs 
-const outline = radius.small;
-const outlineColour = border.black;
-const outlineWidth = width.small;
+const Outline = radius.small;
+const OutlineColour = border.black;
+const OutlineWidth = width.small;
 
 class Login extends Component {
 
@@ -54,11 +54,11 @@ class Login extends Component {
   /* 
   isEmpty:
   - Checks if the users email or password is not falsy (empty values, empty string = false )
+  - The values are returned and if they are true, meaning they are empty show an alert.
   */
   isEmpty = ({email, password}) => {
     return (
-      !email.length || 
-      !password.length
+      !email.length || !password.length
     )
   }
 
@@ -66,6 +66,8 @@ class Login extends Component {
   handleSubmit:
   - No params required 
   - Checks the input isn't empty
+  - If the inputs are empty then return false
+  - When the state has been validated then navigate to the next stack return true to stop the code from continuing
   */
   handleSubmit = () => {
 
@@ -75,7 +77,6 @@ class Login extends Component {
     }
 
     this.props.navigation.navigate('authStack');    
-    return true
   }
 
   /* 
@@ -125,52 +126,52 @@ class Login extends Component {
           - For additional information about the props allowed visist https://facebook.github.io/react-native/docs/textinput
           
           Button (react-native paper):
-          - Pre-made material button
+          - Pre-made material Buttons
           - Accepts a number of props, though for this project only mode, compact, style, color, onPress and accessabiltyLabel were used
-          - For more information about this component visit https://callstack.github.io/react-native-paper/button.html       
+          - For more information about this component visit https://callstack.github.io/react-native-paper/Buttons.html       
         */
          
         <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>
           <KeyboardAvoidingView behavior="padding">    
 
-            <View style={section}>
+            <View style={Section}>
               <Text style={MainTitle}>Welcome back</Text>
               <Text style={SubHeading}>Please sign in to continue</Text>
             </View>
 
-            <View style={section}>
-              <Text style={formLabel}>Email</Text>
+            <View style={Section}>
+              <Text style={FormLabel}>Email</Text>
               <TextInput
                 placeholder="Enter your email address"
                 value={email}
                 onChangeText = {(value) => this.handleChange('email', value)}
                 keyboardType="email-address"
-                style={[outline, outlineColour, outlineWidth]}
+                style={[Outline, OutlineColour, OutlineWidth]}
                 multiline={true} 
-              />            
+              />   
             </View>
 
-            <View style={section}>
-              <Text style={formLabel}>Password</Text>
+            <View style={Section}>
+              <Text style={FormLabel}>Password</Text>
               <TextInput
                 placeholder="Enter your password"
                 value={password}
                 onChangeText = {(value) => this.handleChange('password', value)}
                 secureTextEntry={true}
-                style={[outline, outlineColour, outlineWidth]}
+                style={[Outline, OutlineColour, OutlineWidth]}
                 multiline={true}
               />   
             </View>
 
-            <View style={section}>
-              <Button mode="contained" compact={true} style={button} color="#0277bd" onPress={this.handleSubmit} accessibilityLabel="Sign up for a free account">
+            <View style={Section}>
+              <Button mode="contained" compact={true} style={Buttons} color="#0277bd" onPress={this.handleSubmit} accessibilityLabel="Sign up for a free account">
                 Login
               </Button>          
             </View>
 
-            <View style={[spacing.mediumTop]}>
-              <Text style={signUpLabel}> Don't have an account ? </Text>       
-              <Button mode="contained" compact={true}  style={button} color="#0277bd" onPress={()=> {this.props.navigation.navigate('register')}} accessibilityLabel="Sign up for a free account">
+            <View style={SignUpLabelSection}>
+              <Text style={SignUpLabel}> Don't have an account ? </Text>       
+              <Button mode="contained" compact={true}  style={Buttons} color="#0277bd" onPress={()=> {this.props.navigation.navigate('register')}} accessibilityLabel="Sign up for a free account">
                 Sign up
               </Button>  
             </View>

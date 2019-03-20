@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {Text, View, AsyncStorage, ScrollView} from 'react-native';
 import CustomButton from '../Components/UI/Button';
+import { MaterialDialog } from 'react-native-material-dialog';
 
 /* 
 Utility classes:
@@ -14,19 +15,28 @@ import {buttons} from '../styles/buttons-utils';
 
 // User-Interface Libaries
 import {Divider} from 'react-native-paper';
+import { FlatList } from 'react-native-gesture-handler';
 
-// Action properties
+// Action 
 const Action = {marginBottom: 5, marginTop: 5};
 const ActionTitle = [fonts.title3]
 const ActionBody = [fonts.callout];
 const ActionButton = [buttons.large];
 
 
-// Divider properties
+// Divider
 const DividerStyling = {height:1, marginTop:10};
 
+//Modal 
+const ModalBody = [fonts.body]
 
 export default class SettingsScreen extends Component {
+
+  state = {
+    accountDeletionModal: false,
+    dataDeletionModal: false,
+    logoutModal: false
+  }
 
   // Setting the screens title
   static navigationOptions = {
@@ -34,19 +44,24 @@ export default class SettingsScreen extends Component {
   };
 
   deleteAccount = async () => {
+    this.setState({accountDeletionModal: !this.state.accountDeletionModal});
     this.props.navigation.navigate('guestStack');
   }
 
   logout = async () => {
+    this.setState({logoutModal: !this.state.logoutModal});
     this.props.navigation.navigate('guestStack');
   }
 
   deleteStorage = async () => {
+    this.setState({dataDeletionModal: !this.state.dataDeletionModal});
     this.props.navigation.navigate('guestStack');
   }
 
-
   render() {
+
+    const {logoutModal, dataDeletionModal, accountDeletionModal} = this.state;
+
     return (
 
       /* 
@@ -69,6 +84,37 @@ export default class SettingsScreen extends Component {
       <ScrollView contentContainerStyle={[spacing.ContainerSpacing]}>
         <View>
 
+           <MaterialDialog
+            title="Logout"
+            visible={logoutModal}
+            onOk={this.logout}
+            onCancel={() => this.setState({ logoutModal: !logoutModal })}>
+            <Text style={ModalBody}>
+              Looks like you want to logout of your account. Are you sure you want to continue?
+            </Text>
+          </MaterialDialog>
+
+          <MaterialDialog
+            title="Account deletion"
+            visible={accountDeletionModal}
+            onOk={this.deleteAccount}
+            onCancel={() => this.setState({ accountDeletionModal: !accountDeletionModal })}>
+            <Text style={ModalBody}>
+              Looks like you want to delete your account. Are you sure you want to continue?
+            </Text>
+          </MaterialDialog>
+
+          
+          <MaterialDialog
+            title="Data deletion"
+            visible={dataDeletionModal}
+            onOk={this.deleteStorage}
+            onCancel={() => this.setState({ dataDeletionModal: !dataDeletionModal })}>
+            <Text style={ModalBody}>
+            Looks like you want to remove all of your application data. Are you sure you want to continue?
+            </Text>
+          </MaterialDialog>
+
           <View style={Action}>
             <Text style={ActionTitle}>Account deletion</Text>
             <Text style={ActionBody}>Permanently delete your account and all of it's content</Text>
@@ -78,7 +124,7 @@ export default class SettingsScreen extends Component {
              compact={true}
              styling={ActionButton} 
              colour="#FF0000" 
-             onClick={this.deleteAccount} 
+             onClick={() => this.setState({accountDeletionModal: !accountDeletionModal})} 
              label="Delete your account"
             />
           </View>     
@@ -94,7 +140,7 @@ export default class SettingsScreen extends Component {
              compact={true}
              styling={ActionButton} 
              colour="#FF0000" 
-             onClick={this.deleteStorage} 
+             onClick={() => this.setState({dataDeletionModal: !dataDeletionModal})} 
              label="Delete the data saved within your devices internal storage"
             />
           </View>
@@ -110,7 +156,7 @@ export default class SettingsScreen extends Component {
              compact={true}
              styling={ActionButton} 
              colour="#FF0000" 
-             onClick={this.logout} 
+             onClick={() => this.setState({logoutModal: !logoutModal})} 
              label="Go to the homepage and end your current session"
             />
           </View>     

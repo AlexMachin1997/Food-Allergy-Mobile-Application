@@ -10,11 +10,15 @@ Utility classes:
 import {fonts, align} from '../../styles/text-utils';
 import {spacing} from '../../styles/spacing-utils';
 
-export default Confirmation = (props) => {
+
+// Component assets
+import Icon from '../../assets/Happy-face.png'
+
+export default ConfirmationMessage = (props) => {
     return (
-        <React.Fragment>
+        <>
             <View>
-              <Image source={props.icon} style={{width: 300, height: 300}}/>
+              <Image source={Icon} style={{width: 300, height: 300}}/>
             </View>
             
             <View style={[spacing.ContainerSpacing]}>
@@ -22,7 +26,7 @@ export default Confirmation = (props) => {
                   {props.text}
                 </Text>
             </View>
-        </React.Fragment>
+        </>
     )
 }
 

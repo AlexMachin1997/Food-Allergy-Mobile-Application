@@ -1,22 +1,21 @@
 // React dependencies
 import React, { Component } from 'react'
-import {Text, View, ScrollView, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
+import {Text, View, ScrollView, KeyboardAvoidingView, Alert} from 'react-native';
 
 // Custom React components
-import CustomInput from '../UI/Input';
-
+import CustomInput from '../../UI/Input';
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../../styles/buttons-utils';
-import {fonts} from '../../styles/text-utils';
-import {flex} from '../../styles/flex-utils';
-import {spacing} from '../../styles/spacing-utils';
-import {border, radius, width} from '../../styles/border';
-
+import {buttons} from '../../../styles/buttons-utils';
+import {fonts} from '../../../styles/text-utils';
+import {flex} from '../../../styles/flex-utils';
+import {spacing} from '../../../styles/spacing-utils';
+import {border, radius, width} from '../../../styles/border';
+import styles from '../styles';
 
 // Headings 
 const MainTitle = [fonts.title1];
@@ -35,7 +34,7 @@ const OutlineColour = border.black;
 const OutlineWidth = width.small;
 
 // Buttons
-const Button = [buttons.large, buttons.RegisterButtons];
+const Button = [buttons.large, styles.RegisterButtons];
 
 export default class EditProfile extends Component {
 

@@ -27,8 +27,6 @@ export default class AllergySetup extends Component {
               Back
             </Button>
         </View>
-
-        
     )
   }
 }

@@ -2,9 +2,9 @@
 import React, {Component} from 'react';
 
 // Custom React components
-import ProfileSetup from '../Components/Add-User/Profile-setup';
-import AllergySetup from '../Components/Add-User/Allergy-Setup';
-import Confirmation from '../Components/Add-User/Confirmation';
+import ProfileSetup from '../Components/Forms/New-User/Profile-setup';
+import AllergySetup from '../Components/Forms/New-User/Allergy-Setup';
+import Confirmation from '../Components/Forms/New-User/Confirmation';
 
 export default class RegisterScreen extends Component {
     state = {

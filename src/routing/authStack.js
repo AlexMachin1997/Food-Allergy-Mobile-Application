@@ -45,7 +45,7 @@ const AuthStackRoutes = createStackNavigator(
     help: HelpScreen,
   },
   {
-    initialRouteName: 'search',
+    initialRouteName: 'settings',
     defaultNavigationOptions: ({navigation}) => ({
       headerLeft: (
         <TouchableOpacity onPress={() => {navigation.toggleDrawer()}} style={[spacing.smallLeft]}>

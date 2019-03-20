@@ -5,12 +5,12 @@ import {TouchableOpacity} from 'react-native';
 // React navigation 
 import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
 
-// Custom screens
-import SettingsScreen from '../screens/settings';
-import EditProfileScreen from '../screens/editProfile';
-import HelpScreen from '../screens/help';
+// Custom screens and stacks
+import SettingsScreen from '../screens/Settings-Screen';
+import EditProfileScreen from '../screens/Edit-Profile-Screen';
+import HelpScreen from '../screens/Help-Screen';
 import CustomDrawer from '../Components/Drawer/CustomDrawer';
-
+import SearchStack from './SearchStack';
 
 // Icons
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -18,15 +18,34 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 // Custom utilities
 import {spacing} from '../styles/spacing-utils'
 
+/* 
+AuthStackRoutes:
+- Creates a stack which can be traversered via props when active
+- This particular stack is only avaliable if a user is authenticated
+- Contains a drawer toggler and settings icon, both of which are wrapped in a touchable opacitiy
+- This stack is referenced in a drawer to access routes, but it's currently not setup
+
+Screens avaliable:
+- SettingsScreen
+- EditProfileScreen
+- HelpScreen
+
+Stack config:
+- Inital route is set
+- The headerLeft triggers the navigation drawer (Currently displays nothing other than a plain component with the apps icon)
+- The headerRight triggers the settings screen to appear.
+- To access these actions outside of the screens the navigation object and defaultNavigation options are leveraged. 
+- Both headerLeft and headerRight are wrapped in touchable opacity to allow onPress actions to be defined
+*/
 const AuthStackRoutes = createStackNavigator(
   {
-    Settings: SettingsScreen,
-    EditProfile: EditProfileScreen,
-    Help: HelpScreen,
-    Settings: SettingsScreen,
+    search: SearchStack,
+    settings: SettingsScreen,
+    edit: EditProfileScreen,
+    help: HelpScreen,
   },
   {
-    initialRouteName: 'Help',
+    initialRouteName: 'settings',
     defaultNavigationOptions: ({navigation}) => ({
       headerLeft: (
         <TouchableOpacity onPress={() => {navigation.toggleDrawer()}} style={[spacing.smallLeft]}>
@@ -34,7 +53,7 @@ const AuthStackRoutes = createStackNavigator(
         </TouchableOpacity>
       ),
       headerRight: (
-        <TouchableOpacity onPress={()=> {navigation.navigate('Settings')}} style={[spacing.smallRight]}>
+        <TouchableOpacity onPress={()=> {navigation.navigate('settings')}} style={[spacing.smallRight]}>
           <Icon name="settings" size={30}/>
         </TouchableOpacity>
       ),    

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-class EditProfile extends Component {
+export default class EditProfileScreen extends Component {
   render() {
     return (
       <View>
@@ -12,5 +12,3 @@ class EditProfile extends Component {
     );
   }
 }
-
-export default EditProfile;

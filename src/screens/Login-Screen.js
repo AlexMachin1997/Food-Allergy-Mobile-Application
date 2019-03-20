@@ -2,9 +2,9 @@
 import React, {Component} from 'react';
 import {Text, View, ScrollView, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
 
-// User-Interface Libaries
-import {Button} from 'react-native-paper';
-
+// Custom React components
+import CustomButton from '../Components/UI/Button';
+import CustomInput from '../Components/UI/Input';
 
 /* 
 Utility classes:
@@ -15,7 +15,7 @@ import {buttons} from '../styles/buttons-utils';
 import {flex} from '../styles/flex-utils';
 import {fonts, align} from '../styles/text-utils';
 import {spacing} from '../styles/spacing-utils';
-import {border, radius, width} from '../styles/border'
+import {border, radius, width} from '../styles/border';
 
 
 // Sections
@@ -38,7 +38,7 @@ const Outline = radius.small;
 const OutlineColour = border.black;
 const OutlineWidth = width.small;
 
-class Login extends Component {
+export default class LoginScreen extends Component {
 
   // Login components own internal state
   state = {
@@ -52,30 +52,10 @@ class Login extends Component {
   };
 
   /* 
-  isEmpty:
-  - Checks if the users email or password is not falsy (empty values, empty string = false )
-  - The values are returned and if they are true, meaning they are empty show an alert.
-  */
-  isEmpty = ({email, password}) => {
-    return (
-      !email.length || !password.length
-    )
-  }
-
-  /* 
   handleSubmit:
-  - No params required 
-  - Checks the input isn't empty
-  - If the inputs are empty then return false
-  - When the state has been validated then navigate to the next stack return true to stop the code from continuing
+  - No params required
   */
   handleSubmit = () => {
-
-    if(this.isEmpty(this.state)) {
-      Alert.alert("Looks like some of the required details are missing");
-      return false 
-    }
-
     this.props.navigation.navigate('authStack');    
   }
 
@@ -120,15 +100,9 @@ class Login extends Component {
           Text:
           - Renders a string of text, its the equivalent of a p tag in web development
           - For more information about this component visit https://facebook.github.io/react-native/docs/text 
-
-          TextInput:
-          - Is a text input field with numerous props to use, its the equivalent of input tag in web development 
-          - For additional information about the props allowed visist https://facebook.github.io/react-native/docs/textinput
-          
-          Button (react-native paper):
-          - Pre-made material Buttons
-          - Accepts a number of props, though for this project only mode, compact, style, color, onPress and accessabiltyLabel were used
-          - For more information about this component visit https://callstack.github.io/react-native-paper/Buttons.html       
+        
+          CustomButton and CustomInput
+          - Check the components for more information
         */
          
         <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>
@@ -141,39 +115,54 @@ class Login extends Component {
 
             <View style={Section}>
               <Text style={FormLabel}>Email</Text>
-              <TextInput
+              <CustomInput
                 placeholder="Enter your email address"
                 value={email}
-                onChangeText = {(value) => this.handleChange('email', value)}
-                keyboardType="email-address"
+                onChange = {(value) => this.handleChange('email', value)}
+                secureTextEntry={false}
                 style={[Outline, OutlineColour, OutlineWidth]}
-                multiline={true} 
+                Ismultiline={true}
+                keyboardType="email-address"
               />   
             </View>
 
             <View style={Section}>
               <Text style={FormLabel}>Password</Text>
-              <TextInput
+              <CustomInput
                 placeholder="Enter your password"
                 value={password}
-                onChangeText = {(value) => this.handleChange('password', value)}
+                onChange = {(value) => this.handleChange('password', value)}
                 secureTextEntry={true}
                 style={[Outline, OutlineColour, OutlineWidth]}
-                multiline={true}
-              />   
+                Ismultiline={true}
+              />    
             </View>
 
             <View style={Section}>
-              <Button mode="contained" compact={true} style={Buttons} color="#0277bd" onPress={this.handleSubmit} accessibilityLabel="Sign up for a free account">
-                Login
-              </Button>          
+              <CustomButton 
+                text="Login" 
+                mode="contained" 
+                compact={true} 
+                colour="#0277bd" 
+                styling={Buttons} 
+                onClick={this.handleSubmit} 
+                label="Login"
+                disabled={!email || !password}
+              />       
             </View>
 
             <View style={SignUpLabelSection}>
               <Text style={SignUpLabel}> Don't have an account ? </Text>       
-              <Button mode="contained" compact={true}  style={Buttons} color="#0277bd" onPress={()=> {this.props.navigation.navigate('register')}} accessibilityLabel="Sign up for a free account">
-                Sign up
-              </Button>  
+              <CustomButton 
+              text="Register" 
+              mode="contained" 
+              compact={true} 
+              colour="#0277bd" 
+              styling={Buttons} 
+              onClick={() => this.props.navigation.navigate('authStack')} 
+              accessibilityLabel="Register"
+              disabled={false}
+              />    
             </View>
 
           </KeyboardAvoidingView>
@@ -181,5 +170,3 @@ class Login extends Component {
     );
   }
 }
-
-export default Login;

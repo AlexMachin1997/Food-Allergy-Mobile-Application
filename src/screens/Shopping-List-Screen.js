@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-class LiveSearch extends Component {
+export default class ShoppingListScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Shopping list',
+  };
+
   render() {
     return (
       <View>
         <Text>
-            Live Search Component
+            Shopping List Component
         </Text>
       </View>
     );
   }
 }
-
-export default LiveSearch;

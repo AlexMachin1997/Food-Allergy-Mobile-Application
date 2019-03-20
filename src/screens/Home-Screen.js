@@ -1,6 +1,9 @@
 // React dependencies
 import React, {Component} from 'react';
-import {Text, View, Image, ScrollView } from 'react-native';
+import {Text, View, Image, ScrollView, StyleSheet } from 'react-native';
+
+// Custom React components
+import CustomButton from '../Components/UI/Button';
 
 /* 
 Utility classes:
@@ -9,22 +12,32 @@ Utility classes:
 */
 import {buttons} from '../styles/buttons-utils';
 import {flex} from '../styles/flex-utils';
-import {fonts, colours} from '../styles/text-utils';
-import {images} from '../styles/image-utils';
+import {fonts} from '../styles/text-utils';
 
-// Assets
+// Application Icon
 import AppIcon from '../assets/Icon.png';
 
-// User-Interface Libaries
-import { Button} from 'react-native-paper';
+const styles = StyleSheet.create({
+  HomeButtons: {
+    width: 200
+  },
+  HomeScreenIcon: {
+    width: 250,
+    height: 250,
+    margin: 30,
+    alignSelf: 'flex-start',
+  }
+})
 
-// Generic utils
-const homeButton = [buttons.HomeButtons, buttons.large];
+// Button utils
+const Button = [styles.HomeButtons, buttons.large];
 
+// Heading utils
+const Heading = [fonts.title1]
 
-// Home component
-class Home extends Component { 
+export default class HomeScreen extends Component { 
 
+  // Sets the title within the header and disables the header properties whilst on this screen
   static navigationOptions = {
     headerMode: 'none',
     header: null
@@ -47,37 +60,46 @@ class Home extends Component {
                 
         Text:
         - Renders a string of text, its the equivalent of a p tag in web development
-        - For more information about this component visit https://facebook.github.io/react-native/docs/text 
-       
-        Button (react-native paper):
-        - Pre-made material button
-        - Accepts a number of props, though for this project only mode, compact, style, color, onPress and accessabiltyLabel were used
-        - For more information about this component visit https://callstack.github.io/react-native-paper/button.html       
+        - For more information about this component visit https://facebook.github.io/react-native/docs/text
+        
+                
+        CustomButton:
+        - Check the component for more information
       */
          
       <ScrollView contentContainerStyle={[flex.alignItemsCenter, flex.justifyContentCenter, flex.grow]}>
         <View>
-          <Text style={[colours.black, fonts.title1]}>Food Allergy Assistant</Text>
+          <Text style={Heading}> Food Allergy Assistant</Text>
         </View>
 
         <View>
-          <Image source={AppIcon} style={images.HomeScreenIcon}/>
+          <Image source={AppIcon} style={styles.HomeScreenIcon}/>
         </View>
 
         <View style={{marginBottom: 10}}>
-         <Button mode="contained" compact={true} style={homeButton} color="#0277bd" onPress={()=> {this.props.navigation.navigate('login')}} accessibilityLabel="Login with an existing account">
-           Login
-          </Button>
+          <CustomButton 
+            text="Sign up"
+            mode="contained" 
+            compact={true} 
+            styling={Button} 
+            colour="#0277bd" 
+            onClick={() => this.props.navigation.navigate('register')} 
+            label="Go to the register screen"
+          />
         </View>
 
         <View>
-          <Button mode="contained" compact={true} style={homeButton} color="#0277bd" onPress={()=> {this.props.navigation.navigate('register')}} accessibilityLabel="Sign up for a free account">
-           Sign up
-          </Button>
+          <CustomButton 
+            text="Login"
+            mode="contained" 
+            compact={true} 
+            styling={Button} 
+            colour="#0277bd" 
+            onClick={() => this.props.navigation.navigate('login')} 
+            label="Go to the login screen"
+         />
         </View>
       </ScrollView>
     );
   }
 }
-
-export default Home;

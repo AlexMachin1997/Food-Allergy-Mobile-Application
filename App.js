@@ -1,9 +1,8 @@
-
 // React dependencies
 import React, {Component} from 'react';
 
 // The exported app container which will decide which route or routes are viewed
-import AppContainer from './src/routing/index';
+import AppContainer from './src/routing/Index';
 
 /*
 React-Native-Paper:
@@ -16,7 +15,6 @@ import { Provider as PaperProvider } from 'react-native-paper';
 App component:
 - Wrapped in PaperProvider for styling component
 - AppContainer is returned 
-- Redux will be implimented here for updating the central state store
 */
 export default class App extends Component {
   render() {

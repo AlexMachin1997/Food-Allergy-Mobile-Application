@@ -1,6 +1,7 @@
 // React dependencies
 import React, {Component} from 'react';
 import {Text, View, AsyncStorage, ScrollView} from 'react-native';
+import CustomButton from '../Components/UI/Button';
 
 /* 
 Utility classes:
@@ -12,7 +13,7 @@ import {spacing} from '../styles/spacing-utils';
 import {buttons} from '../styles/buttons-utils';
 
 // User-Interface Libaries
-import {Button, Divider} from 'react-native-paper';
+import {Divider} from 'react-native-paper';
 
 // Action properties
 const Action = {marginBottom: 5, marginTop: 5};
@@ -25,7 +26,7 @@ const ActionButton = [buttons.large];
 const DividerStyling = {height:1, marginTop:10};
 
 
-class Settings extends Component {
+export default class SettingsScreen extends Component {
 
   // Setting the screens title
   static navigationOptions = {
@@ -63,11 +64,6 @@ class Settings extends Component {
         Text:
         - Renders a string of text, its the equivalent of a p tag in web development
         - For more information about this component visit https://facebook.github.io/react-native/docs/text 
-        
-        Button (react-native paper):
-        - Pre-made material button
-        - Accepts a number of props, though for this project only mode, compact, style, color, onPress and accessabiltyLabel were used
-        - For more information about this component visit https://callstack.github.io/react-native-paper/button.html       
       */
 
       <ScrollView contentContainerStyle={[spacing.ContainerSpacing]}>
@@ -76,9 +72,15 @@ class Settings extends Component {
           <View style={Action}>
             <Text style={ActionTitle}>Account deletion</Text>
             <Text style={ActionBody}>Permanently delete your account and all of it's content</Text>
-            <Button mode="contained" style={ActionButton} color="#FF0000" compact={true} onPress={this.deleteAccount} accessibilityLabel="Delete account button">
-              Delete account
-            </Button>
+            <CustomButton 
+             text="Delete account"
+             mode="contained" 
+             compact={true}
+             styling={ActionButton} 
+             colour="#FF0000" 
+             onClick={this.deleteAccount} 
+             label="Delete your account"
+            />
           </View>     
 
           <Divider style={DividerStyling} />
@@ -86,9 +88,15 @@ class Settings extends Component {
           <View style={Action}>
             <Text style={ActionTitle}>Delete contents</Text>
             <Text style={ActionBody}>Permanently delete all your application contents </Text>
-            <Button mode="contained" style={ActionButton} color="#FF0000" compact={true} onPress={this.deleteStorage} accessibilityLabel="Delete internal storage contents">
-              Delete data
-            </Button>
+            <CustomButton 
+             text="Delete data"
+             mode="contained" 
+             compact={true}
+             styling={ActionButton} 
+             colour="#FF0000" 
+             onClick={this.deleteStorage} 
+             label="Delete the data saved within your devices internal storage"
+            />
           </View>
 
           <Divider style={DividerStyling} />
@@ -96,9 +104,15 @@ class Settings extends Component {
           <View style={Action}>
             <Text style={ActionTitle}>Logout</Text>
             <Text style={ActionBody}>End your current session, you will be redirected </Text>
-            <Button mode="contained" style={ActionButton} color="#FF0000" compact={true} onPress={this.logout} accessibilityLabel="Logout">
-              Logout
-            </Button>
+            <CustomButton 
+             text="Logout"
+             mode="contained" 
+             compact={true}
+             styling={ActionButton} 
+             colour="#FF0000" 
+             onClick={this.logout} 
+             label="Go to the homepage and end your current session"
+            />
           </View>     
 
           <Divider style={DividerStyling} />
@@ -110,5 +124,3 @@ class Settings extends Component {
     );
   }
 }
-
-export default Settings;

@@ -2,41 +2,41 @@
 import React, {Component} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 
+// User-Interface Libaries
+import {Divider} from 'react-native-paper';
+
+// Custom React components
+import CustomButton from '../Components/UI/Button';
+
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
 import {flex} from '../styles/flex-utils';
-import {fonts, colours} from '../styles/text-utils';
+import {fonts} from '../styles/text-utils';
 import {spacing} from '../styles/spacing-utils';
 
-import {Button, Divider} from 'react-native-paper';
-
-// General utils
+// Sections
 const section = [spacing.smallTop, spacing.smallBottom]
 
-// Heading utils
+// Headings
 const heading = [fonts.headline]
 
-// Main body utils 
+// Body 
 const body = [fonts.body];
 
-// Divider styling
+// Dividers
 const DividerStyling = {height:1, marginTop:10};
 
+export default class HelpScreen extends Component {
 
-
-class Help extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      Section1: false,
-      Section2: false,
-      Section3: false,
-      Section4: false,
-      Section5: false  
-    }
+  state = {
+    Section1: false,
+    Section2: false,
+    Section3: false,
+    Section4: false,
+    Section5: false  
   }
 
   /* 
@@ -55,8 +55,6 @@ class Help extends Component {
   static navigationOptions = {
     title: 'Questions and answers',
   };
-
-
   
   render() {
 
@@ -64,6 +62,27 @@ class Help extends Component {
     const {Section1, Section2, Section3, Section4, Section5} = this.state;
     
     return (
+    
+      /* 
+        Component overviews with resources:
+
+        ScrollView:
+        - Allows content to be scrolled in the event the content exceeds the screen height.
+        - Often in very rare cases content will overflow the screen but not actually enable the functionlaity. To solve this add an additional view to the bottom with a fixed hieght
+        - For more information about this component visit https://facebook.github.io/react-native/docs/scrollview#docsNav
+
+        View:
+        - Is the wrapper, it's the equivalent of a div tag in web development the only difference being React-Natives is more messy
+        - For more information about this component visit https://facebook.github.io/react-native/docs/view
+                
+        Text:
+        - Renders a string of text, its the equivalent of a p tag in web development
+        - For more information about this component visit https://facebook.github.io/react-native/docs/text 
+        
+        CustomButton
+        - Check the component for more information
+      */
+    
       <ScrollView contentContainerStyle={[spacing.ContainerSpacing, flex.grow]}>
         <View style={{marginBottom: 50}}>
 
@@ -77,9 +96,14 @@ class Help extends Component {
               :null
             }
                         
-            <Button mode="contained" color="#0277bd" onPress={()=> this.handleToggle('Section1')} accessibilityLabel="Login with an existing account">
-              {!Section1 ? "Show" : "Hide"}
-            </Button>
+            <CustomButton 
+              text={!Section1 ? "Show" : "Hide"}
+              mode="contained" 
+              compact={true} 
+              colour="#0277bd" 
+              onClick={()=> this.handleToggle('Section1')} 
+              label="Toggle section 1"
+            />
           </View>
 
           <Divider style={DividerStyling}/>
@@ -94,9 +118,14 @@ class Help extends Component {
               : null
             }
 
-            <Button mode="contained" color="#0277bd" onPress={()=> this.handleToggle('Section2')} accessibilityLabel="Login with an existing account">
-              {!Section2 ? "Show" : "Hide"}
-            </Button>
+            <CustomButton 
+              text={!Section2 ? "Show" : "Hide"}
+              mode="contained" 
+              compact={true} 
+              colour="#0277bd" 
+              onClick={()=> this.handleToggle('Section2')} 
+              label="Toggle section 2"
+            />
           </View>
 
           <Divider style={DividerStyling}/>
@@ -111,9 +140,14 @@ class Help extends Component {
               : null
             }
 
-            <Button mode="contained" color="#0277bd" onPress={()=> this.handleToggle('Section3')} accessibilityLabel="Login with an existing account">
-              {!Section3 ? "Show" : "Hide"}
-            </Button>
+            <CustomButton 
+              text={!Section3 ? "Show" : "Hide"}
+              mode="contained" 
+              compact={true} 
+              colour="#0277bd" 
+              onClick={()=> this.handleToggle('Section3')} 
+              label="Toggle section 3"
+            />  
           </View>
 
           <Divider style={DividerStyling}/>
@@ -128,9 +162,14 @@ class Help extends Component {
               :null
             }
       
-            <Button mode="contained" color="#0277bd" onPress={()=> this.handleToggle('Section4')} accessibilityLabel="Login with an existing account">
-              {!Section4 ? "Show" : "Hide"}
-            </Button>
+            <CustomButton 
+              text={!Section4 ? "Show" : "Hide"}
+              mode="contained" 
+              compact={true} 
+              colour="#0277bd" 
+              onClick={()=> this.handleToggle('Section4')} 
+              label="Toggle section 4"
+            />
 
           </View>
 
@@ -145,11 +184,15 @@ class Help extends Component {
                 Within the search tabs when you either scan a suitable items or click an add button it will be stored locally.
               </Text>:null
             }
-      
-            <Button mode="contained" color="#0277bd" onPress={()=> this.handleToggle('Section5')} accessibilityLabel="Login with an existing account">
-              {!Section5 ? "Show" : "Hide"}
-            </Button>
 
+            <CustomButton 
+              text={!Section5 ? "Show" : "Hide"}
+              mode="contained" 
+              compact={true} 
+              colour="#0277bd" 
+              onClick={()=> this.handleToggle('Section5')} 
+              label="Toggle section 5"
+            />
           </View>
         
         </View>
@@ -157,5 +200,3 @@ class Help extends Component {
     );
   }
 }
-
-export default Help;

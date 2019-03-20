@@ -1,20 +1,13 @@
+// React Dependencies
 import React, {Component} from 'react';
-import {View, ActivityIndicator, AsyncStorage, StatusBar} from 'react-native';
+import {View, ActivityIndicator, AsyncStorage} from 'react-native';
 
-class Index extends Component {
 
-  constructor(){
-      super();
-  }
+export default class IndexScreen extends Component {
 
-  /* 
-  componentDidMount:
-  - When the component loads it checks the auth status of the user
-  */
   componentDidMount(){
     this._checkAuthStatus();
   }
-
   
   /* 
   checkAuthStatus:
@@ -30,6 +23,7 @@ class Index extends Component {
   render() {
        
     return (
+
       /* 
         Component overviews with resources:
         
@@ -50,5 +44,3 @@ class Index extends Component {
     );
   }
 }
-
-export default Index;

@@ -3,19 +3,19 @@ import React, {Component} from 'react';
 import {Text, View, Image, ScrollView, StyleSheet } from 'react-native';
 
 // Custom React components
-import CustomButton from '../Components/UI/Button';
+import CustomButton from '../../Components/UI/Button';
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../styles/buttons-utils';
-import {flex} from '../styles/flex-utils';
-import {fonts} from '../styles/text-utils';
+import {buttons} from '../../styles/buttons-utils';
+import {flex} from '../../styles/flex-utils';
+import {fonts} from '../../styles/text-utils';
 
 // Application Icon
-import AppIcon from '../assets/Icon.png';
+import AppIcon from '../../assets/Icon.png';
 
 const styles = StyleSheet.create({
   HomeButtons: {

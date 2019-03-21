@@ -1,21 +1,23 @@
 // React dependencies
 import React, {Component} from 'react';
 import {Text, View, AsyncStorage, ScrollView} from 'react-native';
-import CustomButton from '../Components/UI/Button';
 import { MaterialDialog } from 'react-native-material-dialog';
+
+// Custom React components 
+import CustomButton from '../../Components/UI/Button';
+
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {fonts} from '../styles/text-utils';
-import {spacing} from '../styles/spacing-utils';
-import {buttons} from '../styles/buttons-utils';
+import {fonts} from '../../styles/text-utils';
+import {spacing} from '../../styles/spacing-utils';
+import {buttons} from '../../styles/buttons-utils';
 
 // User-Interface Libaries
 import {Divider} from 'react-native-paper';
-import { FlatList } from 'react-native-gesture-handler';
 
 // Action 
 const Action = {marginBottom: 5, marginTop: 5};

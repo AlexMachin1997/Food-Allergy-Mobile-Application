@@ -85,7 +85,7 @@ export default class EditProfile extends Component {
             <KeyboardAvoidingView behavior="padding">  
                     
                 <View style={Section}>
-                  <Text style={MainTitle}>Account setup</Text>
+                  <Text style={MainTitle}>Account details</Text>
                   <Text style={SubHeading}>Fill in the inputs below with the appropriate information</Text>
                 </View>
  

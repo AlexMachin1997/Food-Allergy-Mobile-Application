@@ -1,10 +1,12 @@
 //React dependencies
 import React, { Component } from 'react'
-import {ScrollView, Alert} from 'react-native'
+import {ScrollView, Text} from 'react-native'
+import { MaterialDialog } from 'react-native-material-dialog';
 
 // Custom React components
 import ConfirmationMessage from '../../UI/ConfirmationMessage';
 import ConfirmationAction from '../../UI/ConfirmationAction';
+
 
 /* 
 Utility classes:
@@ -12,13 +14,20 @@ Utility classes:
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
 import {flex} from '../../../styles/flex-utils';
-import ConfirmationAction from '../../UI/ConfirmationAction';
+import {fonts} from '../../../styles/text-utils';
 
 // Sections 
 const ConfirmationSection = [flex.alignItemsCenter, flex.justifyContentCenter, flex.flex];
 
+//Modal 
+const ModalBody = [fonts.body]
+
 export default class ConfirmationScreen extends Component {
   
+  state = {
+    isModalVisible: false
+  }
+
   goBack = e => {
     e.preventDefault();
     this.props.back();
@@ -29,9 +38,9 @@ export default class ConfirmationScreen extends Component {
   - This will submit the data via the NodeJS API endpoint 
   - When the data is sent to the API an alert message is sent and the user is redirected to the login screen
   */
-  addData = () => {
-    Alert.alert(`Your account has succesfully been created`);
-    this.props.goToLogin();
+  updateData = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible})
+    this.props.goToSearch();
   }
 
   render() {
@@ -39,6 +48,7 @@ export default class ConfirmationScreen extends Component {
     // Use to send data to the API endpoint
     // e.g. name can be used to show the name, email can be used to show email etc
     const {values: { name, email, password, allergies }} = this.props;
+    const {isModalVisible} = this.state;
 
     return (
 
@@ -60,8 +70,18 @@ export default class ConfirmationScreen extends Component {
       */
       
       <ScrollView contentContainerStyle={ConfirmationSection}>
-        <ConfirmationMessage text="Your details are ready to be updated, would you like to update them?"/>
-        <ConfirmationAction goBack={this.goBack}/>
+        <MaterialDialog
+          title="Account update"
+          visible={isModalVisible}
+          onOk={() => this.updateData()}
+          onCancel={() => this.setState({ isModalVisible: !this.state.isModalVisible })}>
+          <Text style={ModalBody}>
+            Looks like you want to update your account, would you like to continue?
+          </Text>
+        </MaterialDialog>
+
+        <ConfirmationMessage text="Your details are ready to be updated."/>
+        <ConfirmationAction action={() => { this.setState({isModalVisible: !isModalVisible}) }} goBack={this.goBack}/>
       </ScrollView>
     )
   }

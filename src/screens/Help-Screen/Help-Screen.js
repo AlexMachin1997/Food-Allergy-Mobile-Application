@@ -6,16 +6,16 @@ import {Text, View, ScrollView} from 'react-native';
 import {Divider} from 'react-native-paper';
 
 // Custom React components
-import CustomButton from '../Components/UI/Button';
+import CustomButton from '../../Components/UI/Button';
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {flex} from '../styles/flex-utils';
-import {fonts} from '../styles/text-utils';
-import {spacing} from '../styles/spacing-utils';
+import {flex} from '../../styles/flex-utils';
+import {fonts} from '../../styles/text-utils';
+import {spacing} from '../../styles/spacing-utils';
 
 // Sections
 const section = [spacing.smallTop, spacing.smallBottom]

@@ -2,9 +2,9 @@
 import React, {Component} from 'react';
 
 // Custom React components
-import ProfileSetup from '../Components/Forms/New-User/Profile-setup';
-import AllergySetup from '../Components/Forms/New-User/Allergy-Setup';
-import Confirmation from '../Components/Forms/New-User/Confirmation';
+import ProfileSetup from '../../Components/Forms/New-User/Profile-setup';
+import AllergySetup from '../../Components/Forms/New-User/Allergy-Setup';
+import Confirmation from '../../Components/Forms/New-User/Confirmation';
 
 export default class RegisterScreen extends Component {
     state = {
@@ -108,7 +108,6 @@ export default class RegisterScreen extends Component {
            case 3:
                return (
                    <Confirmation
-                       forward={this.goForward}
                        back={this.goBack}
                        values={values}
                        goToLogin={this.goToLogin}

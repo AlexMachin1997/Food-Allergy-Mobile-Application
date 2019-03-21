@@ -2,9 +2,9 @@
 import {createStackNavigator} from 'react-navigation'
 
 // React-Navigation screens 
-import HomeScreen from '../screens/Home-Screen'
-import LoginScreen from '../screens/Login-Screen';
-import RegisterScreen from '../screens/Register-Screen';
+import HomeScreen from '../screens/Home-Screen/Home-Screen'
+import LoginScreen from '../screens/Login-Screen/Login-Screen';
+import RegisterScreen from '../screens/Register-Screen/Register-Screen';
 
 /* 
 GuestSack:

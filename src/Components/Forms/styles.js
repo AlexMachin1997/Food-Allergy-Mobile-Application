@@ -5,6 +5,6 @@ export default styles = StyleSheet.create({
         width: 200
     },
     ConfirmButtons: {
-        width: 150
+        width: 130
     }
 });

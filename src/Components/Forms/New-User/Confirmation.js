@@ -1,6 +1,6 @@
 //React dependencies
 import React, { Component } from 'react'
-import {ScrollView, Text} from 'react-native'
+import {ScrollView, Text, Alert} from 'react-native'
 import { MaterialDialog } from 'react-native-material-dialog';
 
 // Custom React components

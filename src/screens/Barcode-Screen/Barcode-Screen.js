@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 
-export default class EditProfileScreen extends Component {
+export default class BarcodeScreen extends Component {
+
   render() {
     return (
       <View>
         <Text>
-            Edit Profile Component
+            Barcode Component
         </Text>
       </View>
     );

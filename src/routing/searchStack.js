@@ -5,9 +5,9 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
 // Custom screen
-import BarcodeScreen from '../screens/Barcode-Screen';
-import LiveSearchScreen from '../screens/Live-Search-Screen';
-import ShoppingListScreen from '../screens/Shopping-List-Screen';
+import BarcodeScreen from '../screens/Barcode-Screen/Barcode-Screen';
+import LiveSearchScreen from '../screens/Live-Search-Screen/Live-Search-Screen';
+import ShoppingListScreen from '../screens/Shopping-List-Screen/Shopping-List-Screen';
 
 // Icon libaries
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -71,6 +71,8 @@ export default SearchStack = createMaterialBottomTabNavigator(
     tabBarOptions: {
       scrollEnabled:true,
     },
-    headerTitle: "Search feeds"
+    navigationOptions: {
+      headerTitle: "Search feeds"
+    }
   }
 );

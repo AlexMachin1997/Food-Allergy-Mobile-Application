@@ -3,19 +3,19 @@ import React, {Component} from 'react';
 import {Text, View, ScrollView, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
 
 // Custom React components
-import CustomButton from '../Components/UI/Button';
-import CustomInput from '../Components/UI/Input';
+import CustomButton from '../../Components/UI/Button';
+import CustomInput from '../../Components/UI/Input';
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../styles/buttons-utils';
-import {flex} from '../styles/flex-utils';
-import {fonts, align} from '../styles/text-utils';
-import {spacing} from '../styles/spacing-utils';
-import {border, radius, width} from '../styles/border';
+import {buttons} from '../../styles/buttons-utils';
+import {flex} from '../../styles/flex-utils';
+import {fonts, align} from '../../styles/text-utils';
+import {spacing} from '../../styles/spacing-utils';
+import {border, radius, width} from '../../styles/border';
 
 
 // Sections
@@ -159,7 +159,7 @@ export default class LoginScreen extends Component {
               compact={true} 
               colour="#0277bd" 
               styling={Buttons} 
-              onClick={() => this.props.navigation.navigate('authStack')} 
+              onClick={() => this.props.navigation.navigate('register')} 
               accessibilityLabel="Register"
               disabled={false}
               />    

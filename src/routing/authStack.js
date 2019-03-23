@@ -10,7 +10,7 @@ import SettingsScreen from '../screens/Settings-Screen/Settings-Screen';
 import EditProfileScreen from '../screens/Edit-Profile-Screen/Edit-Profile-Screen';
 import HelpScreen from '../screens/Help-Screen/Help-Screen';
 import CustomDrawer from '../Components/Drawer/CustomDrawer';
-import SearchStack from './SearchStack';
+import SearchStack from './searchStack';
 
 // Icons
 import Icon from 'react-native-vector-icons/MaterialIcons'

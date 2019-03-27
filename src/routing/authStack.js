@@ -10,10 +10,12 @@ import SettingsScreen from '../screens/Settings-Screen/Settings-Screen';
 import EditProfileScreen from '../screens/Edit-Profile-Screen/Edit-Profile-Screen';
 import HelpScreen from '../screens/Help-Screen/Help-Screen';
 import CustomDrawer from '../Components/Drawer/CustomDrawer';
-import SearchStack from './searchStack';
+import SearchStack from './SearchStack';
 
 // Icons
+// MaterialIcons
 import Icon from 'react-native-vector-icons/MaterialIcons'
+const MaterialIconSize = 30;
 
 // Custom utilities
 import {spacing} from '../styles/spacing-utils'
@@ -49,12 +51,12 @@ const AuthStackRoutes = createStackNavigator(
     defaultNavigationOptions: ({navigation}) => ({
       headerLeft: (
         <TouchableOpacity onPress={() => {navigation.toggleDrawer()}} style={[spacing.smallLeft]}>
-          <Icon name="menu" size={30}/>
+          <Icon name="menu" size={MaterialIconSize}/>
         </TouchableOpacity>
       ),
       headerRight: (
         <TouchableOpacity onPress={()=> {navigation.navigate('settings')}} style={[spacing.smallRight]}>
-          <Icon name="settings" size={30}/>
+          <Icon name="settings" size={MaterialIconSize}/>
         </TouchableOpacity>
       ),    
     })

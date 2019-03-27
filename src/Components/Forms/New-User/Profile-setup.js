@@ -19,23 +19,23 @@ import {border, radius, width} from '../../../styles/border';
 import styles from '../styles';
 
 
-// Headings 
+// Heading styled
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3]
 
 
-// Sections
+// Section styles
 const Section = [spacing.smallBottom, spacing.smallTop]
 
-// Labels
+// Label styles
 const FormLabel = [fonts.title3]
 
-// Inputs 
+// Input styles
 const Outline = radius.small;
 const OutlineColour = border.black;
 const OutlineWidth = width.small;
 
-// Buttons
+// Button styles
 const Button = [buttons.large, styles.RegisterButtons];
 
 export default class ProfileSetup extends Component {
@@ -52,7 +52,13 @@ export default class ProfileSetup extends Component {
 
   render() {
 
+     // Destructuring the state and storing them in variables
+    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+
+    // Desturcutre the props so they can be refered to via props
     const {values, handleChange} = this.props;
+
+    // Destrucutre the values object, the indvidual values within the object can be refered
     const {name,email, password} = values; 
      
 
@@ -77,9 +83,6 @@ export default class ProfileSetup extends Component {
           Text:
           - Renders a string of text, its the equivalent of a p tag in web development
           - For more information about this component visit https://facebook.github.io/react-native/docs/text 
-
-          CustomButton and CustomInput
-          - Check the components for more information
         */
 
         <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>
@@ -144,6 +147,7 @@ export default class ProfileSetup extends Component {
                      disabled={!name || !email || password.length < 5}
                     />
                 </View>
+
             </KeyboardAvoidingView>
         </ScrollView>
     )

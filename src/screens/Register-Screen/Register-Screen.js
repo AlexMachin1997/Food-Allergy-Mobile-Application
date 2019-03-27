@@ -7,12 +7,14 @@ import AllergySetup from '../../Components/Forms/New-User/Allergy-Setup';
 import Confirmation from '../../Components/Forms/New-User/Confirmation';
 
 export default class RegisterScreen extends Component {
-    state = {
-      step: 1,
-      name: '',
-      email: '',
-      password: '',
-      allergies: []
+
+  // Register components own internal state
+  state = {
+    step: 1,
+    name: '',
+    email: '',
+    password: '',
+    allergies: []
   }  
 
   /*
@@ -68,13 +70,14 @@ export default class RegisterScreen extends Component {
 
   render() {
 
-       /* 
-       Object Destructuring:
-        - Destructuring the state and storing them in variables
-        - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-       */
-       const {step, name, email, password, allergies} = this.state;
-       const values = {name, email, password, allergies}
+      // Destructuring the state and storing them in variables
+      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      
+      // Destructuring the state so they can be refered to via indvidual variables
+      const {step, name, email, password, allergies} = this.state;
+
+      // Destructuring the values so they can be refered to via indvidual variables
+      const values = {name, email, password, allergies}
 
        /* 
        Form switching functionality:

@@ -1,6 +1,7 @@
 // React dependencies 
 import React, {Component} from 'react';
-import {Text, View, ScrollView, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
+import {Text, View, ScrollView, KeyboardAvoidingView, Alert, AsyncStorage} from 'react-native';
+import { MaterialDialog } from 'react-native-material-dialog';
 
 // Custom React components
 import CustomButton from '../../Components/UI/Button';
@@ -17,26 +18,32 @@ import {fonts, align} from '../../styles/text-utils';
 import {spacing} from '../../styles/spacing-utils';
 import {border, radius, width} from '../../styles/border';
 
-
-// Sections
+// Section styles
 const Section = [spacing.smallBottom, spacing.smallTop]
 const SignUpLabelSection = [spacing.mediumTop];
 
-// Labels 
+// Label styles
 const FormLabel = [fonts.title3]
 const SignUpLabel = [align.center, fonts.title3, spacing.smallBottom]
 
-// Buttons
+// Button styles
 const Buttons = [buttons.large]
 
-// Headings 
+// Heading styles
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3]
 
-// Inputs 
+// Input styles
 const Outline = radius.small;
 const OutlineColour = border.black;
 const OutlineWidth = width.small;
+
+//Modal styles
+const ModalBody = [fonts.body];
+
+// API
+import axios from 'axios';
+
 
 export default class LoginScreen extends Component {
 
@@ -44,6 +51,12 @@ export default class LoginScreen extends Component {
   state = {
     email: "",
     Password: "",
+
+    errorModal: false,
+    successModal: false,
+    
+    error: "",
+    success: ""
   };
 
   // Sets the title within the header
@@ -53,11 +66,86 @@ export default class LoginScreen extends Component {
 
   /* 
   handleSubmit:
-  - No params required
+  - This will submit the data via the NodeJS API endpoint 
+  - When the data is sent to the API an alert message is sent and the user is redirected to the login screen
+  
+  Try block:
+  - Set the state of the isUpdatModalVisible to false
+  - Get the token
+  - Send a request to the endpoint with the authorization token set
+  - Set the success equal to the API's success message
+  - Set the successModal to true
+
+  catch block:
+  - Set the error equal to the API's error message
+  - Set the errorModal to true
   */
-  handleSubmit = () => {
-    this.props.navigation.navigate('authStack');    
+  handleSubmit = async (email, password) => {
+
+    try {
+
+      // API Domain name
+      const API_URL = 'https://radiant-dusk-41662.herokuapp.com';
+
+      // Awaiting the response from the API endpoint
+      const response = await axios.post(`${API_URL}/api/users/login`, {
+          "email": email, //this.state.email
+          "password": password // this.state.password
+      });
+  
+      
+      // Destructuring the state and storing them in variables
+      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      // The data object is destructured from the response object
+      const {data} = response;
+      console.log(data.token)
+
+      // Store the token in AsyncStorage
+      try {
+        // setItem(key, data)
+        await AsyncStorage.setItem('userToken',data.token);
+      }
+
+      // When the token can't be saved
+      catch(error){
+        Alert.alert(error.message)
+      }
+
+      
+      /* 
+      success state is set to the data message
+      successModal is set to the opposite value of the current state
+      */
+      this.setState({
+        successModal: !this.state.successModal,
+        success: data.message
+      })
   }
+
+  catch(error) {        
+
+      // Destructuring the state and storing them in variables
+      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      // The data object is destrctured from the error response object
+      const {data} = error.response;
+      
+      // Error message from the API
+      console.log(data.message);
+
+      
+      /* 
+      error state is set to the data message
+      errorModal is set to the opposite value of the current state
+      */
+      this.setState({
+        error: data.message,
+        errorModal: !this.state.errorModal
+      })
+
+      // Return to stop the process (This might be handled by axios, but not sure)
+      return false;
+  }
+}
 
   /* 
   handleChange:
@@ -76,7 +164,8 @@ export default class LoginScreen extends Component {
 
     // Destructuring the state and storing them in variables
     // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-    const {email, password} = this.state;
+    // Destructuring the state so they can be access via variables
+    const {email, password, errorModal, successModal, error, success} = this.state;
   
     return (
       
@@ -101,12 +190,40 @@ export default class LoginScreen extends Component {
           - Renders a string of text, its the equivalent of a p tag in web development
           - For more information about this component visit https://facebook.github.io/react-native/docs/text 
         
-          CustomButton and CustomInput
-          - Check the components for more information
+          MaterialDialog:
+          - Custom dialog component
+          - This could be replaced by the Alert.alert() but the material dialog is more cleaner and easier to read as opposed to the 
+          - For more information about this component visit https://github.com/hectahertz/react-native-material-dialog
+
+          CustomInput and CustomButton
+          - Refer to the indvidual components for a full breakdown
         */
          
         <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>
           <KeyboardAvoidingView behavior="padding">    
+
+            {/* Success dialog */}
+            <MaterialDialog
+              title="Success"
+              visible={successModal}
+              onOk={() => this.props.navigation.navigate('authStack') }
+              onCancel={() => this.props.navigation.navigate('authStack')}>
+              <Text style={ModalBody}>
+                {success}
+              </Text>
+            </MaterialDialog>
+
+            {/* Error dialog */}
+            <MaterialDialog
+              title="Error"
+              visible={errorModal}
+              onOk={() => this.setState({ errorModal: !errorModal})}
+              onCancel={() => this.setState({ errorModal: !errorModal})}>
+              <Text style={ModalBody}>
+                {error}
+              </Text>
+            </MaterialDialog>
+
 
             <View style={Section}>
               <Text style={MainTitle}>Welcome back</Text>
@@ -119,7 +236,7 @@ export default class LoginScreen extends Component {
                 placeholder="Enter your email address"
                 value={email}
                 onChange = {(value) => this.handleChange('email', value)}
-                secureTextEntry={false}
+                isSecure={false}
                 style={[Outline, OutlineColour, OutlineWidth]}
                 Ismultiline={true}
                 keyboardType="email-address"
@@ -132,7 +249,7 @@ export default class LoginScreen extends Component {
                 placeholder="Enter your password"
                 value={password}
                 onChange = {(value) => this.handleChange('password', value)}
-                secureTextEntry={true}
+                isSecure={true}
                 style={[Outline, OutlineColour, OutlineWidth]}
                 Ismultiline={true}
               />    
@@ -145,7 +262,7 @@ export default class LoginScreen extends Component {
                 compact={true} 
                 colour="#0277bd" 
                 styling={Buttons} 
-                onClick={this.handleSubmit} 
+                onClick={() => this.handleSubmit(email, password)} 
                 label="Login"
                 disabled={!email || !password}
               />       

@@ -1,5 +1,7 @@
 // React dependencies
 import React, {Component} from 'react';
+import {AsyncStorage, ActivityIndicator, View} from 'react-native';
+import axios from 'axios'
 
 // Custom React components
 import EditProfile from '../../Components/Forms/Edit-User/Edit-Profile';
@@ -10,12 +12,62 @@ export default class EditProfileScreen extends Component {
 
   state = {
     step: 1,
-    name: 'Alex James Machin',
-    email: 'alexmachin1997@gmail.com',
-    phoneNumber: '07713758383',
-    allergies: ["Wheat", "Peanuts", "Nuts"]
+    name: '',
+    email: '',
+    phoneNumber: null,
+    allergies: null,
+
+    errorModal: false,
+    error: ''
   }
+
+  componentDidMount() {
+    this.getMyData();
+  }
+
   
+  getMyData = async () => {
+   
+    // Search localstorage for a key named
+    const userData = await AsyncStorage.getItem('userData');
+
+    /* 
+    Parsing data into an object:
+    
+    - When the data is fetched from storage it's not an object isntead its this:
+    {"name":"Alex Machin","email":"alexmachin1997@gmail.com","allergies":[]}
+
+    - To parse the data JSON.parse() was used to convert the data into a raw object like this:
+      Object
+        allergies: []
+        email: "alexmachin1997@gmail.com"
+        name: "Alex Machin"
+      __proto__: Object
+
+      - After parsing the data it is then set to the state s othe component can access it  
+
+      for more information about JSON.parse visit https://www.w3schools.com/js/js_json_parse.asp 
+      */
+    
+      console.log("Parsed data from AsyncStorage")
+      const  data = JSON.parse(userData);
+      console.log(data);
+
+      this.setState({
+        name: data.name,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        allergies: data.allergies,      
+      })
+
+      //Logging the values to check they are being fetched and set to the state correctly/
+      console.log("Local data from AsyncStorage which is avaliable in the internal state");
+      console.log("Your name is " + this.state.name);
+      console.log("Your email is " + this.state.email);
+      console.log("Your contact number is " + this.state.phoneNumber);
+      console.log("Your current allergies are " + this.state.allergies);
+  }
+   
   /*
   goForward:
   - Destructing step number
@@ -76,6 +128,16 @@ export default class EditProfileScreen extends Component {
     */
     const {step, name, email, phoneNumber, allergies} = this.state;
     const values = {name, email, phoneNumber, allergies};
+
+
+    if(!name, !email, !phoneNumber, !allergies) {
+      return (
+        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size="large" color="#0000ff"/>
+       </View>
+      )       
+    }
+
 
     switch(step) {
       

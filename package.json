@@ -8,6 +8,7 @@
     "devtools": "react-devtools"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "expo-barcode-scanner": "^4.0.0",
     "expo-constants": "^4.0.0",
     "expo-permissions": "^4.0.0",
@@ -18,7 +19,7 @@
     "react-native-paper": "^2.13.0",
     "react-native-typography": "^1.4.0",
     "react-native-unimodules": "^0.2.0",
-    "react-native-vector-icons": "^6.3.0",
+    "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.3.2",
     "react-navigation-material-bottom-tabs": "^1.0.0"
   },

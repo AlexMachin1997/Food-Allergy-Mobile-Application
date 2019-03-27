@@ -17,23 +17,23 @@ import {spacing} from '../../../styles/spacing-utils';
 import {border, radius, width} from '../../../styles/border';
 import styles from '../styles';
 
-// Headings 
+// Heading styles
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3]
 
 
-// Sections
+// Section styles
 const Section = [spacing.smallBottom, spacing.smallTop]
 
-// Labels
+// Label styles
 const FormLabel = [fonts.title3]
 
-// Inputs 
+// Input styles
 const Outline = radius.small;
 const OutlineColour = border.black;
 const OutlineWidth = width.small;
 
-// Buttons
+// Button styles
 const Button = [buttons.large, styles.RegisterButtons];
 
 export default class EditProfile extends Component {
@@ -50,6 +50,8 @@ export default class EditProfile extends Component {
 
   render() {
 
+    // Destructuring the state and storing them in variables
+    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
     const {values, handleChange} = this.props;
     const {name,email, phoneNumber} = values; 
      
@@ -120,7 +122,7 @@ export default class EditProfile extends Component {
                     <Text style={FormLabel}>Contact number</Text>
                     <CustomInput 
                         placeholder="Enter your contact number"
-                        value={phoneNumber}
+                        value={phoneNumber ? String(phoneNumber) : null} // Fetched as a number, displayed as a string value as TextInput only accepts strings                    
                         onChange = {(value) => handleChange('phoneNumber', value)}
                         isSecure={false}
                         style={[Outline, OutlineColour, OutlineWidth]}

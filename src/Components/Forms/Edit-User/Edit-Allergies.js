@@ -4,11 +4,22 @@ import {Button} from 'react-native-paper'
 
 export default class EditAllergies extends Component {
 
+   /* 
+   goForward:
+   - Increments the step number
+   - Renders the next screen
+   */
   goForward = e => {
     e.preventDefault();
     this.props.forward();
   };
 
+  
+   /* 
+   goBack:
+   - Decrement the step number
+   - Renders the next screen
+   */
   goBack = e => {
     e.preventDefault();
     this.props.back();

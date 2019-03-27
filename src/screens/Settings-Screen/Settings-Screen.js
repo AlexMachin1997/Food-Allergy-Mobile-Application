@@ -6,6 +6,7 @@ import { MaterialDialog } from 'react-native-material-dialog';
 // Custom React components 
 import CustomButton from '../../Components/UI/Button';
 
+import axios from 'axios';
 
 /* 
 Utility classes:
@@ -25,19 +26,24 @@ const ActionTitle = [fonts.title3]
 const ActionBody = [fonts.callout];
 const ActionButton = [buttons.large];
 
-
 // Divider
 const DividerStyling = {height:1, marginTop:10};
 
 //Modal 
-const ModalBody = [fonts.body]
+const ModalBody = [fonts.body];
 
 export default class SettingsScreen extends Component {
 
   state = {
     accountDeletionModal: false,
     dataDeletionModal: false,
-    logoutModal: false
+    logoutModal: false,
+
+    errorModal: false,
+    successModal: false,
+
+    error: "",
+    success: "",
   }
 
   // Setting the screens title
@@ -46,23 +52,70 @@ export default class SettingsScreen extends Component {
   };
 
   deleteAccount = async () => {
-    this.setState({accountDeletionModal: !this.state.accountDeletionModal});
-    this.props.navigation.navigate('guestStack');
+
+    try {
+
+      this.setState({ accountDeletionModal: !this.state.accountDeletionModal })
+
+        // Authorization token
+        const token = await AsyncStorage.getItem('userToken'); // Wait for the promise to be resolved before
+        const API_URL = 'https://radiant-dusk-41662.herokuapp.com';
+
+        // Awaiting the response from the API endpoint and set the header to have an authorization token
+        const response = await axios.delete(`${API_URL}/api/users`,{
+            headers: {
+              "Authorization": token
+            }
+        });
+
+        const {data} = response;
+        console.log(data.message);
+        
+        this.setState({
+          success: data.message,
+          successModal: !this.state.successModal
+        })
+    
+      }
+
+    catch(error) {
+        const {data} = error.response; 
+        //console.log(data.message);
+
+        this.setState({
+          error: data,
+          errorModal: !this.state.errorModal
+        });
+
+        return false;
+    }
   }
 
   logout = async () => {
-    this.setState({logoutModal: !this.state.logoutModal});
-    this.props.navigation.navigate('guestStack');
+    this.setState({logoutModal: !this.state.logoutModal}); // Hide the modal again
+    await AsyncStorage.removeItem('userToken'); // Remove the data referenced in userToken, this is where the JWT token is stored
+    this.props.navigation.navigate('guestStack'); // After logging out go to the guestStack
   }
 
   deleteStorage = async () => {
-    this.setState({dataDeletionModal: !this.state.dataDeletionModal});
+    this.setState({dataDeletionModal: !this.state.dataDeletionModal}); // Hide modal again
+    //await AsyncStorage.removeItem('shoppingListItems'); //Remove the data referenced in shoppingListItems. This won't remove the login token.
     this.props.navigation.navigate('guestStack');
   }
 
-  render() {
+  goToRegister() {
+    this.props.navigation.navigate('guestStack'); // After deleting an account go to the guestStack
+    AsyncStorage.removeItem('userToken')
+    this.setState({ successModal: !this.state.successModal })
+  }
 
-    const {logoutModal, dataDeletionModal, accountDeletionModal} = this.state;
+
+
+  render() {
+    
+    // Destructuring the state and storing them in variables
+    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    const {logoutModal, dataDeletionModal, accountDeletionModal, error, errorModal, success, successModal} = this.state;
 
     return (
 
@@ -86,16 +139,30 @@ export default class SettingsScreen extends Component {
       <ScrollView contentContainerStyle={[spacing.ContainerSpacing]}>
         <View>
 
-           <MaterialDialog
-            title="Logout"
-            visible={logoutModal}
-            onOk={this.logout}
-            onCancel={() => this.setState({ logoutModal: !logoutModal })}>
+          {/* Error dialog */}
+          <MaterialDialog
+            title="Error"
+            visible={errorModal}
+            onOk={() => this.setState({errorModal: !errorModal})}
+            onCancel={() => this.setState({ errorModal: !errorModal })}>
             <Text style={ModalBody}>
-              Looks like you want to logout of your account. Are you sure you want to continue?
+              {error.error ? error.error : "Unauthorized, please logout"}
             </Text>
           </MaterialDialog>
 
+          {/* Success dialog */}
+          <MaterialDialog
+            title="Success"
+            visible={successModal}
+            onOk={() => this.goToRegister()}
+            onCancel={() => this.setState({ successModal: !successModal })}>
+            <Text style={ModalBody}>
+              {success}
+            </Text>
+          </MaterialDialog>
+
+
+          {/* Account deletion dialog */}
           <MaterialDialog
             title="Account deletion"
             visible={accountDeletionModal}
@@ -106,7 +173,18 @@ export default class SettingsScreen extends Component {
             </Text>
           </MaterialDialog>
 
-          
+          {/* Logout dialog */}
+          <MaterialDialog
+            title="Logout"
+            visible={logoutModal}
+            onOk={this.logout}
+            onCancel={() => this.setState({ logoutModal: !logoutModal })}>
+            <Text style={ModalBody}>
+              Looks like you want to logout of your account. Are you sure you want to continue?
+            </Text>
+          </MaterialDialog>
+
+          {/* Local data deletion dialog */}
           <MaterialDialog
             title="Data deletion"
             visible={dataDeletionModal}

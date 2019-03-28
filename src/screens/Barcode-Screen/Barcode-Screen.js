@@ -29,26 +29,36 @@ export default class BarcodeScreen extends Component {
     allergies: null,
     
     errorModal: false,
-    error: ''
-    
+    error: '',
+    scanned: false
   }
 
  
   componentDidMount() {
+    console.log("The component has mounted and is performing the tasks specified");
     this.requestCameraPermission();
     this.fetchCurrentUserData();
   }
 
   requestCameraPermission = async () => {
+
+  /* 
+  Destructuring status:
+  - Destructuring the state and storing them in variables
+  - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+  - status is destructured from the permissions response
+  */
+  console.log("Requesting permission to use the live camera feed");
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({
       hasCameraPermission: status === 'granted',
     });
+    console.log(`Status ${this.state.hasCameraPermission}`);
   };
 
   fetchCurrentUserData = async () => {
     
-    // Search localstorage for a key named
+    // Search localstorage for a key named userData
     const userData = await AsyncStorage.getItem('userData');
 
     // If the key exists then retrive from localStorage 
@@ -84,14 +94,13 @@ export default class BarcodeScreen extends Component {
 
       //Logging the values to check they are being fetched and set to the state correctly/
       console.log("Local data from AsyncStorage which is avaliable in the internal state");
-      console.log("Your name is " + this.state.name);
+      console.log(`Your name is  ${this.state.name}`);
       console.log("Your email is " + this.state.email);
       console.log("Your contact number is " + this.state.phoneNumber )
       console.log("Your current allergies are " + this.state.allergies);
 
     } else {
 
-      // Navigation 
       try {    
 
           // Get the token from storage, wait for the promise to resolve
@@ -106,14 +115,24 @@ export default class BarcodeScreen extends Component {
                   Authorization: token
               }
           });
-    
-          //Destructure data from the response object
-          const {data} = response.data;
-          
-          // Logs data from API endpoint 
+
+          /* 
+          Destructuring response:
+          - Destructuring the state and storing them in variables
+          - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+          - Destructuring the data from the API  
+          */
+          const {data} = response.data;          
+          console.log("State of the data recieved from the /api/users/me request")
           console.log(data);
-    
-          // Updating the state - the data from the network request 
+
+          /* 
+          Updating the user data states:
+          - Setting the state equal to the response from the data
+          - When the data is fetched from the API endpoint for the first time, this will be used
+          - Any other requests the data will be recieved from AsyncStorage
+          */
+          console.log("Updating the user data states");
           this.setState({
             name: data.name,
             email: data.email,
@@ -121,51 +140,70 @@ export default class BarcodeScreen extends Component {
             allergies: data.allergies
           });
 
-          // Raw data to be stored in AsyncStorage
+          /* 
+          Saving data to AsyncStorage:
+          - AsyncStorage only accepts a string, so the data needs to be stringified
+          - More info here https://facebook.github.io/react-native/docs/asyncstorage
+          */
+          console.log("Saving data to AsyncStorage");
           const userData = {
             name: data.name,
             email: data.email,
             phoneNumber: data.phoneNumber,
             allergies: data.allergies
           }
-
-          // setItem(key, data)
           await AsyncStorage.setItem('userData',JSON.stringify(userData));          
       }
     
       catch(error) {
-    
-        // Error object contains a data object. Within that object is a response e.g. unauthorized
-        const {data} = error.response; 
 
-        // Data from the response
+        /* 
+        Destructuring response:
+        - Destructuring the state and storing them in variables
+        - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+        - Destructure the data object from the error response object so they can be refered to via varialbes
+        - The only error for this endpoint can be unauthorised
+        */
+        const {data} = error.response; 
+        console.log("Error meesage from the /api/users/me GET request")
         console.log(`Response Message: ${data}`);
 
         /* 
+        Updating the error state:
         error state is set to the data message
         errorModal is set to the opposite value of the current state
         */
+        console.log("The error state has been updated");
         this.setState({
           error: data, // Could use data.error but when the users token is invalid no message would be shown (Look for the solution in the error modal)
           errorModal: !this.state.errorModal
         });
+
+        // Return false to prevent the request from continuting. Not sure if axios handles this or not.
+        return false;
       }
     }
   }
 
-
-
   /* 
-  _handleBarCodeRead:
+  handleBarCodeRead:
   - Make API call      
   */
-  _handleBarCodeRead = ({data}) => {
+  handleBarCodeRead = ({data}) => {
+    
+    this.setState({scanned: true});
+
     Alert.alert(
       'Scan successful!',
-      JSON.stringify(data)
-    );
-
-
+      JSON.stringify(data),
+      [
+        {
+          text: 'Continue',
+          onPress: () => this.setState({scanned: false}),
+          style: 'cancel'
+        },
+      ],
+    );    
 
     // Axios call:
     // Insert barcode string into the request
@@ -175,19 +213,39 @@ export default class BarcodeScreen extends Component {
     // If there are no tell them the item is fine for consumption
   };
 
-
   render() {
 
-    const { hasCameraPermission, error, errorModal} = this.state;
+    const { hasCameraPermission, error, errorModal, scanned} = this.state;
 
     if (hasCameraPermission === null) {
       return <Text>Requesting for camera permission</Text>;
     }
+
     if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     }
 
     return (
+
+      /* 
+        Component overviews with resources:
+
+        View:
+        - Is the wrapper, it's the equivalent of a div tag in web development the only difference being React-Natives is more messy
+        - For more information about this component visit https://facebook.github.io/react-native/docs/view
+                  
+        MaterialDialog:
+        - Custom dialog component
+        - This could be replaced by the Alert.alert() but the material dialog is more cleaner and easier to read as opposed to the 
+        - For more information about this component visit https://github.com/hectahertz/react-native-material-dialog
+    
+        BarcodeScanner:
+        - Component from the expo lib, it provides barcode functionality (Don't reinvent the wheel, particuallry for a project like this)
+        - Accepts a number of props, the only props used are onBarcodeScanned and style
+          - onBarcodeScanned accepts a function
+          - style accepts stylesheet styling
+      */
+
       <View style={Styles.container}>
        
         {/* Error dialog */}
@@ -197,13 +255,16 @@ export default class BarcodeScreen extends Component {
           onOk={() => this.setState({errorModal: !errorModal})}
           onCancel={() => this.setState({ errorModal: !errorModal })}>
           <Text style={ModalBody}>
+
+            {/* error.error is the error data from the NodeJS API, if true use the message provided by the API false the user is unauthorized */}
             {error.error ? error.error : "Unauthorized access, please logout"}
+
           </Text>
         </MaterialDialog>
 
-       <BarCodeScanner
-        onBarCodeScanned={this._handleBarCodeRead}
-        style={StyleSheet.absoluteFill}
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : this.handleBarCodeRead}
+          style={StyleSheet.absoluteFill}
         />
       
       </View>

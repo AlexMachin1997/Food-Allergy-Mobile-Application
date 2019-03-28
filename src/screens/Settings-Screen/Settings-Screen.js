@@ -113,8 +113,12 @@ export default class SettingsScreen extends Component {
 
   render() {
     
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+     /* 
+      Destructuring response:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+      - Destructuring the state to access them via variables
+    */
     const {logoutModal, dataDeletionModal, accountDeletionModal, error, errorModal, success, successModal} = this.state;
 
     return (

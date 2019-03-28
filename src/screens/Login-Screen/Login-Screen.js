@@ -47,7 +47,6 @@ import axios from 'axios';
 
 export default class LoginScreen extends Component {
 
-  // Login components own internal state
   state = {
     email: "",
     Password: "",

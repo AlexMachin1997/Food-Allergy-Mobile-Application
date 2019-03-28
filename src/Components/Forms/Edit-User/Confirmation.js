@@ -34,8 +34,8 @@ export default class ConfirmationScreen extends Component {
   // Components internal state 
   state = {
     isUpdateModalVisible: false,
-    errorModal: false,
-    successModal: false,
+    isErrorModalVisible: false,
+    isSuccessModalVisible: false,
     error: "",
     success: ""
   }
@@ -61,17 +61,18 @@ export default class ConfirmationScreen extends Component {
   - Get the token
   - Send a request to the endpoint with the authorization token set
   - Set the success equal to the API's success message
-  - Set the successModal to true
+  - Set the isSuccessModalVisible to true
 
   catch block:
   - Set the error equal to the API's error message
-  - Set the errorModal to true
+  - Set the isErrorModalVisible to true
   */
   updateData = async (name, email, phoneNumber, allergies) => {
      
     try {
       
       // Hide the condifrmation modal 
+      console.log("Update modal is now hidden");
       this.setState({ isUpdateModalVisible: !this.state.isUpdateModalVisible })
 
       // Get the token from storage, wait for the promise to resolve
@@ -95,78 +96,94 @@ export default class ConfirmationScreen extends Component {
           }
       });
 
-      // Destructuring the state and storing them in variables
-      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-      // Destructure the data object from the response object so they can be refered to via varialbes
+      /*
+      Destructuring response:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      - Destructuring the data object from the error response. data contains the data fr
+      */
       const {data} = response;
 
-      // Log the data object
+      // Logs the data message from the response 
+      console.log("State of data sent to /api/users PUT request");
       console.log(data);
     
       /* 
-      success state is set to the data message
-      successModal is set to the opposite value of the current state
+      Updating the state:
+      - success state is set to the data message
+      - isSuccessModalVisible is set to the opposite value of the current state
       */
+      console.log("The success state has been updated")
       this.setState({
         success: data.message,
-        successModal: !this.state.successModal
+        isSuccessModalVisible: !this.state.isSuccessModalVisible
       });
 
-      // Update AsyncStorage with the new values from the update form props
+      /* 
+      Saving data to AsyncStorage:
+      - AsyncStorage only accepts a string, so the data needs to be stringified
+      - More info here https://facebook.github.io/react-native/docs/asyncstorage
+      */
       const userData = {
         name: data.data.name,
         email: data.data.email,
         phoneNumber: data.data.phone,
         allergies: data.data.allergies
       }
-
-      console.log(userData);
+      console.log("The users data has been saved to AsyncStorage");
       await AsyncStorage.setItem('userData',JSON.stringify(userData));
-
     }
     
     catch(error) {
 
-      // Destructuring the state and storing them in variables
-      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-      // Destructure the data object from the error response object so they can be refered to via varialbes
+      /* 
+      Destructuring response:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+      - Destructure the data object from the error response object so they can be refered to via varialbes
+      */
       const {data} = error.response; 
+      console.log("Error meesage from the /api/users PUT request")
       console.log(data)
       
       /* 
-      error state is set to the data message
-      errorModal is set to the opposite value of the current state
+      Updating the error state:
+      - error state is set to the data message
+      - isErrorModalVisible is set to the opposite value of the current state
       */
+      console.log("The error state has been updated");
       this.setState({
         error: data, // Could use data.error but when the users token is invalid no message would be shown (Look for the solution in the error modal)
-        errorModal: !this.state.errorModal
+        isErrorModalVisible: !this.state.isErrorModalVisible
       });
 
-      // Return false to prevent the request from continuting
+      // Return false to prevent the request from continuting. Not sure if axios handles this or not.
       return false;
     }
   }
 
   /* 
-  goToMainScreen:
+  goToSearchScreens:
   - Call the method goToSearch method which passed down via props
-  - Set the successModal to false
+  - Set the isSuccessModalVisible to false
   */
-  goToMainScreen = () => {
+  goToSearchScreens = () => {
+    console.log("Going to the search stack");
     this.props.goToSearch();
-    this.setState({ successModal: !this.state.successModal });
+    this.setState({ isSuccessModalVisible: !this.state.isSuccessModalVisible });
   }
 
   render() {
 
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-   
-    // Destructure the values from the values object which is passed down via the props, now then can be refered to via variables 
+    /*
+    Destructuring response:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    - Destructure the values from the values object which is passed down via the props so they can accessed via variables 
+    - Destructuring the state to also access them via variables
+    */
     const {values: { name, email,phoneNumber, allergies }} = this.props;
-
-    // Destructure the state so they can be refered to via varialbes
-    const {isUpdateModalVisible, errorModal, successModal , error , success} = this.state;
+    const {isUpdateModalVisible, isErrorModalVisible, isSuccessModalVisible , error , success} = this.state;
 
     return (
 
@@ -195,20 +212,23 @@ export default class ConfirmationScreen extends Component {
         {/* Error dialog */}
         <MaterialDialog
           title="Error"
-          visible={errorModal}
-          onOk={() => this.setState({errorModal: !errorModal})}
-          onCancel={() => this.setState({ errorModal: !errorModal })}>
+          visible={isErrorModalVisible}
+          onOk={() => this.setState({isErrorModalVisible: !isErrorModalVisible})}
+          onCancel={() => this.setState({ isErrorModalVisible: !isErrorModalVisible })}>
           <Text style={ModalBody}>
-            {error.error ? error.error : "Unauthorized access, please logout"}
+            
+            {/* error.error is the error data from the NodeJS API, if true use the message provided by the API false the user is unauthorized */}
+            {error.error ? error.error : "Unauthorized access, please logout"} 
+          
           </Text>
         </MaterialDialog>
 
         {/* Success dialog */}
         <MaterialDialog
           title="Success"
-          visible={successModal}
-          onOk={() => this.goToMainScreen()}
-          onCancel={() => this.setState({ successModal: !successModal })}>
+          visible={isSuccessModalVisible}
+          onOk={() => this.goToSearchScreens()}
+          onCancel={() => this.setState({ isSuccessModalVisible: !isSuccessModalVisible })}>
           <Text style={ModalBody}>
             {success}
           </Text>

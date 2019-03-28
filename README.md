@@ -24,7 +24,7 @@ As of the current version of the mobile application, it is currently capable of 
 * Authenticating users
 * Search for products via barcode search and live search
 * Save items to a shopping list
-* Customise the application settings like accessability, make your experince unique and comfortable for you.
+* Customise the application settings like accessability, make your experince unique and comfortable for you (Not going to be added anytime soon)
 * Update your profile details
 * Logout of your account
 * Delete your account
@@ -35,15 +35,18 @@ As of the current version of the mobile application, it is currently capable of 
 * [React](https://reactjs.org/)
 * [Jest](https://jestjs.io/)
 * [Metro bundler](https://github.com/facebook/metro)
-* [React-test-renderer](https://reactjs.org/docs/test-renderer.html)
 * [Expo-cli](https://docs.expo.io/versions/latest/workflow/expo-cli/)
 * [Babel](https://babeljs.io/)
 * [Yarn](https://yarnpkg.com/en/)
-* [Redux](https://redux.js.org/)
-* [Redux-persist](https://github.com/rt2zz/redux-persist)
 * [Axios](https://github.com/axios/axios)
 * [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage)
 * [React Navigation](https://reactnavigation.org/)
+* [Expo-barcode-scanner](https://github.com/expo/expo/tree/master/packages/expo-barcode-scanner)
+* [Expo-permissions](https://docs.expo.io/versions/latest/sdk/permissions/)
+* [React-Native-material-dialog](https://github.com/hectahertz/react-native-material-dialog)
+* [React-Native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+* [React-navigation](https://reactnavigation.org/)
+* [React-navigation-material-bottom-tabs](https://github.com/react-navigation/react-navigation-material-bottom-tabs)
 
 **NOTE**: Dependencies may be swapped out occasionally as there maybe better alternatives. For example Axio might be swapped out for the native fetch api, but in the current build it will be used to perform HTTP requests to API like [this example](https://github.com/AlexMachin1997/RESTful-API-Interface)
 
@@ -106,13 +109,6 @@ As of the current version of the mobile application, it is currently capable of 
     * Issue `npm install` to install all dependencies with NPM
     * Issue 'yarn install' to install all dependencies with yarn (Requires yarn to be configured)
 
-* React-Navigation configuration and setup (**IMPORTANT**):
-    * Run `react-native link react-native-gesture-handler`
-    * Open the android settings located at 'android/settings.gradle'
-    * Check the following code is exactly like this example: 
-    `project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')`
-    * Only reason this is required is due to a [react-native cli issue](https://github.com/react-navigation/react-navigation/issues/5665)
-
 * Development enviroment variables setup:
     * Create keys_dev.js within the keys directory
     * After creating the file files add the following code sample: `` module.exports = {} ``
@@ -124,12 +120,6 @@ As of the current version of the mobile application, it is currently capable of 
     * If you have the emulator running it will run on that device
     * If you have a physical device attached it will run on that device
     * **Note**: Only one device can run at once
-
-
-
-## Testing
-Comming soon in a future update
-
 
 ## Deployment notes
 To use the API, you can deploy it to various playstores a platforms like:

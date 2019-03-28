@@ -50,8 +50,11 @@ export default class EditProfile extends Component {
 
   render() {
 
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    /* 
+    Destructuring 
+    Destructuring the state and storing them in variables
+    More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    */
     const {values, handleChange} = this.props;
     const {name,email, phoneNumber} = values; 
      
@@ -78,9 +81,8 @@ export default class EditProfile extends Component {
           - Renders a string of text, its the equivalent of a p tag in web development
           - For more information about this component visit https://facebook.github.io/react-native/docs/text 
 
-          TextInput:
-          - Is a text input field with numerous props to use, its the equivalent of input tag in web development 
-          - For additional information about the props allowed visist https://facebook.github.io/react-native/docs/textinput
+          CustomInput and CustomButton:
+          - For information about each componnent visit them indvidually
         */
 
         <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>

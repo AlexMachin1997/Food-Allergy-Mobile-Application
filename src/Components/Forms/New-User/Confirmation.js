@@ -26,7 +26,6 @@ const ModalBody = [fonts.body]
 
 export default class ConfirmationScreen extends Component {
 
-  // Components internal state 
   state = {
     isRegisterModalVisible: false,
     errorModal: false,
@@ -78,48 +77,57 @@ export default class ConfirmationScreen extends Component {
           "allergies": allergies
       });
 
-      // Destructuring the state and storing them in variables
-      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-      // Response contains data, its destrcuted from the response object
+      /*
+      Destructuring response:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      - Destructuring the data object from the response. Data is the response from axios, to access the custom data use data.data, to acces the API message data.message
+      */
       const {data} = response;
       
-      // Data from the response
-      // The first data object is the response from axios
-      // The second data object is the data provided by the API e.g. name, email, password etc
-      console.log(data.data);
+      // Logs the data message from the response 
+      console.log("State of data sent to the  /api/users PUT request");
+      console.log(data); // log the actual data use data.data (The custom is nested within the axios data)
 
       /* 
-      success state is set to the data message
-      successModal is set to the opposite value of the current state
+      Updating the success state:
+      - success state is set to the data message
+      - successModal is set to the opposite value of the current state
       */
+      console.log("The success state has been updated")
       this.setState({
         success: data.message,
         successModal: !this.state.successModal
       });
     }
+
     catch(error) {        
+  
+    /*
+    Destructuring response:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    - Destructuring the data object from the error response. data contains the data fr
+    */
+    const {data} = error.response;
 
+    // Log the data message and data returned
+    console.log("Error message from /api/users POST request")
+    console.log(data.message);
 
-      // Destructuring the state and storing them in variables
-      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment         
-      // Response contains data, its destrcuted from the error response object
-      const {data} = error.response;
+    /* 
+    Updating the error state:
+    - error state is set to the data message
+    - errorModal is set to the opposite value of the current state, for example its false by default this would turn it to true
+    */ 
+    console.log("The error state has been updated")
+    this.setState({
+      error: data.message,
+      errorModal: !this.state.errorModal
+    });
 
-      // Log the data message and data returned
-      console.log(data.message);
-      console.log(data);
-
-      /* 
-      error state is set to the data message
-      errorModal is set to the opposite value of the current state
-      */
-      this.setState({
-        error: data.message,
-        errorModal: !this.state.errorModal
-      });
-
-      // Return false to prevent the request from continuting
-      return false;
+    // Return false to prevent the request from continuting
+    return false;
     }
   }
 
@@ -129,6 +137,7 @@ export default class ConfirmationScreen extends Component {
   - Set the successModal to false
   */
   goToLoginScreen = () => {
+    console.log("Going to the login screen");
     this.props.goToLogin();
     this.setState({ successModal: !this.state.successModal })
   }
@@ -136,13 +145,14 @@ export default class ConfirmationScreen extends Component {
 
   render() {
 
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-
-    // Destructure the values from the values object which is passed down via the props, now then can be refered to via variables 
+    /*
+    Destructuring response:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    - Destructure the values from the values object which is passed down via the props, now then can be refered to via variables 
+    - Destructure the state so they can be refered to via varialbes
+    */
     const {values: { name, email, password, allergies }} = this.props;
-
-    // Destructure the state so they can be refered to via varialbes
     const {isRegisterModalVisible, success, successModal, error, errorModal} = this.state;
 
     return (

@@ -54,11 +54,10 @@ export default class ProfileSetup extends Component {
 
      // Destructuring the state and storing them in variables
     // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-
     // Desturcutre the props so they can be refered to via props
-    const {values, handleChange} = this.props;
-
     // Destrucutre the values object, the indvidual values within the object can be refered
+    
+    const {values, handleChange} = this.props;
     const {name,email, password} = values; 
      
 
@@ -83,6 +82,9 @@ export default class ProfileSetup extends Component {
           Text:
           - Renders a string of text, its the equivalent of a p tag in web development
           - For more information about this component visit https://facebook.github.io/react-native/docs/text 
+
+          CustomInput
+          - Visit the component for more information
         */
 
         <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>

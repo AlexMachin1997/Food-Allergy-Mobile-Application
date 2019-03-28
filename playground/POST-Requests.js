@@ -35,8 +35,6 @@ login = async () => {
         // Data is the payload attached to the response from the request
         const {data} = error.response;
 
-        // Data from the response
-
         // Success message from the API
         console.log(data.message);
     }

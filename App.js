@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 
 // The exported app container which will decide which route or routes are viewed
-import AppContainer from './src/routing/index';
+import AppContainer from './src/routing/Index';
 
 /*
 React-Native-Paper:

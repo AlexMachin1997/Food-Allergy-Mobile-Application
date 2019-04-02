@@ -39,6 +39,16 @@ export default class HelpScreen extends Component {
     Section5: false  
   }
 
+  componentDidMount() {
+    console.log("The Help Screen Has Mounted");
+  }
+
+
+  // Sets the title within the header
+  static navigationOptions = {
+    title: 'Questions and answers',
+  };
+
   /* 
   Toggle function:
   - Takes 1 param, name
@@ -50,11 +60,6 @@ export default class HelpScreen extends Component {
       [name]: !this.state[name] 
     });
   }  
-
-  // Sets the title within the header
-  static navigationOptions = {
-    title: 'Questions and answers',
-  };
   
   render() {
 

@@ -1,10 +1,15 @@
 
 import React, {Component} from 'react';
 import {Text, View, Alert, StyleSheet, AsyncStorage} from 'react-native';
+
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
+
 import Styles from './Styles';
+
 import { MaterialDialog } from 'react-native-material-dialog';
+
+// HTTP A
 import axios from 'axios';
 
 
@@ -35,7 +40,7 @@ export default class BarcodeScreen extends Component {
 
  
   componentDidMount() {
-    console.log("The component has mounted and is performing the tasks specified");
+    console.log("The Barcode Screen Has Mounted");
     this.requestCameraPermission();
     this.fetchCurrentUserData();
   }
@@ -53,7 +58,7 @@ export default class BarcodeScreen extends Component {
     this.setState({
       hasCameraPermission: status === 'granted',
     });
-    console.log(`Status ${this.state.hasCameraPermission}`);
+    console.log(`Status: ${this.state.hasCameraPermission}`);
   };
 
   fetchCurrentUserData = async () => {
@@ -94,7 +99,7 @@ export default class BarcodeScreen extends Component {
 
       //Logging the values to check they are being fetched and set to the state correctly/
       console.log("Local data from AsyncStorage which is avaliable in the internal state");
-      console.log(`Your name is  ${this.state.name}`);
+      console.log("Your name is " + this.state.name);
       console.log("Your email is " + this.state.email);
       console.log("Your contact number is " + this.state.phoneNumber )
       console.log("Your current allergies are " + this.state.allergies);

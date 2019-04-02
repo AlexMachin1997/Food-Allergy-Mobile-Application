@@ -37,11 +37,17 @@ const Heading = [fonts.title1]
 
 export default class HomeScreen extends Component { 
 
+
+  componentDidMount() {
+    console.log("The Home Screen Has Mounted");
+  }
+
   // Sets the title within the header and disables the header properties whilst on this screen
   static navigationOptions = {
     headerMode: 'none',
     header: null
   }
+
 
   render() {
     return (

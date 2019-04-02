@@ -7,24 +7,25 @@ Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../../styles/buttons-utils';
 import {flex} from '../../styles/flex-utils';
-import {spacing} from '../../styles/spacing-utils';
 
 //Shared styling for all forms
 import styles from '../Forms/styles';
 
 // Sections 
-const ConfirmationButtonsSection = [flex.row, flex.alignItemsCenter, flex.justifyContentCenter,spacing.mediumLeft];
-const ConfirmationButtonSection = [flex.flex];
+const ConfirmationButtonsSection = [flex.justifyContentSpaceAround, flex.row];
 
-const ConfirmationButtons = [buttons.large, styles.ConfirmButtons];
+const ConfirmationButtons = {
+    padding: 10,
+    margin: 5,
+    width: 120
+};
 
 
 export default ConfirmationAction = (props) => {
     return (
         <View style={ConfirmationButtonsSection}>           
-            <View style={ConfirmationButtonSection}>
+            <View>
                 <CustomButton 
                     text="Go back" 
                     mode="contained" 
@@ -37,7 +38,7 @@ export default ConfirmationAction = (props) => {
                 />
             </View>     
 
-            <View style={ConfirmationButtonSection}>
+            <View>
                 <CustomButton 
                     text="Send" 
                     mode="contained" 
@@ -48,7 +49,7 @@ export default ConfirmationAction = (props) => {
                     label="Submit"
                     disabled={false}
                 />
+            </View>
         </View>
-      </View>
     )
 }

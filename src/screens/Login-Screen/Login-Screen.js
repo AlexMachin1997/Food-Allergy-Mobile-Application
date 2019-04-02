@@ -58,6 +58,10 @@ export default class LoginScreen extends Component {
     success: ""
   };
 
+  componentDidMount() {
+    console.log("The Login Screen Has Mounted");
+  }
+
   // Sets the title within the header
   static navigationOptions = {
     title: 'Login',

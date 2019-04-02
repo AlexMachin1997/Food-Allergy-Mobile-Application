@@ -1,6 +1,6 @@
 // React dependencies
 import React, { Component } from 'react'
-import {Text, View, ScrollView, KeyboardAvoidingView, StyleSheet} from 'react-native';
+import {Text, View, ScrollView, KeyboardAvoidingView} from 'react-native';
 
 // ReactJS custom components
 import CustomButton from '../../UI/Button';
@@ -40,6 +40,12 @@ const Button = [buttons.large, styles.RegisterButtons];
 
 export default class ProfileSetup extends Component {
 
+    componentDidMount() {
+        console.log("The Profile Setup Componnt Has Mounted");
+        console.log("The avaliable values are:")
+        console.log(this.props.values)
+    }
+
    /* 
    goForward:
    - Increments the step number
@@ -52,15 +58,16 @@ export default class ProfileSetup extends Component {
 
   render() {
 
-     // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-    // Desturcutre the props so they can be refered to via props
-    // Destrucutre the values object, the indvidual values within the object can be refered
-    
+    /* 
+    Destructuring status:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+    - Destructuring the props so they can be refered to via indvidual variables
+    - Destructuring the values so they can be refered to via indvidual variables
+    */
     const {values, handleChange} = this.props;
     const {name,email, password} = values; 
      
-
     return (
        /* 
           Component overviews with resources:
@@ -143,7 +150,7 @@ export default class ProfileSetup extends Component {
                      styling={Button} 
                      colour="#0277bd" 
                      onClick={this.goForward} 
-                     label="Sign up for a free account"
+                     label="Next"
 
                      // Yuck!!!!! dirty validation technique, but it works for now......
                      disabled={!name || !email || password.length < 5}

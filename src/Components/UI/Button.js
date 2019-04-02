@@ -20,6 +20,7 @@ export default CustomButton = (props) => {
           onPress={props.onClick}
           accessibilityLabel={props.label}
           disabled={props.disabled}
+          dark={props.isDark}
         >
         {props.text} 
         </Button>  

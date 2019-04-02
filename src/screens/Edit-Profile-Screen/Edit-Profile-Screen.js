@@ -1,11 +1,10 @@
 // React dependencies
 import React, {Component} from 'react';
 import {AsyncStorage, ActivityIndicator, View} from 'react-native';
-import axios from 'axios'
 
 // Custom React components
 import EditProfile from '../../Components/Forms/Edit-User/Edit-Profile';
-import EditAllergies from '../../Components/Forms/Edit-User/Edit-Allergies';
+import EditAllergies from '../../Components/UI/Allergies';
 import Confirmation from '../../Components/Forms/Edit-User/Confirmation';
 
 export default class EditProfileScreen extends Component {
@@ -15,26 +14,35 @@ export default class EditProfileScreen extends Component {
     name: '',
     email: '',
     phoneNumber: null,
-    allergies: null,
+    allergies: [],
+    avaliableAllergies: [],
 
     errorModal: false,
     error: ''
   }
 
+  // Sets the title within the header
+  static navigationOptions = {
+    title: 'Edit Profile',
+  };
+
+
   componentDidMount() {
+    console.log("The Edit Profile Screen Has Mounted");
+
     this.getMyData();
   }
 
-  
   getMyData = async () => {
    
     // Search localstorage for a key named
     const userData = await AsyncStorage.getItem('userData');
+    const avaliableAllergies = await AsyncStorage.getItem('avaliableAllergies');
 
     /* 
     Parsing data into an object:
     
-    - When the data is fetched from storage it's not an object isntead its this:
+    - When the data is fetched from storage it's not an object isntead its this (FYI Its not a raw object):
     {"name":"Alex Machin","email":"alexmachin1997@gmail.com","allergies":[]}
 
     - To parse the data JSON.parse() was used to convert the data into a raw object like this:
@@ -44,28 +52,37 @@ export default class EditProfileScreen extends Component {
         name: "Alex Machin"
       __proto__: Object
 
-      - After parsing the data it is then set to the state s othe component can access it  
+    - After parsing the data it is then set to the state s othe component can access it  
 
-      for more information about JSON.parse visit https://www.w3schools.com/js/js_json_parse.asp 
-      */
+    for more information about JSON.parse visit https://www.w3schools.com/js/js_json_parse.asp 
+    */
     
-      console.log("Parsed data from AsyncStorage")
-      const  data = JSON.parse(userData);
-      console.log(data);
+    console.log("Parsed data from AsyncStorage");
 
-      this.setState({
-        name: data.name,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        allergies: data.allergies,      
-      })
+    const  data = JSON.parse(userData); //Parses user data
+    const allergyData = JSON.parse(avaliableAllergies) // Parses the avaliableAllergies 
 
-      //Logging the values to check they are being fetched and set to the state correctly/
-      console.log("Local data from AsyncStorage which is avaliable in the internal state");
-      console.log("Your name is " + this.state.name);
-      console.log("Your email is " + this.state.email);
-      console.log("Your contact number is " + this.state.phoneNumber);
-      console.log("Your current allergies are " + this.state.allergies);
+    console.log("Your user data is:")
+    console.log(data);
+
+    console.log("The avaliable allergies are:")
+    console.log(allergyData);
+
+    this.setState({
+      name: data.name,
+      email: data.email,
+      phoneNumber: data.phoneNumber,
+      allergies: data.allergies,  
+      avaliableAllergies: allergyData    
+    })
+
+    //Logging the values to check they are being fetched and set to the state correctly
+    console.log("Local data from AsyncStorage which is avaliable in the internal state");
+    console.log("Your name is " + this.state.name);
+    console.log("Your email is " + this.state.email);
+    console.log("Your contact number is " + this.state.phoneNumber);
+    console.log("Your current allergies are " + this.state.allergies);
+    console.log("The avaliable allergies are " + this.state.avaliableAllergies);
   }
    
   /*
@@ -105,11 +122,6 @@ export default class EditProfileScreen extends Component {
     })
   }
 
-  // Sets the title within the header
-  static navigationOptions = {
-    title: 'Edit Profile',
-  };
-
   /* 
   goToSearch:
   - Goes to the login page
@@ -119,6 +131,48 @@ export default class EditProfileScreen extends Component {
     this.props.navigation.navigate('search');
   }
 
+  /* 
+  addAllergy:
+  - Takes the prevstate of allergies and spreads (copies it)
+  - After copying the state the element clicked which is identified by this.state.avaliableAllergies[id] is added to the users allergies
+  - The element copied into the array is then removed
+  */
+  addAllergy = id => {
+        
+    this.setState(prevState => ({
+      allergies: [
+        ...prevState.allergies,
+        this.state.avaliableAllergies[id]
+      ],
+      avaliableAllergies: [
+        ...prevState.avaliableAllergies.slice(0, id),
+        ...prevState.avaliableAllergies.slice(id + 1)
+      ]
+    }));
+
+  };
+
+  /* 
+  removeAllergy:
+  - Takes the prevstate of avaliableAllergies and spreads (copies it)
+  - After copying the state the element clicked which is identified by this.state.allergies[id] is added to the users allergies
+  - The element copied into the array is then removed
+  */
+  removeAllergy = id => {
+    
+    this.setState(prevState => ({
+      avaliableAllergies: [
+        ...prevState.avaliableAllergies,
+        this.state.allergies[id]
+      ],
+      
+      allergies: [
+        ...prevState.allergies.slice(0, id),
+        ...prevState.allergies.slice(id + 1)
+      ]
+    }));
+  };
+
   render() {
   
     /* 
@@ -126,11 +180,12 @@ export default class EditProfileScreen extends Component {
     - Destructuring the state and storing them in variables
     - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
     */
-    const {step, name, email, phoneNumber, allergies} = this.state;
-    const values = {name, email, phoneNumber, allergies};
+    const {step, name, email, phoneNumber, allergies,avaliableAllergies} = this.state;
+    const values = {name, email, phoneNumber, allergies,avaliableAllergies};
 
-
-    if(!name, !email, !phoneNumber, !allergies) {
+    
+    // If any of the values are empty return a loading spinner
+    if(!name, !email, !phoneNumber, !allergies, !avaliableAllergies) {
       return (
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color="#0000ff"/>
@@ -156,7 +211,9 @@ export default class EditProfileScreen extends Component {
             forward={this.goForward}
             back={this.goBack}
             handleChange={this.handleChange}
-            value={values}
+            values={values}
+            addAllery={this.addAllergy}
+            removeAllergy={this.removeAllergy}
           />
         )
 

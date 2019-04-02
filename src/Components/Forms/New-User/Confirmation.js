@@ -1,13 +1,13 @@
 //React dependencies
 import React, { Component } from 'react'
-import {ScrollView, Text} from 'react-native'
+import {ScrollView, Text, AsyncStorage} from 'react-native'
 import { MaterialDialog } from 'react-native-material-dialog';
 
 // Custom React components
 import ConfirmationMessage from '../../UI/ConfirmationMessage';
 import ConfirmationAction from '../../UI/ConfirmationAction';
 
-
+// Promose based HTTP Requests library 
 import axios from 'axios';
 
 /* 
@@ -19,7 +19,7 @@ import {flex} from '../../../styles/flex-utils';
 import {fonts} from '../../../styles/text-utils';
 
 // Section styles
-const ConfirmationSection = [flex.alignItemsCenter, flex.justifyContentCenter, flex.flex];
+const ConfirmationSection = [flex.justifyContentCenter, flex.flex];
 
 //Modal styles
 const ModalBody = [fonts.body]
@@ -34,6 +34,12 @@ export default class ConfirmationScreen extends Component {
     success: ""
   }
 
+
+  componentDidMount(){
+    console.log("The Registration Confirmation Component Has Mounted");
+    console.log("The avaliable values are:");
+    console.log(this.props.values)
+  }
   /* 
   goBack: 
   - Decrements the parents step state by 1 by referencing the back method passed in via props
@@ -60,7 +66,7 @@ export default class ConfirmationScreen extends Component {
   - Set the error equal to the API's error message
   - Set the errorModal to true
   */
-  addData = async (name, email, password, allergies) => {
+  addData = async (name, email, password, allergies, avaliableAllergies) => {
     try {
 
       // Set the isRegisterModalVisiable to false
@@ -99,6 +105,8 @@ export default class ConfirmationScreen extends Component {
         success: data.message,
         successModal: !this.state.successModal
       });
+
+      await AsyncStorage.setItem('avaliableAllergies', JSON.stringify(avaliableAllergies));
     }
 
     catch(error) {        
@@ -126,7 +134,7 @@ export default class ConfirmationScreen extends Component {
       errorModal: !this.state.errorModal
     });
 
-    // Return false to prevent the request from continuting
+    // Return false to prevent the request from continuting, axios may or may not handle this.
     return false;
     }
   }
@@ -152,7 +160,7 @@ export default class ConfirmationScreen extends Component {
     - Destructure the values from the values object which is passed down via the props, now then can be refered to via variables 
     - Destructure the state so they can be refered to via varialbes
     */
-    const {values: { name, email, password, allergies }} = this.props;
+    const {values: { name, email, password, avaliableAllergies, allergies }} = this.props;
     const {isRegisterModalVisible, success, successModal, error, errorModal} = this.state;
 
     return (
@@ -171,7 +179,7 @@ export default class ConfirmationScreen extends Component {
         - For more information about this component visit https://github.com/hectahertz/react-native-material-dialog
 
         ConfirmationMessage:
-        - It accepts only one prop, text which is a string. Its the message which gets displayed below the icon
+        - It accepts only one prop, text which is a string. It's the message which gets displayed below the icon
         
         ConfirmationAction:
         - It renders the confirmation actions, they are the back button and update button
@@ -205,7 +213,7 @@ export default class ConfirmationScreen extends Component {
         <MaterialDialog
           title="Account creation"
           visible={isRegisterModalVisible}
-          onOk={() => this.addData(name,email, password, allergies)}
+          onOk={() => this.addData(name,email, password, allergies, avaliableAllergies)}
           onCancel={() => this.setState({ isRegisterModalVisible: !this.state.isRegisterModalVisible })}>
           <Text style={ModalBody}>
            You are about to register your account, would you like to continue? 

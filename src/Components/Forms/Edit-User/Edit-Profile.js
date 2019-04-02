@@ -38,6 +38,11 @@ const Button = [buttons.large, styles.RegisterButtons];
 
 export default class EditProfile extends Component {
 
+
+    componentDidMount() {
+        console.log("The Edit Profile Component Has Mounted");
+    }
+
    /* 
    goForward:
    - Increments the step number

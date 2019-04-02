@@ -2,9 +2,12 @@ import { StyleSheet } from 'react-native'
 
 export default styles = StyleSheet.create({
     RegisterButtons: {
-        width: 200
+        width: '100%'
     },
     ConfirmButtons: {
-        width: 130
+        width: '90%'
+    },
+    AlleryNextAndBackButtons: {
+        width: '95%'
     }
 });

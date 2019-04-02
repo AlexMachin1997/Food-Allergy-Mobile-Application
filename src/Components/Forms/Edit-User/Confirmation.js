@@ -23,7 +23,7 @@ import {flex} from '../../../styles/flex-utils';
 import {fonts} from '../../../styles/text-utils';
 
 // Section styles
-const ConfirmationSection = [flex.alignItemsCenter, flex.justifyContentCenter, flex.flex];
+const ConfirmationSection = [flex.justifyContentCenter, flex.flex];
 
 //Modal styles
 const ModalBody = [fonts.body];
@@ -31,13 +31,18 @@ const ModalBody = [fonts.body];
 
 export default class ConfirmationScreen extends Component {
 
-  // Components internal state 
   state = {
     isUpdateModalVisible: false,
     isErrorModalVisible: false,
     isSuccessModalVisible: false,
     error: "",
     success: ""
+  }
+
+  componentDidMount(){
+    console.log("The Edit User Confirmation Has Mounted");
+    console.log("The avaliable values are:");
+    console.log(this.props.values)
   }
 
   /* 
@@ -49,7 +54,6 @@ export default class ConfirmationScreen extends Component {
     e.preventDefault();
     this.props.back();
   };
-
 
   /* 
   UpdateData:
@@ -67,7 +71,7 @@ export default class ConfirmationScreen extends Component {
   - Set the error equal to the API's error message
   - Set the isErrorModalVisible to true
   */
-  updateData = async (name, email, phoneNumber, allergies) => {
+  updateData = async (name, email, phoneNumber, allergies, avaliableAllergies) => {
      
     try {
       
@@ -132,6 +136,7 @@ export default class ConfirmationScreen extends Component {
       }
       console.log("The users data has been saved to AsyncStorage");
       await AsyncStorage.setItem('userData',JSON.stringify(userData));
+      await AsyncStorage.setItem('avaliableAllergies', JSON.stringify(avaliableAllergies));
     }
     
     catch(error) {
@@ -182,7 +187,7 @@ export default class ConfirmationScreen extends Component {
     - Destructure the values from the values object which is passed down via the props so they can accessed via variables 
     - Destructuring the state to also access them via variables
     */
-    const {values: { name, email,phoneNumber, allergies }} = this.props;
+    const {values: { name, email,phoneNumber, allergies, avaliableAllergies}} = this.props;
     const {isUpdateModalVisible, isErrorModalVisible, isSuccessModalVisible , error , success} = this.state;
 
     return (
@@ -238,7 +243,7 @@ export default class ConfirmationScreen extends Component {
         <MaterialDialog
           title="Account update"
           visible={isUpdateModalVisible}
-          onOk={() => this.updateData(name, email,phoneNumber, allergies)}
+          onOk={() => this.updateData(name, email,phoneNumber, allergies, avaliableAllergies)}
           onCancel={() => this.setState({ isUpdateModalVisible: !isUpdateModalVisible })}>
           <Text style={ModalBody}>
             Looks like you want to update your account, would you like to continue?

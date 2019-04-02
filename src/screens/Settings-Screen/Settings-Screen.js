@@ -46,6 +46,10 @@ export default class SettingsScreen extends Component {
     success: "",
   }
 
+  componentDidMount() {
+    console.log("The Setting Screen Has Mounted");
+  }
+
   // Setting the screens title
   static navigationOptions = {
     title: 'Settings',
@@ -55,28 +59,36 @@ export default class SettingsScreen extends Component {
 
     try {
 
+      // Hide the accountDeletionModal
       this.setState({ accountDeletionModal: !this.state.accountDeletionModal })
 
-        // Authorization token
-        const token = await AsyncStorage.getItem('userToken'); // Wait for the promise to be resolved before
-        const API_URL = 'https://radiant-dusk-41662.herokuapp.com';
+      // Authorization token
+      const token = await AsyncStorage.getItem('userToken'); // Wait for the promise to be resolved
+      const API_URL = 'https://radiant-dusk-41662.herokuapp.com';
 
-        // Awaiting the response from the API endpoint and set the header to have an authorization token
-        const response = await axios.delete(`${API_URL}/api/users`,{
-            headers: {
-              "Authorization": token
-            }
-        });
+      // Awaiting the response from the API endpoint and set the header to have an authorization token
+      const response = await axios.delete(`${API_URL}/api/users`,{
+        headers: {
+          "Authorization": token
+        }
+      });
 
-        const {data} = response;
-        console.log(data.message);
+      /* 
+      Destructuring status:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+      - Destructuring the data object from the response
+      */
+      const {data} = response;
+      console.log(data.message);
         
-        this.setState({
-          success: data.message,
-          successModal: !this.state.successModal
-        })
-    
-      }
+      this.setState({
+        success: data.message,
+        successModal: !this.state.successModal
+      })
+
+      console.log("The success state has been updated");
+    }
 
     catch(error) {
         const {data} = error.response; 
@@ -87,28 +99,36 @@ export default class SettingsScreen extends Component {
           errorModal: !this.state.errorModal
         });
 
+        console.log("The error state has been updated");
+
+
         return false;
     }
   }
 
-  logout = async () => {
-    this.setState({logoutModal: !this.state.logoutModal}); // Hide the modal again
-    await AsyncStorage.removeItem('userToken'); // Remove the data referenced in userToken, this is where the JWT token is stored
-    this.props.navigation.navigate('guestStack'); // After logging out go to the guestStack
-  }
-
+  /* 
+  deleteStorage:
+  - Hide the dataDeletionModal
+  - Delete the shoppingListItems (Not avaliable yet)
+  - No need to redirect as the user is only deleting storage
+  */
   deleteStorage = async () => {
     this.setState({dataDeletionModal: !this.state.dataDeletionModal}); // Hide modal again
     //await AsyncStorage.removeItem('shoppingListItems'); //Remove the data referenced in shoppingListItems. This won't remove the login token.
-    this.props.navigation.navigate('guestStack');
   }
 
-  goToRegister() {
+
+  /* 
+  goHome:
+  - Navigate to the guestStack
+  - Remove the users accss token  
+  - Hide the successModal
+  */
+  goHome() {
     this.props.navigation.navigate('guestStack'); // After deleting an account go to the guestStack
     AsyncStorage.removeItem('userToken')
     this.setState({ successModal: !this.state.successModal })
   }
-
 
 
   render() {
@@ -158,7 +178,7 @@ export default class SettingsScreen extends Component {
           <MaterialDialog
             title="Success"
             visible={successModal}
-            onOk={() => this.goToRegister()}
+            onOk={() => this.goHome()}
             onCancel={() => this.setState({ successModal: !successModal })}>
             <Text style={ModalBody}>
               {success}
@@ -181,7 +201,7 @@ export default class SettingsScreen extends Component {
           <MaterialDialog
             title="Logout"
             visible={logoutModal}
-            onOk={this.logout}
+            onOk={() => this.goHome()}
             onCancel={() => this.setState({ logoutModal: !logoutModal })}>
             <Text style={ModalBody}>
               Looks like you want to logout of your account. Are you sure you want to continue?

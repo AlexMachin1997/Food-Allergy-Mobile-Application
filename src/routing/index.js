@@ -12,12 +12,8 @@
 */
 import {createAppContainer, createSwitchNavigator } from 'react-navigation'
 
-import AuthStack from './AuthStack';
+import AuthStack from './authStack';
 import GuestStack from './GuestStack';
-
-
-
-
 import AuthLoading from '../screens/Index-Screen'
 
 const SwitchNavigator = createSwitchNavigator(

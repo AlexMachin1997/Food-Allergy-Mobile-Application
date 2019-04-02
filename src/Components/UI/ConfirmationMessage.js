@@ -9,14 +9,14 @@ Utility classes:
 */
 import {fonts, align} from '../../styles/text-utils';
 import {spacing} from '../../styles/spacing-utils';
-
+import {flex} from '../../styles/flex-utils';
 
 // Component assets
 import Icon from '../../assets/Happy-face.png'
 
 export default ConfirmationMessage = (props) => {
     return (
-        <>
+        <View style={flex.alignItemsCenter}>
             <View>
               <Image source={Icon} style={{width: 300, height: 300}}/>
             </View>
@@ -26,7 +26,7 @@ export default ConfirmationMessage = (props) => {
                   {props.text}
                 </Text>
             </View>
-        </>
+        </View>
     )
 }
 

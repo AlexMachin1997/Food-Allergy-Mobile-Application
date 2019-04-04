@@ -7,6 +7,15 @@ import EditProfile from '../../Components/Forms/Edit-User/Edit-Profile';
 import EditAllergies from '../../Components/UI/Allergies';
 import Confirmation from '../../Components/Forms/Edit-User/Confirmation';
 
+/* 
+Utility classes:
+- To access util classes use the exported variable.
+- Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
+*/
+import {flex} from '../../styles/flex-utils';
+
+
+
 export default class EditProfileScreen extends Component {
 
   state = {
@@ -18,7 +27,8 @@ export default class EditProfileScreen extends Component {
     avaliableAllergies: [],
 
     errorModal: false,
-    error: ''
+    error: '',
+    loading: true
   }
 
   // Sets the title within the header
@@ -29,7 +39,6 @@ export default class EditProfileScreen extends Component {
 
   componentDidMount() {
     console.log("The Edit Profile Screen Has Mounted");
-
     this.getMyData();
   }
 
@@ -73,7 +82,8 @@ export default class EditProfileScreen extends Component {
       email: data.email,
       phoneNumber: data.phoneNumber,
       allergies: data.allergies,  
-      avaliableAllergies: allergyData    
+      avaliableAllergies: allergyData,
+      loading: false    
     })
 
     //Logging the values to check they are being fetched and set to the state correctly
@@ -180,14 +190,14 @@ export default class EditProfileScreen extends Component {
     - Destructuring the state and storing them in variables
     - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
     */
-    const {step, name, email, phoneNumber, allergies,avaliableAllergies} = this.state;
+    const {step, name, email, phoneNumber, allergies,avaliableAllergies, loading} = this.state;
     const values = {name, email, phoneNumber, allergies,avaliableAllergies};
 
     
     // If any of the values are empty return a loading spinner
-    if(!name, !email, !phoneNumber, !allergies, !avaliableAllergies) {
+    if(loading) {
       return (
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={[flex.flex, flex.row, flex.justifyContentCenter, flex.alignItemsCenter]}>
           <ActivityIndicator size="large" color="#0000ff"/>
        </View>
       )       

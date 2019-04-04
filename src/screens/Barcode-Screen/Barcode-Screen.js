@@ -1,17 +1,19 @@
-
+// React dependencies
 import React, {Component} from 'react';
-import {Text, View, Alert, StyleSheet, AsyncStorage} from 'react-native';
+import {Text, View, Alert, StyleSheet, AsyncStorage, TouchableHighlight,Modal} from 'react-native';
 
+// Expo dependencies
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 
+// Component styled
 import Styles from './Styles';
 
+// Material Dialog
 import { MaterialDialog } from 'react-native-material-dialog';
 
-// HTTP A
+// Promose based HTTP Requests library 
 import axios from 'axios';
-
 
 /* 
 Utility classes:
@@ -27,7 +29,7 @@ export default class BarcodeScreen extends Component {
 
   state = {
     hasCameraPermission: null,
-    
+  
     name: '',
     email: '',
     phoneNumber: '',
@@ -35,10 +37,13 @@ export default class BarcodeScreen extends Component {
     
     errorModal: false,
     error: '',
-    scanned: false
+    scanned: false,
+
+    isAllergic: false,
+    item: {},
+    isAllergicModalVisible: false
   }
 
- 
   componentDidMount() {
     console.log("The Barcode Screen Has Mounted");
     this.requestCameraPermission();
@@ -51,7 +56,7 @@ export default class BarcodeScreen extends Component {
   Destructuring status:
   - Destructuring the state and storing them in variables
   - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-  - status is destructured from the permissions response
+  - Status is destructured from the permissions response
   */
   console.log("Requesting permission to use the live camera feed");
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -190,32 +195,149 @@ export default class BarcodeScreen extends Component {
     }
   }
 
-  /* 
-  handleBarCodeRead:
-  - Make API call      
-  */
-  handleBarCodeRead = ({data}) => {
-    
-    this.setState({scanned: true});
 
-    Alert.alert(
-      'Scan successful!',
-      JSON.stringify(data),
-      [
-        {
-          text: 'Continue',
-          onPress: () => this.setState({scanned: false}),
-          style: 'cancel'
-        },
-      ],
-    );    
+  /* */
+  handleBarCodeRead = async ({data}) => {
+        
+    this.setState({
+      scanned: true,
+      isAllergicModalVisible: true
+    });
 
-    // Axios call:
-    // Insert barcode string into the request
-    // Await for the call to finish
-    // Then compare the current users allergies to the products allergies
-    // If there are some then alert the user they are allergic to it
-    // If there are no tell them the item is fine for consumption
+    // // Remove when the modal is added
+    // Alert.alert(
+    //   'Scan successful!',
+    //   JSON.stringify(data),
+    //   [
+    //     {
+    //       text: 'Continue',
+    //       onPress: () => this.setState({scanned: false}),
+    //       style: 'cancel'
+    //     },
+    //   ],
+    // );    
+          
+    const API_URL = 'http://supermarketownbrandguide.co.uk/api/newfeed.php?json=';
+    const API_KEY = 'ticrk41z75yq98u7isqz'
+
+    // Finds the item based on the reponse provided by expo
+    const Item = await AsyncStorage.getItem(data);
+
+    // Look in AsyncStorage based on the key provided
+    if(Item) {
+      
+      // Parse the data from AsyncStorage
+      const parsedData = JSON.parse(Item);
+      this.setState({
+        item: parsedData
+      })
+
+      /* 
+      Destructuring status:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+      - Status is destructured from the permissions response
+      */
+      const {item} = this.state;
+      console.log(`The item from AsyncStorage has now been set to the local state : ${item}`)
+
+    } else {    
+      console.log("A network request is being performed");
+  
+      // Send get request to API endpoint and log the response
+      const response = await axios.get(`${API_URL}barcode&q=${data}&apikey=${API_KEY}`);
+      console.log(`The data from the response is: ${response.data} `)
+     
+      /* 
+      error handling:
+
+      - Checks for an error object in the response
+      
+      - This is due to the nasty API being used for the food source. Basically when an invalid barcode is returned instead of throwing say a 404 or a 505 it shows the resposne
+        as 200. 200 HTTP status code means its valid, this is incorrect and instead of wrapping it in a try catch you have to check for error object in the data of the response.
+        This is out of my control for the moment, though if I was to build by own API it would at least throw correct response codes 
+      
+      - When response.data.error is true set the error state equal to response.data.error to extract the message. This will alow for it to be shown in the modal
+
+      - To prevent the thread continuing a return statement is used to prevent further execution.
+      
+      - When the error is no error 
+      */
+
+      if(response.data.error) {
+      
+        // Update the error state with error from the API endpoint
+        this.setState({
+          error: response.data.error
+        })
+        console.log(`An error has occured for this request: ${error}`);
+
+        // Display the error 
+        /* 
+        Destructuring status:
+        - Destructuring the state and storing them in variables
+        - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+        - Status is destructured from the permissions response
+        */
+        const {error} = this.state
+        console.log(`The error state has been updated to ${error}`);
+        return false;      
+      } else {
+
+        /* 
+        Destructuring status:
+        - Destructuring the state and storing them in variables
+        - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+        - The item is destructured from the state
+        */
+        const{item} = this.state;        
+        this.setState({
+          item: response.data
+        })
+        console.log(`The new item state is ${item}`)
+      
+        // AsyncStorage.setItem(key,'data') - data needs to be a string
+        await AsyncStorage.setItem(data,JSON.stringify(item))
+      }
+    }
+   
+    /* 
+    Destructuring status:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+    - The item is destructured from the state
+    */
+    const {item} = this.state;
+    const productAllergies = item.properties.contains;
+    console.log(`The products allergies are ${productAllergies}`)
+
+    /* 
+    Destructuring status:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+    - allergies is destructured from the state
+    */
+    const {allergies} = this.state;
+    console.log(`The users allergies are ${allergies}`);
+
+    /* 
+    result:    
+    - When a value from the users allergies is in the productAllergies it returns true.
+    - When a value from the users allergies isn't in the procuctAllergies it returns false
+    - After the result has been relased from the thread isAllergic state is set to the response from result
+    - Log a message to show if the response is true or false (Used to check the response)
+
+    For information about some() checkout https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+    For more infromation about inlcudes() checkout https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes 
+
+    */
+    const result = await allergies.some(allergy => productAllergies.includes(allergy));
+    this.setState({
+      isAllergic: result
+    })
+
+    const {isAllergic} = this.state;
+    console.log(`Are you allergic: ${isAllergic}`);
   };
 
   render() {
@@ -266,6 +388,22 @@ export default class BarcodeScreen extends Component {
 
           </Text>
         </MaterialDialog>
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.isAllergicModalVisible}
+        >
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View>
+              <TouchableHighlight
+                onPress={() => this.setState({isAllergicModalVisible: !this.state.isAllergicModalVisible, scanned: false})}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
 
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeRead}

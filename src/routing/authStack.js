@@ -1,24 +1,24 @@
 // React dependencies
-import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import React from "react";
+import { TouchableOpacity } from "react-native";
 
-// React navigation 
-import {createStackNavigator, createDrawerNavigator} from 'react-navigation';
+// React navigation
+import { createStackNavigator, createDrawerNavigator } from "react-navigation";
 
 // Custom screens and stacks
-import SettingsScreen from '../screens/Settings-Screen/Settings-Screen';
-import EditProfileScreen from '../screens/Edit-Profile-Screen/Edit-Profile-Screen';
-import HelpScreen from '../screens/Help-Screen/Help-Screen';
-import CustomDrawer from '../Components/Drawer/CustomDrawer';
-import SearchStack from './SearchStack';
+import SettingsScreen from "../screens/Settings-Screen/Settings-Screen";
+import EditProfileScreen from "../screens/Edit-Profile-Screen/Edit-Profile-Screen";
+import HelpScreen from "../screens/Help-Screen/Help-Screen";
+import CustomDrawer from "../Components/Drawer/CustomDrawer";
+import SearchStack from "./SearchStack";
 
 // Icons
 // MaterialIcons
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from "react-native-vector-icons/MaterialIcons";
 const MaterialIconSize = 30;
 
 // Custom utilities
-import {spacing} from '../styles/spacing-utils'
+import { spacing } from "../styles/spacing-utils";
 
 /* 
 AuthStackRoutes:
@@ -44,29 +44,42 @@ const AuthStackRoutes = createStackNavigator(
     search: SearchStack,
     settings: SettingsScreen,
     edit: EditProfileScreen,
-    help: HelpScreen,
+    help: HelpScreen
   },
   {
-    initialRouteName: 'search',
-    defaultNavigationOptions: ({navigation}) => ({
+    initialRouteName: "search",
+    defaultNavigationOptions: ({ navigation }) => ({
       headerLeft: (
-        <TouchableOpacity onPress={() => {navigation.toggleDrawer()}} style={[spacing.smallLeft]}>
-          <Icon name="menu" size={MaterialIconSize}/>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+          style={[spacing.smallLeft]}
+        >
+          <Icon name="menu" size={MaterialIconSize} />
         </TouchableOpacity>
       ),
       headerRight: (
-        <TouchableOpacity onPress={()=> {navigation.navigate('settings')}} style={[spacing.smallRight]}>
-          <Icon name="settings" size={MaterialIconSize}/>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("settings");
+          }}
+          style={[spacing.smallRight]}
+        >
+          <Icon name="settings" size={MaterialIconSize} />
         </TouchableOpacity>
-      ),    
+      )
     })
   }
 );
 
-const AuthStack = createDrawerNavigator({
-  screen: AuthStackRoutes
-}, {
- contentComponent: CustomDrawer
-});
+const AuthStack = createDrawerNavigator(
+  {
+    screen: AuthStackRoutes
+  },
+  {
+    contentComponent: CustomDrawer
+  }
+);
 
 export default AuthStack;

@@ -1,57 +1,44 @@
 // React dependencies
-import React, {Component} from 'react';
-import {Text, View, Image, ScrollView, StyleSheet } from 'react-native';
+import React, { Component } from "react";
+import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
 
 // Custom React components
-import CustomButton from '../../Components/UI/Button';
+import CustomButton from "../../Components/UI/Button";
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../../styles/buttons-utils';
-import {flex} from '../../styles/flex-utils';
-import {fonts} from '../../styles/text-utils';
+import { buttons } from "../../styles/buttons-utils";
+import { flex } from "../../styles/flex-utils";
+import { fonts } from "../../styles/text-utils";
 
 // Application Icon
-import AppIcon from '../../assets/Icon.png';
+import AppIcon from "../../assets/Icon.png";
 
-const styles = StyleSheet.create({
-  HomeButtons: {
-    width: 200
-  },
-  HomeScreenIcon: {
-    width: 250,
-    height: 250,
-    margin: 30,
-    alignSelf: 'flex-start',
-  }
-})
+// Component specific styling
+import styles from "./Styles";
 
 // Button utils
 const Button = [styles.HomeButtons, buttons.large];
 
 // Heading utils
-const Heading = [fonts.title1]
+const Heading = [fonts.title1];
 
-export default class HomeScreen extends Component { 
-
-
+export default class HomeScreen extends Component {
   componentDidMount() {
     console.log("The Home Screen Has Mounted");
   }
 
   // Sets the title within the header and disables the header properties whilst on this screen
   static navigationOptions = {
-    headerMode: 'none',
+    headerMode: "none",
     header: null
-  }
-
+  };
 
   render() {
     return (
-
       /* 
         Component overviews with resources:
 
@@ -72,38 +59,44 @@ export default class HomeScreen extends Component {
         CustomButton:
         - Check the component for more information
       */
-         
-      <ScrollView contentContainerStyle={[flex.alignItemsCenter, flex.justifyContentCenter, flex.grow]}>
+
+      <ScrollView
+        contentContainerStyle={[
+          flex.alignItemsCenter,
+          flex.justifyContentCenter,
+          flex.grow
+        ]}
+      >
         <View>
           <Text style={Heading}> Food Allergy Assistant</Text>
         </View>
 
         <View>
-          <Image source={AppIcon} style={styles.HomeScreenIcon}/>
+          <Image source={AppIcon} style={styles.HomeScreenIcon} />
         </View>
 
-        <View style={{marginBottom: 10}}>
-          <CustomButton 
+        <View style={{ marginBottom: 10 }}>
+          <CustomButton
             text="Sign up"
-            mode="contained" 
-            compact={true} 
-            styling={Button} 
-            colour="#0277bd" 
-            onClick={() => this.props.navigation.navigate('register')} 
+            mode="contained"
+            compact={true}
+            styling={Button}
+            colour="#0277bd"
+            onClick={() => this.props.navigation.navigate("register")}
             label="Go to the register screen"
           />
         </View>
 
         <View>
-          <CustomButton 
+          <CustomButton
             text="Login"
-            mode="contained" 
-            compact={true} 
-            styling={Button} 
-            colour="#0277bd" 
-            onClick={() => this.props.navigation.navigate('login')} 
+            mode="contained"
+            compact={true}
+            styling={Button}
+            colour="#0277bd"
+            onClick={() => this.props.navigation.navigate("login")}
             label="Go to the login screen"
-         />
+          />
         </View>
       </ScrollView>
     );

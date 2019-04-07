@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { human } from 'react-native-typography'
+import { StyleSheet } from "react-native";
+import { human } from "react-native-typography";
 
 export const fonts = StyleSheet.create({
   largeTitle: {
@@ -39,29 +39,27 @@ export const fonts = StyleSheet.create({
 
 export const colours = StyleSheet.create({
   red: {
-      color: '#f44336'
+    color: "#f44336"
   },
   white: {
-     color: 'white'
+    color: "white"
   },
-  green:{ 
-      color: '#a5d6a7'
+  green: {
+    color: "#a5d6a7"
   },
   blue: {
-      color: '#0277bd'
+    color: "#0277bd"
   }
 });
 
-
 export const align = StyleSheet.create({
   right: {
-    textAlign: 'right'
+    textAlign: "right"
   },
   left: {
-    textAlign: 'left'
+    textAlign: "left"
   },
   center: {
-    textAlign: 'center'
+    textAlign: "center"
   }
-})
-
+});

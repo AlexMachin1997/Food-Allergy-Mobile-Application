@@ -1,59 +1,64 @@
-// React dependencies 
-import React, {Component} from 'react';
-import {Text, View, ScrollView, KeyboardAvoidingView, Alert, AsyncStorage} from 'react-native';
-import { MaterialDialog } from 'react-native-material-dialog';
+// React dependencies
+import React, { Component } from "react";
+import {
+  Text,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Alert,
+  AsyncStorage
+} from "react-native";
+import { MaterialDialog } from "react-native-material-dialog";
 
 // Custom React components
-import CustomButton from '../../Components/UI/Button';
-import CustomInput from '../../Components/UI/Input';
+import CustomButton from "../../Components/UI/Button";
+import CustomInput from "../../Components/UI/Input";
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {buttons} from '../../styles/buttons-utils';
-import {flex} from '../../styles/flex-utils';
-import {fonts, align} from '../../styles/text-utils';
-import {spacing} from '../../styles/spacing-utils';
-import {border, radius, width} from '../../styles/border';
+import { buttons } from "../../styles/buttons-utils";
+import { flex } from "../../styles/flex-utils";
+import { fonts, align } from "../../styles/text-utils";
+import { spacing } from "../../styles/spacing-utils";
+import { border, radius, width } from "../../styles/border";
 
-// Section styles
-const Section = [spacing.smallBottom, spacing.smallTop]
+// Section
+const Section = [spacing.smallBottom, spacing.smallTop];
 const SignUpLabelSection = [spacing.mediumTop];
 
-// Label styles
-const FormLabel = [fonts.title3]
-const SignUpLabel = [align.center, fonts.title3, spacing.smallBottom]
+// Label
+const FormLabel = [fonts.title3];
+const SignUpLabel = [align.center, fonts.title3, spacing.smallBottom];
 
-// Button styles
-const Buttons = [buttons.large]
+// Buttons
+const Buttons = [buttons.large];
 
-// Heading styles
+// Headings
 const MainTitle = [fonts.title1];
-const SubHeading = [fonts.title3]
+const SubHeading = [fonts.title3];
 
-// Input styles
+// Inputs
 const Outline = radius.small;
 const OutlineColour = border.black;
 const OutlineWidth = width.small;
 
-//Modal styles
+//Modal
 const ModalBody = [fonts.body];
 
-// API
-import axios from 'axios';
-
+// Promise based HTTP libarary
+import axios from "axios";
 
 export default class LoginScreen extends Component {
-
   state = {
     email: "",
     Password: "",
 
     errorModal: false,
     successModal: false,
-    
+
     error: "",
     success: ""
   };
@@ -64,7 +69,7 @@ export default class LoginScreen extends Component {
 
   // Sets the title within the header
   static navigationOptions = {
-    title: 'Login',
+    title: "Login"
   };
 
   /* 
@@ -84,37 +89,31 @@ export default class LoginScreen extends Component {
   - Set the errorModal to true
   */
   handleSubmit = async (email, password) => {
-
     try {
-
       // API Domain name
-      const API_URL = 'https://radiant-dusk-41662.herokuapp.com';
+      const API_URL = "https://radiant-dusk-41662.herokuapp.com";
 
       // Awaiting the response from the API endpoint
       const response = await axios.post(`${API_URL}/api/users/login`, {
-          "email": email, //this.state.email
-          "password": password // this.state.password
+        email: email, //this.state.email
+        password: password // this.state.password
       });
-  
-      
+
       // Destructuring the state and storing them in variables
-      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
       // The data object is destructured from the response object
-      const {data} = response;
-      console.log(data.token)
+      const { data } = response;
+      console.log(data.token);
 
       // Store the token in AsyncStorage
       try {
         // setItem(key, data)
-        await AsyncStorage.setItem('userToken',data.token);
+        await AsyncStorage.setItem("userToken", data.token);
+      } catch (error) {
+        // When the token can't be saved
+        Alert.alert(error.message);
       }
 
-      // When the token can't be saved
-      catch(error){
-        Alert.alert(error.message)
-      }
-
-      
       /* 
       success state is set to the data message
       successModal is set to the opposite value of the current state
@@ -122,20 +121,16 @@ export default class LoginScreen extends Component {
       this.setState({
         successModal: !this.state.successModal,
         success: data.message
-      })
-  }
-
-  catch(error) {        
-
-      // Destructuring the state and storing them in variables
-      // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-      // The data object is destrctured from the error response object
-      const {data} = error.response;
-      
-      // Error message from the API
+      });
+    } catch (error) {
+      /* 
+      Object Destructuring:
+      - Destructuring the state and storing them in variables
+      - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+      */
+      const { data } = error.response;
       console.log(data.message);
 
-      
       /* 
       error state is set to the data message
       errorModal is set to the opposite value of the current state
@@ -143,12 +138,12 @@ export default class LoginScreen extends Component {
       this.setState({
         error: data.message,
         errorModal: !this.state.errorModal
-      })
+      });
 
       // Return to stop the process (This might be handled by axios, but not sure)
       return false;
-  }
-}
+    }
+  };
 
   /* 
   handleChange:
@@ -160,19 +155,26 @@ export default class LoginScreen extends Component {
   handleChange = (id, value) => {
     this.setState({
       [id]: value
-    })
-  }
+    });
+  };
 
   render() {
+    /* 
+    Object Destructuring:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    */
+    const {
+      email,
+      password,
+      errorModal,
+      successModal,
+      error,
+      success
+    } = this.state;
 
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-    // Destructuring the state so they can be access via variables
-    const {email, password, errorModal, successModal, error, success} = this.state;
-  
     return (
-      
-        /* 
+      /* 
           Component overviews with resources:
 
           ScrollView:
@@ -201,92 +203,93 @@ export default class LoginScreen extends Component {
           CustomInput and CustomButton
           - Refer to the indvidual components for a full breakdown
         */
-         
-        <ScrollView contentContainerStyle={[flex.justifyContentCenter,flex.flex, spacing.ContainerSpacing]}>
-          <KeyboardAvoidingView behavior="padding">    
 
-            {/* Success dialog */}
-            <MaterialDialog
-              title="Success"
-              visible={successModal}
-              onOk={() => this.props.navigation.navigate('authStack') }
-              onCancel={() => this.props.navigation.navigate('authStack')}>
-              <Text style={ModalBody}>
-                {success}
-              </Text>
-            </MaterialDialog>
+      <ScrollView
+        contentContainerStyle={[
+          flex.justifyContentCenter,
+          flex.flex,
+          spacing.ContainerSpacing
+        ]}
+      >
+        <KeyboardAvoidingView behavior="padding">
+          {/* Success dialog */}
+          <MaterialDialog
+            title="Success"
+            visible={successModal}
+            onOk={() => this.props.navigation.navigate("authStack")}
+            onCancel={() => this.props.navigation.navigate("authStack")}
+          >
+            <Text style={ModalBody}>{success}</Text>
+          </MaterialDialog>
 
-            {/* Error dialog */}
-            <MaterialDialog
-              title="Error"
-              visible={errorModal}
-              onOk={() => this.setState({ errorModal: !errorModal})}
-              onCancel={() => this.setState({ errorModal: !errorModal})}>
-              <Text style={ModalBody}>
-                {error}
-              </Text>
-            </MaterialDialog>
+          {/* Error dialog */}
+          <MaterialDialog
+            title="Error"
+            visible={errorModal}
+            onOk={() => this.setState({ errorModal: !errorModal })}
+            onCancel={() => this.setState({ errorModal: !errorModal })}
+          >
+            <Text style={ModalBody}>{error}</Text>
+          </MaterialDialog>
 
+          <View style={Section}>
+            <Text style={MainTitle}>Welcome back</Text>
+            <Text style={SubHeading}>Please sign in to continue</Text>
+          </View>
 
-            <View style={Section}>
-              <Text style={MainTitle}>Welcome back</Text>
-              <Text style={SubHeading}>Please sign in to continue</Text>
-            </View>
+          <View style={Section}>
+            <Text style={FormLabel}>Email</Text>
+            <CustomInput
+              placeholder="Enter your email address"
+              value={email}
+              onChange={value => this.handleChange("email", value)}
+              isSecure={false}
+              style={[Outline, OutlineColour, OutlineWidth]}
+              Ismultiline={true}
+              keyboardType="email-address"
+            />
+          </View>
 
-            <View style={Section}>
-              <Text style={FormLabel}>Email</Text>
-              <CustomInput
-                placeholder="Enter your email address"
-                value={email}
-                onChange = {(value) => this.handleChange('email', value)}
-                isSecure={false}
-                style={[Outline, OutlineColour, OutlineWidth]}
-                Ismultiline={true}
-                keyboardType="email-address"
-              />   
-            </View>
+          <View style={Section}>
+            <Text style={FormLabel}>Password</Text>
+            <CustomInput
+              placeholder="Enter your password"
+              value={password}
+              onChange={value => this.handleChange("password", value)}
+              isSecure={true}
+              style={[Outline, OutlineColour, OutlineWidth]}
+              Ismultiline={true}
+            />
+          </View>
 
-            <View style={Section}>
-              <Text style={FormLabel}>Password</Text>
-              <CustomInput
-                placeholder="Enter your password"
-                value={password}
-                onChange = {(value) => this.handleChange('password', value)}
-                isSecure={true}
-                style={[Outline, OutlineColour, OutlineWidth]}
-                Ismultiline={true}
-              />    
-            </View>
+          <View style={Section}>
+            <CustomButton
+              text="Login"
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              styling={Buttons}
+              onClick={() => this.handleSubmit(email, password)}
+              label="Login"
+              disabled={!email || !password}
+            />
+          </View>
 
-            <View style={Section}>
-              <CustomButton 
-                text="Login" 
-                mode="contained" 
-                compact={true} 
-                colour="#0277bd" 
-                styling={Buttons} 
-                onClick={() => this.handleSubmit(email, password)} 
-                label="Login"
-                disabled={!email || !password}
-              />       
-            </View>
-
-            <View style={SignUpLabelSection}>
-              <Text style={SignUpLabel}> Don't have an account ? </Text>       
-              <CustomButton 
-              text="Register" 
-              mode="contained" 
-              compact={true} 
-              colour="#0277bd" 
-              styling={Buttons} 
-              onClick={() => this.props.navigation.navigate('register')} 
+          <View style={SignUpLabelSection}>
+            <Text style={SignUpLabel}> Don't have an account ? </Text>
+            <CustomButton
+              text="Register"
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              styling={Buttons}
+              onClick={() => this.props.navigation.navigate("register")}
               accessibilityLabel="Register"
               disabled={false}
-              />    
-            </View>
-
-          </KeyboardAvoidingView>
-        </ScrollView>
+            />
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }

@@ -1,22 +1,21 @@
 // React dependencies
-import React from 'react';
+import React from "react";
 
-// React navigation 
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+// React navigation
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 // Custom screen
-import BarcodeScreen from '../screens/Barcode-Screen/Barcode-Screen';
-import LiveSearchScreen from '../screens/Live-Search-Screen/Live-Search-Screen';
-import ShoppingListScreen from '../screens/Shopping-List-Screen/Shopping-List-Screen';
+import BarcodeScreen from "../screens/Barcode-Screen/Barcode-Screen";
+import LiveSearchScreen from "../screens/Live-Search-Screen/Live-Search-Screen";
+import ShoppingListScreen from "../screens/Shopping-List-Screen/Shopping-List-Screen";
 
 // Icon libaries
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import AntDesigns from 'react-native-vector-icons/AntDesign'
-import FoundationIcon from 'react-native-vector-icons/Foundation';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import AntDesigns from "react-native-vector-icons/AntDesign";
+import FoundationIcon from "react-native-vector-icons/Foundation";
 
 // Icon utility
 const iconSize = 25;
-
 
 /* 
 SearchStack:
@@ -38,41 +37,51 @@ Tab config:
 - Additonal configuration for the tab navigator can be found here https://reactnavigation.org/docs/en/material-bottom-tab-navigator.html
 */
 
-export default SearchStack = createMaterialBottomTabNavigator(
+export default (SearchStack = createMaterialBottomTabNavigator(
   {
     Barcode: {
       screen: BarcodeScreen,
       navigationOptions: {
         tabBarLabel: "Barcode Search",
-        tabBarIcon: () => <AntDesigns name="barcode" size={iconSize} color="white"/>
+        tabBarIcon: () => (
+          <AntDesigns name="barcode" size={iconSize} color="white" />
+        )
       }
     },
     Feed: {
       screen: LiveSearchScreen,
       navigationOptions: {
         tabBarLabel: "Live Search",
-        tabBarIcon: () => <MaterialIcons name="search" size={iconSize} color="white"/>
+        tabBarIcon: () => (
+          <MaterialIcons name="search" size={iconSize} color="white" />
+        )
       }
     },
     ShoppingList: {
       screen: ShoppingListScreen,
       navigationOptions: {
         tabBarLabel: "Shopping List",
-        tabBarIcon: () => <FoundationIcon name="clipboard-notes" size={iconSize} color="white"/>
+        tabBarIcon: () => (
+          <FoundationIcon
+            name="clipboard-notes"
+            size={iconSize}
+            color="white"
+          />
+        )
       }
     }
   },
   {
-		initialRouteName: "Barcode",
-		animationEnabled: true,
+    initialRouteName: "Barcode",
+    animationEnabled: true,
     lazy: true,
-    barStyle: { backgroundColor: '#0277bd' },
+    barStyle: { backgroundColor: "#0277bd" },
     shifting: true,
     tabBarOptions: {
-      scrollEnabled:true,
+      scrollEnabled: true
     },
     navigationOptions: {
       headerTitle: "Search feeds"
     }
   }
-);
+));

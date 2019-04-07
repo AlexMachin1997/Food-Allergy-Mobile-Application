@@ -13,13 +13,13 @@ As part of the README file it will describe and explain the following sections:
 * Project information
 
 ## Purpose
-The overall purpose of this mobile application is to allow food allergens to identify food they are allergic to in real-time. To provide this functionlaity users will be required to sign up to access certain features like food allery ratings, for users who don't want to sign up they can opt into the guest mode. 
+The overall purpose of this mobile application is to allow food allergens to identify food they are allergic to in real-time. To provide this functionlaity users will be required to sign up to access certain features like food allery ratings. 
 
 For a full breakdown of the applications feature visit the core features section.
 
 
 ## Core features
-As of the current version of the mobile application, it is currently capable of performing some of the  following tasks (They will all be added soon):
+As of the current version of the mobile application, it is currently capable of performing some of the  following tasks:
 * Registering a new user
 * Authenticating users
 * Search for products via barcode search and live search
@@ -107,7 +107,7 @@ As of the current version of the mobile application, it is currently capable of 
 
 * Dependency installation
     * Issue `npm install` to install all dependencies with NPM
-    * Issue 'yarn install' to install all dependencies with yarn (Requires yarn to be configured)
+    * Issue `yarn install` to install all dependencies with yarn (Requires yarn to be configured)
 
 * Development enviroment variables setup:
     * Create keys_dev.js within the keys directory

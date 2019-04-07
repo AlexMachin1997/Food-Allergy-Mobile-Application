@@ -10,11 +10,11 @@
  - createSwitchNavigator can be found here https://reactnavigation.org/docs/en/switch-navigator.html
  - An authflow example can be found here https://reactnavigation.org/docs/en/auth-flow.html 
 */
-import {createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 
-import AuthStack from './authStack';
-import GuestStack from './GuestStack';
-import AuthLoading from '../screens/Index-Screen'
+import AuthStack from "./authStack";
+import GuestStack from "./GuestStack";
+import AuthLoading from "../screens/Index-Screen";
 
 const SwitchNavigator = createSwitchNavigator(
   {
@@ -23,9 +23,9 @@ const SwitchNavigator = createSwitchNavigator(
     authStack: AuthStack
   },
   {
-    initialRouteName: 'authLoading'
+    initialRouteName: "authLoading"
   }
-)
+);
 
 const AppContainer = createAppContainer(SwitchNavigator);
 

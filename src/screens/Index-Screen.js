@@ -1,21 +1,22 @@
 // React Dependencies
-import React, {Component} from 'react';
-import {View, ActivityIndicator, AsyncStorage} from 'react-native';
+import React, { Component } from "react";
+import { View, ActivityIndicator, AsyncStorage } from "react-native";
+
+// Custom React components
+import Spinner from "../Components/UI/Spinner";
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {flex} from '../styles/flex-utils';
-
+import { flex } from "../styles/flex-utils";
 
 export default class IndexScreen extends Component {
-
-  componentDidMount(){
+  componentDidMount() {
     this._checkAuthStatus();
   }
-  
+
   /* 
   checkAuthStatus:
     - If true forward to the authStack
@@ -23,14 +24,12 @@ export default class IndexScreen extends Component {
     - Its an async function so it will only release the thread once the task been complete
   */
   _checkAuthStatus = async () => {
-      const userToken = await AsyncStorage.getItem('userToken'); // Search for a key named userToken
-      this.props.navigation.navigate(userToken ? 'authStack': 'guestStack') // True go to authStack, false go to guestStack
-    }
+    const userToken = await AsyncStorage.getItem("userToken"); // Search for a key named userToken
+    this.props.navigation.navigate(userToken ? "authStack" : "guestStack"); // True go to authStack, false go to guestStack
+  };
 
   render() {
-     
     return (
-
       /* 
         Component overviews with resources:
         
@@ -44,9 +43,7 @@ export default class IndexScreen extends Component {
         - THe colour is the colour of the loading icon
         - For more information about this component visit https://facebook.github.io/react-native/docs/activityindicator
       */
-      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#0000ff"/>
-      </View> 
+      <Spinner />
     );
   }
 }

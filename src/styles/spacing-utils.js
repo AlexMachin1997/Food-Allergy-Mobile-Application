@@ -1,38 +1,37 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
 export const spacing = StyleSheet.create({
-    smallBottom: {
-        marginBottom: 10
-    },
-    smallTop: {
-        marginTop: 10
-    },
+  smallBottom: {
+    marginBottom: 10
+  },
+  smallTop: {
+    marginTop: 10
+  },
 
+  smallLeft: {
+    marginLeft: 10
+  },
+  smallRight: {
+    marginRight: 10
+  },
 
-    smallLeft: {
-        marginLeft: 10
-    },
-    smallRight: {
-        marginRight: 10
-    },
+  mediumTop: {
+    marginTop: 40
+  },
 
-    mediumTop: {
-        marginTop: 40
-    },
-    
-    mediumBottom: {
-        marginBottom: 40
-    },
+  mediumBottom: {
+    marginBottom: 40
+  },
 
-    mediumLeft: {
-      marginLeft: 40
-    },
+  mediumLeft: {
+    marginLeft: 40
+  },
 
-    mediumRight: {
-        marginRight: 40
-    },
+  mediumRight: {
+    marginRight: 40
+  },
 
-    ContainerSpacing: {
-        margin: 25
-    }
+  ContainerSpacing: {
+    margin: 25
+  }
 });

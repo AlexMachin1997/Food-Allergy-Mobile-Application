@@ -1,52 +1,50 @@
 // React dependencies
-import React, {Component} from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import React, { Component } from "react";
+import { Text, View, ScrollView } from "react-native";
 
 // User-Interface Libaries
-import {Divider} from 'react-native-paper';
+import { Divider } from "react-native-paper";
 
 // Custom React components
-import CustomButton from '../../Components/UI/Button';
+import CustomButton from "../../Components/UI/Button";
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import {flex} from '../../styles/flex-utils';
-import {fonts} from '../../styles/text-utils';
-import {spacing} from '../../styles/spacing-utils';
+import { flex } from "../../styles/flex-utils";
+import { fonts } from "../../styles/text-utils";
+import { spacing } from "../../styles/spacing-utils";
 
 // Sections
-const section = [spacing.smallTop, spacing.smallBottom]
+const section = [spacing.smallTop, spacing.smallBottom];
 
 // Headings
-const heading = [fonts.headline]
+const heading = [fonts.headline];
 
-// Body 
+// Body
 const body = [fonts.body];
 
 // Dividers
-const DividerStyling = {height:1, marginTop:10};
+const DividerStyling = { height: 1, marginTop: 10 };
 
 export default class HelpScreen extends Component {
-
   state = {
     Section1: false,
     Section2: false,
     Section3: false,
     Section4: false,
-    Section5: false  
-  }
+    Section5: false
+  };
 
   componentDidMount() {
     console.log("The Help Screen Has Mounted");
   }
 
-
   // Sets the title within the header
   static navigationOptions = {
-    title: 'Questions and answers',
+    title: "Questions and answers"
   };
 
   /* 
@@ -55,19 +53,22 @@ export default class HelpScreen extends Component {
   - Name is the identifier for the stste which is being changed, for example Section1
   - The state is then reversed by using the   
   */
-  handleToggle = (name) => {
+  handleToggle = name => {
     this.setState({
-      [name]: !this.state[name] 
+      [name]: !this.state[name]
     });
-  }  
-  
-  render() {
+  };
 
-    // Object destructuring https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-    const {Section1, Section2, Section3, Section4, Section5} = this.state;
-    
+  render() {
+    /* 
+    Object Destructuring:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    - Destructuring the state
+    */
+    const { Section1, Section2, Section3, Section4, Section5 } = this.state;
+
     return (
-    
       /* 
         Component overviews with resources:
 
@@ -87,119 +88,126 @@ export default class HelpScreen extends Component {
         CustomButton
         - Check the component for more information
       */
-    
-      <ScrollView contentContainerStyle={[spacing.ContainerSpacing, flex.grow]}>
-        <View style={{marginBottom: 50}}>
 
+      <ScrollView contentContainerStyle={[spacing.ContainerSpacing, flex.grow]}>
+        <View style={{ marginBottom: 50 }}>
           <View style={section}>
-            <Text style={heading}>Can I delete my user account and saved items ?</Text>
-            
-            {Section1 ?
+            <Text style={heading}>
+              Can I delete my user account and saved items ?
+            </Text>
+
+            {Section1 ? (
               <Text style={body}>
-                Yes, you can use the applications settings to delete your account and all data you have saved in your devices internal storage.
+                Yes, you can use the applications settings to delete your
+                account and all data you have saved in your devices internal
+                storage.
               </Text>
-              :null
-            }
-                        
-            <CustomButton 
+            ) : null}
+
+            <CustomButton
               text={!Section1 ? "Show" : "Hide"}
-              mode="contained" 
-              compact={true} 
-              colour="#0277bd" 
-              onClick={()=> this.handleToggle('Section1')} 
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              onClick={() => this.handleToggle("Section1")}
               label="Toggle section 1"
             />
           </View>
 
-          <Divider style={DividerStyling}/>
+          <Divider style={DividerStyling} />
 
           <View style={section}>
             <Text style={heading}>Why is my email required ? </Text>
 
-            {Section2 ?
+            {Section2 ? (
               <Text style={body}>
-                Your email is required incase we need to contact users, for example when you forget your password when you need to reset it.
+                Your email is required incase we need to contact users, for
+                example when you forget your password when you need to reset it.
               </Text>
-              : null
-            }
+            ) : null}
 
-            <CustomButton 
+            <CustomButton
               text={!Section2 ? "Show" : "Hide"}
-              mode="contained" 
-              compact={true} 
-              colour="#0277bd" 
-              onClick={()=> this.handleToggle('Section2')} 
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              onClick={() => this.handleToggle("Section2")}
               label="Toggle section 2"
             />
           </View>
 
-          <Divider style={DividerStyling}/>
+          <Divider style={DividerStyling} />
 
           <View style={section}>
             <Text style={heading}>Why can't I find some foods ?</Text>
 
-            {Section3 ?
+            {Section3 ? (
               <Text style={body}>
-                Due to the application being heavily dependent on a third-party service not all foods will be available, this is because the API in use is relatively new. This may be replaced with a custom API in the future, but for now a third-party API is used
+                Due to the application being heavily dependent on a third-party
+                service not all foods will be available, this is because the API
+                in use is relatively new. This may be replaced with a custom API
+                in the future, but for now a third-party API is used
               </Text>
-              : null
-            }
+            ) : null}
 
-            <CustomButton 
+            <CustomButton
               text={!Section3 ? "Show" : "Hide"}
-              mode="contained" 
-              compact={true} 
-              colour="#0277bd" 
-              onClick={()=> this.handleToggle('Section3')} 
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              onClick={() => this.handleToggle("Section3")}
               label="Toggle section 3"
-            />  
+            />
           </View>
 
-          <Divider style={DividerStyling}/>
+          <Divider style={DividerStyling} />
 
           <View style={section}>
-            <Text style={heading}>Why was I required to sign up for a free account ?</Text>
-            
-            {Section4 ? 
+            <Text style={heading}>
+              Why was I required to sign up for a free account ?
+            </Text>
+
+            {Section4 ? (
               <Text style={body}>
-                As one of the core features of the application requires access to information such as allergies you were required to create a basic profile.
+                As one of the core features of the application requires access
+                to information such as allergies you were required to create a
+                basic profile.
               </Text>
-              :null
-            }
-      
-            <CustomButton 
+            ) : null}
+
+            <CustomButton
               text={!Section4 ? "Show" : "Hide"}
-              mode="contained" 
-              compact={true} 
-              colour="#0277bd" 
-              onClick={()=> this.handleToggle('Section4')} 
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              onClick={() => this.handleToggle("Section4")}
               label="Toggle section 4"
             />
-
           </View>
 
-
-          <Divider/>
+          <Divider />
 
           <View style={section}>
-            <Text style={heading}>How can I add items which are suitable to my shopping list</Text>
+            <Text style={heading}>
+              How can I add items which are suitable to my shopping list
+            </Text>
 
-            {Section5 ? 
-              <Text style={body}> 
-                Within the search tabs when you either scan a suitable items or click an add button it will be stored locally.
-              </Text>:null
-            }
+            {Section5 ? (
+              <Text style={body}>
+                Within the search tabs when you either scan a suitable items or
+                click an add button it will be stored locally.
+              </Text>
+            ) : null}
 
-            <CustomButton 
+            <CustomButton
               text={!Section5 ? "Show" : "Hide"}
-              mode="contained" 
-              compact={true} 
-              colour="#0277bd" 
-              onClick={()=> this.handleToggle('Section5')} 
+              mode="contained"
+              compact={true}
+              colour="#0277bd"
+              onClick={() => this.handleToggle("Section5")}
               label="Toggle section 5"
             />
           </View>
-        
         </View>
       </ScrollView>
     );

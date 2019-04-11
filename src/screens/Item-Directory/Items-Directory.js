@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ScrollView, Text, View, AsyncStorage } from "react-native";
-import Card from "../../Components/UI/Cards/ItemsDirectoryItem";
+import Card from "../../Components/UI/Cards/Food-Card";
 import { Searchbar } from "react-native-paper";
 import { NavigationEvents } from "react-navigation";
 

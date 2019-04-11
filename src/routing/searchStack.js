@@ -72,6 +72,30 @@ export default (SearchStack = createMaterialBottomTabNavigator(
     }
   },
   {
+    navigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state.routes[navigation.state.index];
+
+      // ShoppingLists tab, when the route equals routeName set the headerTitle equal to the specified title
+      if (routeName == "Barcode") {
+        return {
+          headerTitle: "Barcode scanner"
+        };
+      }
+
+      // TrackItems tab, when the route equals routeName set the headerTitle equal to the specified title
+      if (routeName == "Feed") {
+        return {
+          headerTitle: "Live Search"
+        };
+      }
+
+      // TrackItems tab, when the route equals routeName set the headerTitle equal to the specified title
+      if (routeName == "ItemsDirectory") {
+        return {
+          headerTitle: "Items Directory"
+        };
+      }
+    },
     initialRouteName: "Barcode",
     animationEnabled: true,
     lazy: true,
@@ -79,9 +103,6 @@ export default (SearchStack = createMaterialBottomTabNavigator(
     shifting: true,
     tabBarOptions: {
       scrollEnabled: true
-    },
-    navigationOptions: {
-      headerTitle: "Search feeds"
     }
   }
 ));

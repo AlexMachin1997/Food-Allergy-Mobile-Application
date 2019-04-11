@@ -1,6 +1,5 @@
 // React dependencies
 import React from "react";
-import { TouchableOpacity } from "react-native";
 
 // React navigation
 import { createStackNavigator, createDrawerNavigator } from "react-navigation";
@@ -9,16 +8,11 @@ import { createStackNavigator, createDrawerNavigator } from "react-navigation";
 import SettingsScreen from "../screens/Settings-Screen/Settings-Screen";
 import EditProfileScreen from "../screens/Edit-Profile-Screen/Edit-Profile-Screen";
 import HelpScreen from "../screens/Help-Screen/Help-Screen";
-import CustomDrawer from "../Components/Drawer/CustomDrawer";
-import SearchStack from "./SearchStack";
+import SearchStack from "./searchStack";
 
-// Icons
-// MaterialIcons
-import Icon from "react-native-vector-icons/MaterialIcons";
-const MaterialIconSize = 30;
-
-// Custom utilities
-import { spacing } from "../styles/spacing-utils";
+// Custom navigation drawer
+import CustomDrawer from "../Components/Navigation/Drawer";
+import Icons from "../Components/Navigation/Icons";
 
 /* 
 AuthStackRoutes:
@@ -50,24 +44,18 @@ const AuthStackRoutes = createStackNavigator(
     initialRouteName: "search",
     defaultNavigationOptions: ({ navigation }) => ({
       headerLeft: (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-          style={[spacing.smallLeft]}
-        >
-          <Icon name="menu" size={MaterialIconSize} />
-        </TouchableOpacity>
+        <Icons
+          action={() => navigation.toggleDrawer()}
+          icon="menu"
+          marginLeft
+        />
       ),
       headerRight: (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("settings");
-          }}
-          style={[spacing.smallRight]}
-        >
-          <Icon name="settings" size={MaterialIconSize} />
-        </TouchableOpacity>
+        <Icons
+          action={() => navigation.navigate("settings")}
+          icon="settings"
+          marginRight
+        />
       )
     })
   }

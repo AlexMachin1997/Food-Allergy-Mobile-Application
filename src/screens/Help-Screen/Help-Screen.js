@@ -6,7 +6,7 @@ import { Text, View, ScrollView } from "react-native";
 import { Divider } from "react-native-paper";
 
 // Custom React components
-import CustomButton from "../../Components/UI/Button";
+import CustomButton from "../../Components/UI/Form/Button";
 
 /* 
 Utility classes:

@@ -7,7 +7,7 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 // Custom screen
 import BarcodeScreen from "../screens/Barcode-Screen/Barcode-Screen";
 import LiveSearchScreen from "../screens/Live-Search-Screen/Live-Search-Screen";
-import ShoppingListScreen from "../screens/Shopping-List-Screen/Shopping-List-Screen";
+import ItemsDirectoryScreen from "../screens/Item-Directory/Items-Directory";
 
 // Icon libaries
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -57,10 +57,10 @@ export default (SearchStack = createMaterialBottomTabNavigator(
         )
       }
     },
-    ShoppingList: {
-      screen: ShoppingListScreen,
+    ItemsDirectory: {
+      screen: ItemsDirectoryScreen,
       navigationOptions: {
-        tabBarLabel: "Shopping List",
+        tabBarLabel: "Item Directory",
         tabBarIcon: () => (
           <FoundationIcon
             name="clipboard-notes"

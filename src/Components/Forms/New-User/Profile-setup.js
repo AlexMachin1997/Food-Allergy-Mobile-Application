@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import { Text, View, ScrollView, KeyboardAvoidingView } from "react-native";
 
 // ReactJS custom components
-import CustomButton from "../../UI/Button";
-import CustomInput from "../../UI/Input";
+import CustomButton from "../../UI/Form/Button";
+import CustomInput from "../../UI/Form/Input";
 
 /* 
 Utility classes:
@@ -15,10 +15,9 @@ import { buttons } from "../../../styles/buttons-utils";
 import { fonts } from "../../../styles/text-utils";
 import { flex } from "../../../styles/flex-utils";
 import { spacing } from "../../../styles/spacing-utils";
-import { border, radius, width } from "../../../styles/border";
 
 // Component specific styling
-import styles from "../styles";
+import styles from "../Styles";
 
 // Heading
 const MainTitle = [fonts.title1];
@@ -31,25 +30,19 @@ const Section = [spacing.smallBottom, spacing.smallTop];
 const FormLabel = [fonts.title3];
 
 // Input
-const Outline = radius.small;
-const OutlineColour = border.black;
-const OutlineWidth = width.small;
+const Outline = { borderRadius: 5 };
+const OutlineColour = { borderColor: "black" };
+const OutlineWidth = { borderWidth: 1 };
 
 // Button
 const Button = [buttons.large, styles.RegisterButtons];
 
 export default class ProfileSetup extends Component {
-  componentDidMount() {
-    console.log("The Profile Setup Componnt Has Mounted");
-    console.log("The avaliable values are:");
-    console.log(this.props.values);
-  }
-
   /* 
-   goForward:
-   - Increments the step number
-   - Renders the next screen
-   */
+  goForward:
+  - Increments the step number
+  - Renders the next screen
+  */
   goForward = e => {
     e.preventDefault();
     this.props.forward();
@@ -60,8 +53,8 @@ export default class ProfileSetup extends Component {
     Destructuring status:
     - Destructuring the state and storing them in variables
     - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-    - Destructuring the props so they can be refered to via indvidual variables
-    - Destructuring the values so they can be refered to via indvidual variables
+    - Destructuring the props so they can be refered to via individual variables
+    - Destructuring the values so they can be refered to via individual variables
     */
     const { values, handleChange } = this.props;
     const { name, email, password } = values;
@@ -89,7 +82,9 @@ export default class ProfileSetup extends Component {
           - For more information about this component visit https://facebook.github.io/react-native/docs/text 
 
           CustomInput
-          - Visit the component for more information
+          - Renders a react-native-paper input 
+          - It accepts numerous props
+          - For more information about the component visist the components location
         */
 
       <ScrollView

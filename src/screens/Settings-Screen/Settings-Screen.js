@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Text, View, AsyncStorage, ScrollView } from "react-native";
 
 // Custom React components
-import CustomButton from "../../Components/UI/Button";
+import CustomButton from "../../Components/UI/Form/Button";
 
 // Promise-based HTTP request Library
 import axios from "axios";
@@ -79,6 +79,8 @@ export default class SettingsScreen extends Component {
       */
       const { data } = response;
       console.log(data.message);
+
+      await AsyncStorage.clear();
 
       this.setState({
         success: data.message,

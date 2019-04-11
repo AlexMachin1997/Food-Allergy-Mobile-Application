@@ -20,8 +20,9 @@
     "react-native-typography": "^1.4.0",
     "react-native-unimodules": "^0.2.0",
     "react-native-vector-icons": "^6.4.2",
-    "react-navigation": "^3.3.2",
-    "react-navigation-material-bottom-tabs": "^1.0.0"
+    "react-navigation": "^3.6.1",
+    "react-navigation-material-bottom-tabs": "^1.0.0",
+    "shortid": "^2.2.14"
   },
   "devDependencies": {
     "jest": "24.1.0",

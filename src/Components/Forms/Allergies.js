@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Text, View, ScrollView, KeyboardAvoidingView } from "react-native";
 
 // ReactJS custom components
-import CustomButton from "../UI/Button";
+import CustomButton from "../UI/Form/Button";
 
 /* 
 Utility classes:
@@ -30,10 +30,6 @@ const ConfirmationButtons = {
 };
 
 export default class Allergies extends Component {
-  componentDidMount() {
-    console.log(this.props.values);
-  }
-
   /* 
    goForward:
    - Increments the step number
@@ -55,10 +51,13 @@ export default class Allergies extends Component {
   };
 
   render() {
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-    // Desturcutre the props so they can be refered to via props
-    // Destrucutre the values object, the indvidual values within the object can be refered
+    /* 
+    Destructuring status:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+    - Destructuring the props so they can be refered to via individual variables
+    - Destructuring the values so they can be refered to via individual variables
+    */
     const { values } = this.props;
     const { allergies, avaliableAllergies } = values;
 
@@ -101,7 +100,20 @@ export default class Allergies extends Component {
           </View>
 
           <View style={AllergySection}>
-            <Text style={SubHeading}> Your allergies </Text>
+            <Text style={SubHeading}>Your allergies</Text>
+
+            {allergies.length < 1 ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10
+                }}
+              >
+                <Text style={SubHeading}>You have no allergies</Text>
+              </View>
+            ) : null}
+
             {allergies.map((allergy, index) => {
               return (
                 <View key={index} style={Section}>
@@ -123,7 +135,20 @@ export default class Allergies extends Component {
           </View>
 
           <View style={AllergySection}>
-            <Text style={SubHeading}> Avaliable allergies </Text>
+            <Text style={SubHeading}>Avaliable allergies</Text>
+
+            {avaliableAllergies.length < 1 ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10
+                }}
+              >
+                <Text style={SubHeading}>No allergies avaliable</Text>
+              </View>
+            ) : null}
+
             {avaliableAllergies.map((allergy, index) => {
               return (
                 <View key={index} style={Section}>

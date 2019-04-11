@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   View,
   ScrollView,
-  TouchableOpacity,
   Image,
   Text,
   AsyncStorage
@@ -14,14 +13,9 @@ import {
 import { MaterialDialog } from "react-native-material-dialog";
 const ModalBody = [fonts.body];
 
-// Custom React components
-import Link from "../UI/Link";
-
-// App Icon
+// Navigation components and assets
+import Link from "./Link";
 import AppIcon from "../../assets/Icon.png";
-
-// React-Native Vector Icons
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 /* 
 Utility classes:
@@ -52,8 +46,6 @@ export default class CustomDrawer extends Component {
   render() {
     const { logoutModal, successModal, success } = this.state;
     const { navigate } = this.props.navigation;
-
-    //action={() => this.props.navigation.navigate("help")}
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -112,13 +104,13 @@ export default class CustomDrawer extends Component {
             <Link
               action={() => navigate("settings")}
               icon="settings"
-              text="Application settings"
+              text="Settings"
             />
 
             <Link
               action={() => navigate("help")}
               icon="help-outline"
-              text="Help"
+              text="Q&A section"
             />
 
             <Link

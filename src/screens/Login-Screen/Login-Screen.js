@@ -11,8 +11,8 @@ import {
 import { MaterialDialog } from "react-native-material-dialog";
 
 // Custom React components
-import CustomButton from "../../Components/UI/Button";
-import CustomInput from "../../Components/UI/Input";
+import CustomButton from "../../Components/UI/Form/Button";
+import CustomInput from "../../Components/UI/Form/Input";
 
 /* 
 Utility classes:
@@ -23,7 +23,6 @@ import { buttons } from "../../styles/buttons-utils";
 import { flex } from "../../styles/flex-utils";
 import { fonts, align } from "../../styles/text-utils";
 import { spacing } from "../../styles/spacing-utils";
-import { border, radius, width } from "../../styles/border";
 
 // Section
 const Section = [spacing.smallBottom, spacing.smallTop];
@@ -41,9 +40,9 @@ const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3];
 
 // Inputs
-const Outline = radius.small;
-const OutlineColour = border.black;
-const OutlineWidth = width.small;
+const Outline = { borderRadius: 5 };
+const OutlineColour = { borderColor: "black" };
+const OutlineWidth = { borderWidth: 1 };
 
 //Modal
 const ModalBody = [fonts.body];

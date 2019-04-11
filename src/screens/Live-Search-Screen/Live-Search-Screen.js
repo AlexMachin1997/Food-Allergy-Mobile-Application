@@ -1,23 +1,19 @@
-import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import React, { Component } from "react";
+import { Text, View } from "react-native";
 
 export default class LiveSearchScreen extends Component {
-
   componentDidMount() {
     console.log("The Live Search Component Has Mounted");
   }
 
   static navigationOptions = {
-    title: 'Live search',
+    title: "Live search"
   };
-
 
   render() {
     return (
       <View>
-        <Text>
-            Live Search Component
-        </Text>
+        <Text>Live Search Component</Text>
       </View>
     );
   }

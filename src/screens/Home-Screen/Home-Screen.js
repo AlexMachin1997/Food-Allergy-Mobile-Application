@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
 
 // Custom React components
-import CustomButton from "../../Components/UI/Button";
+import CustomButton from "../../Components/UI/Form/Button";
 
 /* 
 Utility classes:

@@ -3,8 +3,8 @@ import React, { Component } from "react";
 import { ScrollView, Text, AsyncStorage } from "react-native";
 
 // Custom React components
-import ConfirmationMessage from "../../UI/ConfirmationMessage";
-import ConfirmationAction from "../../UI/ConfirmationAction";
+import ConfirmationMessage from "../../UI/User-Forms/ConfirmationMessage";
+import ConfirmationAction from "../../UI/User-Forms/ConfirmationAction";
 
 // Promose based HTTP Requests library
 import axios from "axios";

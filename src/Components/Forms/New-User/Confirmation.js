@@ -4,8 +4,8 @@ import { ScrollView, Text, AsyncStorage } from "react-native";
 import { MaterialDialog } from "react-native-material-dialog";
 
 // Custom React components
-import ConfirmationMessage from "../../UI/ConfirmationMessage";
-import ConfirmationAction from "../../UI/ConfirmationAction";
+import ConfirmationMessage from "../../UI/User-Forms/ConfirmationMessage";
+import ConfirmationAction from "../../UI/User-Forms/ConfirmationAction";
 
 // Promose based HTTP Requests library
 import axios from "axios";
@@ -33,11 +33,6 @@ export default class ConfirmationScreen extends Component {
     success: ""
   };
 
-  componentDidMount() {
-    console.log("The Registration Confirmation Component Has Mounted");
-    console.log("The avaliable values are:");
-    console.log(this.props.values);
-  }
   /* 
   goBack: 
   - Decrements the parents step state by 1 by referencing the back method passed in via props

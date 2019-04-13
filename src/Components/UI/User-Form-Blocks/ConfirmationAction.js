@@ -1,6 +1,9 @@
+// React dependencies
 import React from "react";
 import { View } from "react-native";
-import CustomButton from "../Form/Button";
+
+// Custom React components
+import CustomButton from "../Button";
 
 /* 
 Utility classes:
@@ -9,9 +12,10 @@ Utility classes:
 */
 import { flex } from "../../../styles/flex-utils";
 
-// Sections
+// Section styling
 const ConfirmationButtonsSection = [flex.justifyContentSpaceAround, flex.row];
 
+// ConfirmationButtons styling
 const ConfirmationButtons = {
   padding: 10,
   margin: 5,

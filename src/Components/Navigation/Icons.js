@@ -1,7 +1,16 @@
+// React dependencies
 import React from "react";
-import { spacing } from "../../styles/spacing-utils";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { TouchableOpacity } from "react-native";
+
+/* 
+Utility classes:
+- To access util classes use the exported variable.
+- Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
+*/
+import { spacing } from "../../styles/spacing-utils";
+
+// React-Native Vector Icon
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default props => {
   return (

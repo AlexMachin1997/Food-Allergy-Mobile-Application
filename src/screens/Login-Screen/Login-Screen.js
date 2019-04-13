@@ -8,11 +8,12 @@ import {
   Alert,
   AsyncStorage
 } from "react-native";
-import { MaterialDialog } from "react-native-material-dialog";
 
 // Custom React components
-import CustomButton from "../../Components/UI/Form/Button";
-import CustomInput from "../../Components/UI/Form/Input";
+import CustomButton from "../../Components/UI/Button";
+import CustomInput from "../../Components/UI/Form-Elements/TextInput";
+import ResponseModal from "../../Components/UI/Modals/ResponseModal";
+import ActionModal from "../../Components/UI/Modals/ActionModal";
 
 /* 
 Utility classes:
@@ -211,25 +212,21 @@ export default class LoginScreen extends Component {
         ]}
       >
         <KeyboardAvoidingView behavior="padding">
-          {/* Success dialog */}
-          <MaterialDialog
+          <ResponseModal
             title="Success"
             visible={successModal}
             onOk={() => this.props.navigation.navigate("authStack")}
-            onCancel={() => this.props.navigation.navigate("authStack")}
-          >
-            <Text style={ModalBody}>{success}</Text>
-          </MaterialDialog>
+            onOk={() => this.props.navigation.navigate("authStack")}
+            text={success}
+          />
 
-          {/* Error dialog */}
-          <MaterialDialog
+          <ResponseModal
             title="Error"
             visible={errorModal}
             onOk={() => this.setState({ errorModal: !errorModal })}
-            onCancel={() => this.setState({ errorModal: !errorModal })}
-          >
-            <Text style={ModalBody}>{error}</Text>
-          </MaterialDialog>
+            onDismiss={() => this.setState({ errorModal: !errorModal })}
+            text={error}
+          />
 
           <View style={Section}>
             <Text style={MainTitle}>Welcome back</Text>

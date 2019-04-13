@@ -1,9 +1,9 @@
 // React dependencies
 import React, { Component } from "react";
-import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
+import { Text, View, Image, ScrollView } from "react-native";
 
 // Custom React components
-import CustomButton from "../../Components/UI/Form/Button";
+import CustomButton from "../../Components/UI/Button";
 
 /* 
 Utility classes:

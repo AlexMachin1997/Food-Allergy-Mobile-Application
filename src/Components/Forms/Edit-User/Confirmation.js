@@ -3,8 +3,9 @@ import React, { Component } from "react";
 import { ScrollView, Text, AsyncStorage } from "react-native";
 
 // Custom React components
-import ConfirmationMessage from "../../UI/User-Forms/ConfirmationMessage";
-import ConfirmationAction from "../../UI/User-Forms/ConfirmationAction";
+import ConfirmationMessage from "../../UI/User-Form-Blocks/ConfirmationMessage";
+import ConfirmationAction from "../../UI/User-Form-Blocks/ConfirmationAction";
+import { MaterialDialog } from "react-native-material-dialog";
 
 // Promose based HTTP Requests library
 import axios from "axios";
@@ -12,16 +13,15 @@ import axios from "axios";
 /* 
 Utility classes:
 - To access util classes use the exported variable.
-- Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
+- Since the utils are objects you will need to access the properties like flex.row or flex.justifyContentCenter 
 */
 import { flex } from "../../../styles/flex-utils";
 import { fonts } from "../../../styles/text-utils";
 
-// Section
+// Section styling
 const ConfirmationSection = [flex.justifyContentCenter, flex.flex];
 
-//Modal
-import { MaterialDialog } from "react-native-material-dialog";
+//Modal styling
 const ModalBody = [fonts.body];
 
 export default class ConfirmationScreen extends Component {
@@ -49,22 +49,6 @@ export default class ConfirmationScreen extends Component {
     this.props.back();
   };
 
-  /* 
-  UpdateData:
-  - This will submit the data via the NodeJS API endpoint 
-  - When the data is sent to the API an alert message is sent and the user is redirected to the search screen
-  
-  Try block:
-  - Set the state of the isUpdatModalVisible to false
-  - Get the token
-  - Send a request to the endpoint with the authorization token set
-  - Set the success equal to the API's success message
-  - Set the isSuccessModalVisible to true
-
-  catch block:
-  - Set the error equal to the API's error message
-  - Set the isErrorModalVisible to true
-  */
   updateData = async (
     name,
     email,
@@ -73,14 +57,13 @@ export default class ConfirmationScreen extends Component {
     avaliableAllergies
   ) => {
     try {
-      // Hide the condifrmation modal
-      console.log("Update modal is now hidden");
+      // Hides the account update modal
       this.setState({ isUpdateModalVisible: !this.state.isUpdateModalVisible });
 
       // Get the token from storage, wait for the promise to resolve
       const token = await AsyncStorage.getItem("userToken");
 
-      // API Domain name
+      // NodeJS API Domain name
       const API_URL = "https://radiant-dusk-41662.herokuapp.com";
 
       // Awaiting the response from the API endpoint and set the header to have an authorization token
@@ -105,7 +88,8 @@ export default class ConfirmationScreen extends Component {
       Destructuring response:
       - Destructuring the state and storing them in variables
       - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-      - Destructuring the data object from the error response. data contains the data fr
+      
+      - Destructuring the data object from the response. data contains the message from the NodeJS API
       */
       const { data } = response;
 
@@ -115,10 +99,9 @@ export default class ConfirmationScreen extends Component {
 
       /* 
       Updating the state:
-      - success state is set to the data message
+      - success state is set to the data message from the API response
       - isSuccessModalVisible is set to the opposite value of the current state
       */
-      console.log("The success state has been updated");
       this.setState({
         success: data.message,
         isSuccessModalVisible: !this.state.isSuccessModalVisible
@@ -127,7 +110,9 @@ export default class ConfirmationScreen extends Component {
       /* 
       Saving data to AsyncStorage:
       - AsyncStorage only accepts a string, so the data needs to be stringified
-      - More info here https://facebook.github.io/react-native/docs/asyncstorage
+      - It saves both the userData and the avaliable allergies
+      
+      - For more information about AsyncStorage checkout this link https://facebook.github.io/react-native/docs/asyncstorage
       */
       const userData = {
         name: data.data.name,
@@ -135,8 +120,11 @@ export default class ConfirmationScreen extends Component {
         phoneNumber: data.data.phone,
         allergies: data.data.allergies
       };
-      console.log("The users data has been saved to AsyncStorage");
+
+      console.log("The local user data have been updated");
       await AsyncStorage.setItem("userData", JSON.stringify(userData));
+
+      console.log("The avaliable allergies have been updated");
       await AsyncStorage.setItem(
         "avaliableAllergies",
         JSON.stringify(avaliableAllergies)
@@ -146,6 +134,7 @@ export default class ConfirmationScreen extends Component {
       Destructuring response:
       - Destructuring the state and storing them in variables
       - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+      
       - Destructure the data object from the error response object so they can be refered to via varialbes
       */
       const { data } = error.response;
@@ -157,7 +146,6 @@ export default class ConfirmationScreen extends Component {
       - error state is set to the data message
       - isErrorModalVisible is set to the opposite value of the current state
       */
-      console.log("The error state has been updated");
       this.setState({
         error: data, // Could use data.error but when the users token is invalid no message would be shown (Look for the solution in the error modal)
         isErrorModalVisible: !this.state.isErrorModalVisible
@@ -168,14 +156,11 @@ export default class ConfirmationScreen extends Component {
     }
   };
 
-  /* 
-  goToSearchScreens:
-  - Call the method goToSearch method which passed down via props
-  - Set the isSuccessModalVisible to false
-  */
   goToSearchScreens = () => {
-    console.log("Going to the search stack");
+    // After confirming the update go back to the SearchStack (MainScreen)
     this.props.goToSearch();
+
+    // Hide the success modal to prevent it appearing after navigating to the main screen
     this.setState({ isSuccessModalVisible: !this.state.isSuccessModalVisible });
   };
 
@@ -184,12 +169,15 @@ export default class ConfirmationScreen extends Component {
     Destructuring response:
     - Destructuring the state and storing them in variables
     - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
-    - Destructure the values from the values object which is passed down via the props so they can accessed via variables 
+    
+    - Destructure the values from the values object which is passed down via the props so they can accessed via indvidual variables 
     - Destructuring the state to also access them via variables
     */
+
     const {
       values: { name, email, phoneNumber, allergies, avaliableAllergies }
     } = this.props;
+
     const {
       isUpdateModalVisible,
       isErrorModalVisible,
@@ -214,9 +202,12 @@ export default class ConfirmationScreen extends Component {
 
         ConfirmationMessage:
         - It accepts only one prop, text which is a string. Its the message which gets displayed below the icon
-        
+        - For information about this component visist it's location which is shown where it's imported
+
+      
         ConfirmationAction:
         - It renders the confirmation actions, they are the back button and update button
+        - For information about this component visist it's location which is shown where it's imported
       */
 
       <ScrollView contentContainerStyle={ConfirmationSection}>

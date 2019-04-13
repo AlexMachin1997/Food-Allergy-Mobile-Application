@@ -2,8 +2,10 @@
 import React, { Component } from "react";
 import { Text, View, AsyncStorage, ScrollView } from "react-native";
 
-// Custom React components
-import CustomButton from "../../Components/UI/Form/Button";
+// Premade and custom React components
+import CustomButton from "../../Components/UI/Button";
+import ResponseModal from "../../Components/UI/Modals/ResponseModal";
+import ActionModal from "../../Components/UI/Modals/ActionModal";
 
 // Promise-based HTTP request Library
 import axios from "axios";
@@ -28,10 +30,6 @@ const ActionButton = [buttons.large];
 
 // Divider
 const DividerStyling = { height: 1, marginTop: 10 };
-
-//Modal
-import { MaterialDialog } from "react-native-material-dialog";
-const ModalBody = [fonts.body];
 
 export default class SettingsScreen extends Component {
   state = {
@@ -115,7 +113,7 @@ export default class SettingsScreen extends Component {
   */
   deleteStorage = async () => {
     this.setState({ dataDeletionModal: !this.state.dataDeletionModal }); // Hide modal again
-    await AsyncStorage.removeItem("shoppingListItems"); //Remove the data referenced in shoppingListItems. This won't remove the login token.
+    await AsyncStorage.removeItem("ItemsDirectory"); //Remove the data referenced in shoppingListItems. This won't remove the login token.
   };
 
   /* 
@@ -163,74 +161,69 @@ export default class SettingsScreen extends Component {
         Text:
         - Renders a string of text, its the equivalent of a p tag in web development
         - For more information about this component visit https://facebook.github.io/react-native/docs/text 
+
+        ActionModal:
+        - Renders a React-Native-Paper modal
+        - For information about this component visist it's location which is shown where it's imported
       */
 
       <ScrollView contentContainerStyle={[spacing.ContainerSpacing]}>
         <View>
-          {/* Error dialog */}
-          <MaterialDialog
+          <ResponseModal
             title="Error"
             visible={errorModal}
             onOk={() => this.setState({ errorModal: !errorModal })}
-            onCancel={() => this.setState({ errorModal: !errorModal })}
-          >
-            <Text style={ModalBody}>
-              {error.error ? error.error : "Unauthorized, please logout"}
-            </Text>
-          </MaterialDialog>
+            onDismiss={() => this.setState({ errorModal: !errorModal })}
+            text={error.error ? error.error : "Unauthorized, please logout"}
+          />
 
-          {/* Success dialog */}
-          <MaterialDialog
+          <ResponseModal
             title="Success"
             visible={successModal}
             onOk={() => this.goHome()}
-            onCancel={() => this.setState({ successModal: !successModal })}
-          >
-            <Text style={ModalBody}>{success}</Text>
-          </MaterialDialog>
+            onDismiss={() => this.setState({ successModal: !successModal })}
+            text={success}
+          />
 
-          {/* Account deletion dialog */}
-          <MaterialDialog
-            title="Account deletion"
+          <ActionModal
+            title="Account Deletion"
             visible={accountDeletionModal}
-            onOk={this.deleteAccount}
+            onOk={() => this.deleteAccount()}
             onCancel={() =>
               this.setState({ accountDeletionModal: !accountDeletionModal })
             }
-          >
-            <Text style={ModalBody}>
-              Looks like you want to delete your account. Are you sure you want
-              to continue?
-            </Text>
-          </MaterialDialog>
+            onDismiss={() =>
+              this.setState({ accountDeletionModal: !accountDeletionModal })
+            }
+            text="Looks like you want to delete your account. Are you sure you want
+            to continue?"
+          />
 
-          {/* Logout dialog */}
-          <MaterialDialog
+          <ActionModal
             title="Logout"
             visible={logoutModal}
             onOk={() => this.goHome()}
             onCancel={() => this.setState({ logoutModal: !logoutModal })}
-          >
-            <Text style={ModalBody}>
-              Looks like you want to logout of your account. Are you sure you
-              want to continue?
-            </Text>
-          </MaterialDialog>
+            onDismiss={() => {
+              this.setState({ logoutModal: !logoutModal });
+            }}
+            text="Looks like you want to logout of your account. Are you sure you
+            want to continue?"
+          />
 
-          {/* Local data deletion dialog */}
-          <MaterialDialog
+          <ActionModal
             title="Data deletion"
             visible={dataDeletionModal}
             onOk={this.deleteStorage}
             onCancel={() =>
               this.setState({ dataDeletionModal: !dataDeletionModal })
             }
-          >
-            <Text style={ModalBody}>
-              Looks like you want to remove all of your application data. Are
-              you sure you want to continue?
-            </Text>
-          </MaterialDialog>
+            onDismiss={() => {
+              this.setState({ dataDeletionModal: !dataDeletionModal });
+            }}
+            text="Looks like you want to remove all of your application data. Are
+            you sure you want to continue?"
+          />
 
           <View style={Action}>
             <Text style={ActionTitle}>Account deletion</Text>

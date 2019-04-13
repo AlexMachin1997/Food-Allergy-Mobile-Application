@@ -1,5 +1,5 @@
 // React dependencies
-import React, { Component } from "react";
+import React from "react";
 import { ActivityIndicator, View } from "react-native";
 
 /* 
@@ -12,12 +12,12 @@ import { flex } from "../../styles/flex-utils";
 export default props => {
   return (
     <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center"
-      }}
+      style={[
+        flex.flex,
+        flex.row,
+        flex.justifyContentCenter,
+        flex.alignItemsCenter
+      ]}
     >
       <ActivityIndicator size="large" color="#0000ff" />
     </View>

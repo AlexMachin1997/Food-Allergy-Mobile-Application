@@ -6,10 +6,6 @@ export default class LiveSearchScreen extends Component {
     console.log("The Live Search Component Has Mounted");
   }
 
-  static navigationOptions = {
-    title: "Live search"
-  };
-
   render() {
     return (
       <View>

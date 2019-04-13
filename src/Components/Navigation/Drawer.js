@@ -5,72 +5,53 @@ import {
   View,
   ScrollView,
   Image,
-  Text,
   AsyncStorage
 } from "react-native";
 
-// Modal
-import { MaterialDialog } from "react-native-material-dialog";
-const ModalBody = [fonts.body];
-
-// Navigation components and assets
+// Custom and pre-made React components
 import Link from "./Link";
 import AppIcon from "../../assets/Icon.png";
-
-/* 
-Utility classes:
-- To access util classes use the exported variable.
-- Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
-*/
-import { fonts } from "../../styles/text-utils";
+import ActionModal from "../UI/Modals/ActionModal";
 
 export default class CustomDrawer extends Component {
   state = {
-    logoutModal: false,
-    success: "",
-    successModal: false
+    logoutModal: false
   };
 
-  /* 
-  goHome:
-  - Navigate to the guestStack
-  - Remove the users accss token  
-  - Hide the successModal
-  */
-  goHome() {
-    this.props.navigation.navigate("guestStack"); // After deleting an account go to the guestStack
-    AsyncStorage.removeItem("userToken");
-    this.setState({ successModal: !this.state.successModal });
+  async goHome() {
+    // Go to the guestStack
+    this.props.navigation.navigate("guestStack");
+
+    // Hide the success modal after going to the guestStack
+    this.setState({ logoutModal: !this.state.logoutModal });
+
+    // Remove the users token. To access the home a JWT can't be present with AsyncStorae
+    await AsyncStorage.removeItem("userToken");
   }
 
   render() {
-    const { logoutModal, successModal, success } = this.state;
+    /*
+    Destructuring response:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+
+    - Destructure the state to access them as indvidual variables
+    - Destructure navigate to access the navigate method from React-Navigation props
+    */
+    const { logoutModal } = this.state;
     const { navigate } = this.props.navigation;
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        {/* Success dialog */}
-        <MaterialDialog
-          title="Success"
-          visible={successModal}
-          onOk={() => this.goHome()}
-          onCancel={() => this.setState({ successModal: !successModal })}
-        >
-          <Text style={ModalBody}>{success}</Text>
-        </MaterialDialog>
-
-        {/* Logout dialog */}
-        <MaterialDialog
+        <ActionModal
           title="Logout"
           visible={logoutModal}
           onOk={() => this.goHome()}
           onCancel={() => this.setState({ logoutModal: !logoutModal })}
-        >
-          <Text style={ModalBody}>
-            Looks like you want to logout of your account. Are you sure you want
-            to continue?
-          </Text>
-        </MaterialDialog>
+          onDismiss={() => this.setState({ logoutModal: !logoutModal })}
+          text="Looks like you want to logout of your account. Are you sure you want
+            to continue?"
+        />
 
         <View
           style={{
@@ -114,7 +95,9 @@ export default class CustomDrawer extends Component {
             />
 
             <Link
-              action={() => this.setState({ logoutModal: !logoutModal })}
+              action={async () =>
+                await this.setState({ logoutModal: !logoutModal })
+              }
               icon="exit-to-app"
               text="Logout"
             />

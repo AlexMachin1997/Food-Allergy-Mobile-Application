@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Text, View, ScrollView, KeyboardAvoidingView } from "react-native";
 
 // ReactJS custom components
-import CustomButton from "../UI/Form/Button";
+import CustomButton from "../UI/Button";
 
 /* 
 Utility classes:
@@ -14,39 +14,35 @@ import { fonts } from "../../styles/text-utils";
 import { flex } from "../../styles/flex-utils";
 import { spacing } from "../../styles/spacing-utils";
 
-// Heading styled
+// Heading styles
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title2];
 
 // Section styles
 const Section = [spacing.smallBottom, spacing.smallTop];
 const AllergySection = [spacing.smallTop, spacing.smallBottom, flex.flex];
-
 const ConfirmationButtonsSection = [flex.justifyContentSpaceAround, flex.row];
 
+// Confirmation button styling
 const ConfirmationButtons = {
   padding: 10,
   width: 150
 };
 
 export default class Allergies extends Component {
-  /* 
-   goForward:
-   - Increments the step number
-   - Renders the next screen
-   */
   goForward = e => {
+    // Prevent the default behaviour
     e.preventDefault();
+
+    // Increment by one, render the next component
     this.props.forward();
   };
 
-  /* 
-  goBack:
-  - Decrement the step number
-  - Renders the next screen
-  */
   goBack = e => {
+    // Prevent the default behaviour
     e.preventDefault();
+
+    // Decrement by one, render the previous component
     this.props.back();
   };
 
@@ -55,8 +51,9 @@ export default class Allergies extends Component {
     Destructuring status:
     - Destructuring the state and storing them in variables
     - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+    
     - Destructuring the props so they can be refered to via individual variables
-    - Destructuring the values so they can be refered to via individual variables
+    - Destructuring the values from the props so they can be refered to via individual variables
     */
     const { values } = this.props;
     const { allergies, avaliableAllergies } = values;
@@ -107,7 +104,7 @@ export default class Allergies extends Component {
                 style={{
                   justifyContent: "center",
                   alignItems: "center",
-                  margin: 10
+                  textAlign: "center"
                 }}
               >
                 <Text style={SubHeading}>You have no allergies</Text>

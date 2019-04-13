@@ -2,10 +2,11 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-import CustomButton from "../Form/Button";
+// Custom React component
+import CustomButton from "../Button";
 
-// React-Native Vector Icons
-import OcticonsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+// React-Native material icon
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default props => (
   <View
@@ -26,7 +27,7 @@ export default props => (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View>
           <Text style={{ fontSize: 20 }}>
-            <OcticonsIcon
+            <Icon
               name={
                 props.isAllergic
                   ? "emoticon-sad-outline"

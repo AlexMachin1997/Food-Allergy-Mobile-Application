@@ -4,13 +4,22 @@ import Card from "../../Components/UI/Cards/Food-Card";
 import { Searchbar } from "react-native-paper";
 import { NavigationEvents } from "react-navigation";
 
+/* 
+Utility classes:
+- To access util classes use the exported variable.
+- Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
+*/
+import { fonts } from "../../styles/text-utils";
+
 export default class ShoppingListScreen extends Component {
   state = {
     shoppingLists: [],
+
     name: "",
     email: "",
     phoneNumber: "",
     allergies: [],
+
     term: ""
   };
 
@@ -74,62 +83,76 @@ export default class ShoppingListScreen extends Component {
     await AsyncStorage.setItem("ItemsDirectory", JSON.stringify(filteredList));
   };
 
-  static navigationOptions = {
-    title: "Shopping list"
-  };
-
   render() {
     return (
-      <ScrollView>
+      <>
         <NavigationEvents onDidFocus={this.onFocus} />
 
-        <View
-          style={{
-            marginLeft: 10,
-            marginRight: 10,
-            marginTop: 10,
-            marginBottom: 3
-          }}
-        >
-          <Searchbar
-            placeholder="Start filtering"
-            value={this.state.term}
-            onChangeText={value =>
-              this.setState({
-                term: value
-              })
-            }
-          />
-        </View>
-
-        {this.state.shoppingLists
-
-          // Only returns values which are valid
-          // -1 would mean its not within the array, so we only return when its greater than or equal to 0
-          .filter(item => {
-            return (
-              item.name
-                .toLowerCase()
-                .indexOf(this.state.term.toLocaleLowerCase()) >= 0
-            );
-          })
-
-          .map((data, index) => {
-            const usersAllergies = this.state.allergies;
-            const productAllergies = data.properties;
-
-            return (
-              <Card
-                key={index}
-                name={data.name}
-                isAllergic={usersAllergies.some(allergy =>
-                  productAllergies.includes(allergy)
-                )}
-                onDelete={() => this.handleDelete(data.id)}
+        {this.state.shoppingLists < 1 ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: 10,
+              marginLeft: 10
+            }}
+          >
+            <Text style={[fonts.title2]}>
+              Looks your directory is empty. Try adding some items via barcode
+              or live search
+            </Text>
+          </View>
+        ) : (
+          <ScrollView>
+            <View
+              style={{
+                marginLeft: 10,
+                marginRight: 10,
+                marginTop: 10,
+                marginBottom: 3
+              }}
+            >
+              <Searchbar
+                placeholder="Start filtering"
+                value={this.state.term}
+                onChangeText={value =>
+                  this.setState({
+                    term: value
+                  })
+                }
               />
-            );
-          })}
-      </ScrollView>
+            </View>
+            {this.state.shoppingLists
+
+              // Only returns values which are valid
+              // -1 would mean its not within the array, so we only return when its greater than or equal to 0
+              .filter(item => {
+                return (
+                  item.name
+                    .toLowerCase()
+                    .indexOf(this.state.term.toLocaleLowerCase()) >= 0
+                );
+              })
+
+              .map((data, index) => {
+                const usersAllergies = this.state.allergies;
+                const productAllergies = data.properties;
+
+                return (
+                  <Card
+                    key={index}
+                    name={data.name}
+                    isAllergic={usersAllergies.some(allergy =>
+                      productAllergies.includes(allergy)
+                    )}
+                    onDelete={() => this.handleDelete(data.id)}
+                  />
+                );
+              })}
+          </ScrollView>
+        )}
+      </>
     );
   }
 }

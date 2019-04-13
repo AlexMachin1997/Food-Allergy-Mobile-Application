@@ -43,10 +43,12 @@ import SadFace from "../../assets/Sad-face.png";
 Utility classes:
 - To access util classes use the exported variable e.g. fonts.[object name]
 */
-import { fonts } from "../../styles/text-utils";
+import { fonts, align } from "../../styles/text-utils";
 
 // Generates a random unique ID
 import shortid from "shortid";
+
+const headings = [fonts.title3, align.center];
 
 export default class BarcodeScreen extends Component {
   state = {
@@ -478,9 +480,9 @@ export default class BarcodeScreen extends Component {
             >
               <View style={{ paddingLeft: 10, paddingRight: 10 }}>
                 {error ? (
-                  <Text style={[fonts.title3]}> {error}</Text>
+                  <Text style={headings}> {error}</Text>
                 ) : (
-                  <Text style={[fonts.title3]}>{this.state.item.title}</Text>
+                  <Text style={headings}>{this.state.item.title}</Text>
                 )}
               </View>
 

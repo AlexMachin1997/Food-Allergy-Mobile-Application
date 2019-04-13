@@ -1,7 +1,12 @@
+// React dependencies
 import React, { Component } from "react";
 import { ScrollView, Text, View, AsyncStorage } from "react-native";
+
+// Custom and pre-made React component
 import Card from "../../Components/UI/Cards/Food-Card";
 import { Searchbar } from "react-native-paper";
+
+// React-Navigation Higher-Order-Component
 import { NavigationEvents } from "react-navigation";
 
 /* 

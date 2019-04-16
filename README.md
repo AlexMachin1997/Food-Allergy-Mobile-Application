@@ -1,4 +1,4 @@
-# Food Allergy Mobile Application &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AlexMachin1997/Food-Allergy-Mobile-Application/README.md) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+# Food Allergy Mobile Application &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AlexMachin1997/Food-Allergy-Mobile-Application/README.md) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/AlexMachin1997/Food-Allergy-Mobile-Application/pulls)
 
 The repository consists of a React-Native mobile application, it's designed to help allergens avoid foods they can't come into contact with.
 
@@ -20,16 +20,20 @@ For a full breakdown of the applications feature visit the core features section
 
 ## Core features
 
-As of the current version of the mobile application, it is currently capable of performing some of the following tasks:
+Within the current build of the mobile application, it currently supports the following features:
 
-- Registering a new user
-- User authentication
-- Search for products via barcode search and live search
-- Save suitable items to a shopping list
-- Update your profile details
-- Logout of your account
+- Registration
+- Authentication
+- Authorization through the use of a JSON Web Token (JWT) system
+- Update user profiles, this includes both account details and allergies
 - Delete your account
-- Delete items from the mobile devices internal storage
+- Sign out of your current session
+- Save and remove items from your local directroy
+- Delete all your local data (Excludes JWT token)
+- Barcode scanning via Expo-Barcode module
+- Allery detection based on the data received from a food API
+- Filter through your local directroy of items based on the text input value
+- A small static help section, common questions users might be thinking.
 
 ## Technologies used:
 
@@ -39,18 +43,15 @@ As of the current version of the mobile application, it is currently capable of 
 - [Metro bundler](https://github.com/facebook/metro)
 - [Expo-cli](https://docs.expo.io/versions/latest/workflow/expo-cli/)
 - [Babel](https://babeljs.io/)
-- [Yarn](https://yarnpkg.com/en/)
 - [Axios](https://github.com/axios/axios)
 - [React Navigation](https://reactnavigation.org/)
 - [Expo-barcode-scanner](https://github.com/expo/expo/tree/master/packages/expo-barcode-scanner)
 - [Expo-permissions](https://docs.expo.io/versions/latest/sdk/permissions/)
-- [React-Native-material-dialog](https://github.com/hectahertz/react-native-material-dialog)
 - [React-Native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+- [React-Native-Paper](https://github.com/callstack/react-native-paper)
 - [React-navigation](https://reactnavigation.org/)
 - [React-navigation-material-bottom-tabs](https://github.com/react-navigation/react-navigation-material-bottom-tabs)
 - [ShortID](https://github.com/dylang/shortid)
-
-**NOTE**: Dependencies may be swapped out occasionally as there maybe better alternatives. For example Axio might be swapped out for the native fetch api, but in the current build it will be used to perform HTTP requests to [this](https://github.com/AlexMachin1997/RESTful-API-Interface) API.
 
 ## Getting started
 

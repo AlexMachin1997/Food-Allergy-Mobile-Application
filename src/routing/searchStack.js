@@ -6,11 +6,9 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 
 // Custom screen
 import BarcodeScreen from "../screens/Barcode-Screen/Barcode-Screen";
-import LiveSearchScreen from "../screens/Live-Search-Screen/Live-Search-Screen";
 import ItemsDirectoryScreen from "../screens/Item-Directory/Items-Directory";
 
 // Icon libaries
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AntDesigns from "react-native-vector-icons/AntDesign";
 import FoundationIcon from "react-native-vector-icons/Foundation";
 
@@ -48,15 +46,6 @@ export default (SearchStack = createMaterialBottomTabNavigator(
         )
       }
     },
-    Feed: {
-      screen: LiveSearchScreen,
-      navigationOptions: {
-        tabBarLabel: "Live Search",
-        tabBarIcon: () => (
-          <MaterialIcons name="search" size={iconSize} color="white" />
-        )
-      }
-    },
     ItemsDirectory: {
       screen: ItemsDirectoryScreen,
       navigationOptions: {
@@ -79,13 +68,6 @@ export default (SearchStack = createMaterialBottomTabNavigator(
       if (routeName == "Barcode") {
         return {
           headerTitle: "Barcode scanner"
-        };
-      }
-
-      // TrackItems tab, when the route equals routeName set the headerTitle equal to the specified title
-      if (routeName == "Feed") {
-        return {
-          headerTitle: "Live Search"
         };
       }
 

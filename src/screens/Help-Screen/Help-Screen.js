@@ -18,7 +18,7 @@ import { fonts } from "../../styles/text-utils";
 import { spacing } from "../../styles/spacing-utils";
 
 // Sections
-const section = [spacing.smallTop, spacing.smallBottom];
+const Section = [spacing.smallTop, spacing.smallBottom];
 
 // Headings
 const heading = [fonts.headline];
@@ -91,7 +91,7 @@ export default class HelpScreen extends Component {
 
       <ScrollView contentContainerStyle={[spacing.ContainerSpacing, flex.grow]}>
         <View style={{ marginBottom: 50 }}>
-          <View style={section}>
+          <View style={Section}>
             <Text style={heading}>
               Can I delete my user account and saved items ?
             </Text>
@@ -110,13 +110,13 @@ export default class HelpScreen extends Component {
               compact={true}
               colour="#0277bd"
               onClick={() => this.handleToggle("Section1")}
-              label="Toggle section 1"
+              label="Toggle Section 1"
             />
           </View>
 
           <Divider style={DividerStyling} />
 
-          <View style={section}>
+          <View style={Section}>
             <Text style={heading}>Why is my email required ? </Text>
 
             {Section2 ? (
@@ -132,13 +132,13 @@ export default class HelpScreen extends Component {
               compact={true}
               colour="#0277bd"
               onClick={() => this.handleToggle("Section2")}
-              label="Toggle section 2"
+              label="Toggle Section 2"
             />
           </View>
 
           <Divider style={DividerStyling} />
 
-          <View style={section}>
+          <View style={Section}>
             <Text style={heading}>Why can't I find some foods ?</Text>
 
             {Section3 ? (
@@ -156,13 +156,13 @@ export default class HelpScreen extends Component {
               compact={true}
               colour="#0277bd"
               onClick={() => this.handleToggle("Section3")}
-              label="Toggle section 3"
+              label="Toggle Section 3"
             />
           </View>
 
           <Divider style={DividerStyling} />
 
-          <View style={section}>
+          <View style={Section}>
             <Text style={heading}>
               Why was I required to sign up for a free account ?
             </Text>
@@ -181,13 +181,13 @@ export default class HelpScreen extends Component {
               compact={true}
               colour="#0277bd"
               onClick={() => this.handleToggle("Section4")}
-              label="Toggle section 4"
+              label="Toggle Section 4"
             />
           </View>
 
           <Divider />
 
-          <View style={section}>
+          <View style={Section}>
             <Text style={heading}>
               How can I add items which are suitable to my shopping list
             </Text>
@@ -205,7 +205,7 @@ export default class HelpScreen extends Component {
               compact={true}
               colour="#0277bd"
               onClick={() => this.handleToggle("Section5")}
-              label="Toggle section 5"
+              label="Toggle Section 5"
             />
           </View>
         </View>

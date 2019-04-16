@@ -73,12 +73,16 @@ export default class BarcodeScreen extends Component {
   };
 
   async componentDidMount() {
-    await console.log("The Barcode Screen Has Mounted");
+    console.log("The Barcode Screen Has Mounted");
     await this.requestCameraPermission();
     await this.fetchCurrentUserData();
     await this.fetchSuitableItems();
-    await console.log("componentDidMount state");
-    await console.log(this.state.shoppingLists);
+    console.log("componentDidMount state");
+    console.log(this.state.shoppingLists);
+  }
+
+  componentWillUnmount() {
+    this.setState({});
   }
 
   onFocus = async () => {
@@ -88,8 +92,8 @@ export default class BarcodeScreen extends Component {
     // Fetch there current items directory when focus is true (React-Navigation Higher-Order-Component)
     await this.fetchSuitableItems();
 
-    await console.log("Onfocus state");
-    await console.log(this.state.shoppingLists);
+    console.log("Onfocus state");
+    console.log(this.state.shoppingLists);
   };
 
   fetchSuitableItems = async () => {
@@ -502,7 +506,7 @@ export default class BarcodeScreen extends Component {
                     mode="contained"
                     compact={true}
                     colour="#0277bd"
-                    //onClick={()=> this.handleToggle('Section1')}
+                    onClick={this.addedItemToItemDirectory}
                     label="Add to your shopping list"
                     disabled={isAllergic}
                     style={{ padding: 50 }}

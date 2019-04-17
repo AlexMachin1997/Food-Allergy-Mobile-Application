@@ -209,6 +209,7 @@ export default class EditProfileScreen extends Component {
             values={values}
             addAllery={this.addAllergy}
             removeAllergy={this.removeAllergy}
+            title="Editing allergies"
           />
         );
 

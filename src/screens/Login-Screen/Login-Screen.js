@@ -240,7 +240,7 @@ export default class LoginScreen extends Component {
               value={email}
               onChange={value => this.handleChange("email", value)}
               isSecure={false}
-              style={[Outline, OutlineColour, OutlineWidth]}
+              style={[Otline, OutlineColour, OutlineWidth]}
               Ismultiline={true}
               keyboardType="email-address"
             />
@@ -260,7 +260,7 @@ export default class LoginScreen extends Component {
 
           <View style={Section}>
             <CustomButton
-              text="Login"
+              text="Log in"
               mode="contained"
               compact={true}
               colour="#0277bd"

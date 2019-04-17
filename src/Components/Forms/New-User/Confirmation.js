@@ -25,8 +25,8 @@ const ConfirmationSection = [flex.justifyContentCenter, flex.flex];
 export default class ConfirmationScreen extends Component {
   state = {
     isRegisterModalVisible: false,
-    errorModal: false,
-    successModal: false,
+    isErrorModalVisible: false,
+    isSuccessModalVisible: false,
     error: "",
     success: ""
   };
@@ -73,11 +73,11 @@ export default class ConfirmationScreen extends Component {
       /* 
       Updating the success state:
       - success state is set to the data message
-      - successModal is set to the opposite value of the current state
+      - isSuccessModalVisible is set to the opposite value of the current state
       */
       this.setState({
         success: data.message,
-        successModal: !this.state.successModal
+        isSuccessModalVisible: !this.state.isSuccessModalVisible
       });
 
       /* 
@@ -108,11 +108,11 @@ export default class ConfirmationScreen extends Component {
       /* 
       Updating the error state:
       - error state is set to the data message
-      - errorModal is set to the opposite value of the current state, for example its false by default this would turn it to true
+      - isErrorModalVisible is set to the opposite value of the current state, for example its false by default this would turn it to true
       */
       this.setState({
         error: data.message,
-        errorModal: !this.state.errorModal
+        isErrorModalVisible: !this.state.isErrorModalVisible
       });
 
       // Return false to prevent the request from continuting, axios may or may not handle this.
@@ -125,7 +125,7 @@ export default class ConfirmationScreen extends Component {
     this.props.goToLogin();
 
     // Hide the success modal to prevent it appearing after navigating to the main screen
-    this.setState({ successModal: !this.state.successModal });
+    this.setState({ isSuccessModalVisible: !this.state.isSuccessModalVisible });
   };
 
   render() {
@@ -145,9 +145,9 @@ export default class ConfirmationScreen extends Component {
     const {
       isRegisterModalVisible,
       success,
-      successModal,
+      isSuccessModalVisible,
       error,
-      errorModal
+      isErrorModalVisible
     } = this.state;
 
     return (
@@ -177,17 +177,23 @@ export default class ConfirmationScreen extends Component {
       <ScrollView contentContainerStyle={ConfirmationSection}>
         <ResponseModal
           title="Error"
-          visible={errorModal}
-          onOk={() => this.setState({ errorModal: !errorModal })}
-          onDismiss={() => this.setState({ errorModal: !errorModal })}
+          visible={isErrorModalVisible}
+          onOk={() =>
+            this.setState({ isErrorModalVisible: !isErrorModalVisible })
+          }
+          onDismiss={() =>
+            this.setState({ isErrorModalVisible: !isErrorModalVisible })
+          }
           text={error}
         />
 
         <ResponseModal
-          title="Error"
-          visible={successModal}
+          title="Success"
+          visible={isSuccessModalVisible}
           onOk={() => this.goToLoginScreen()}
-          onDismiss={() => this.setState({ successModal: !successModal })}
+          onDismiss={() =>
+            this.setState({ isSuccessModalVisible: !isSuccessModalVisible })
+          }
           text={success}
         />
 

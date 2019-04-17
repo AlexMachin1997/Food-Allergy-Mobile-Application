@@ -200,14 +200,14 @@ export default class SettingsScreen extends Component {
           />
 
           <ActionModal
-            title="Logout"
+            title="Log out"
             visible={logoutModal}
             onOk={() => this.goHome()}
             onCancel={() => this.setState({ logoutModal: !logoutModal })}
             onDismiss={() => {
               this.setState({ logoutModal: !logoutModal });
             }}
-            text="Looks like you want to logout of your account. Are you sure you
+            text="Looks like you want to log out of your account. Are you sure you
             want to continue?"
           />
 
@@ -272,7 +272,7 @@ export default class SettingsScreen extends Component {
               afterwards
             </Text>
             <CustomButton
-              text="Logout"
+              text="Log out"
               mode="contained"
               compact={true}
               styling={ActionButton}

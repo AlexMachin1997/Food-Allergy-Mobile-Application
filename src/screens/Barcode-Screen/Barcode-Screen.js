@@ -502,7 +502,7 @@ export default class BarcodeScreen extends Component {
               {error ? null : (
                 <View>
                   <CustomButton
-                    text="Add to shopping list"
+                    text="Add to your items directory"
                     mode="contained"
                     compact={true}
                     colour="#0277bd"

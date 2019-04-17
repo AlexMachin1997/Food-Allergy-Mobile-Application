@@ -90,7 +90,7 @@ export default class Allergies extends Component {
       >
         <KeyboardAvoidingView behavior="padding">
           <View style={Section}>
-            <Text style={MainTitle}>Account setup</Text>
+            <Text style={MainTitle}>{this.props.title}</Text>
             <Text style={SubHeading}>
               Fill in the inputs below with the appropriate information
             </Text>

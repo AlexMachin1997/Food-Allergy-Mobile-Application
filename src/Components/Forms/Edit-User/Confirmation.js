@@ -5,7 +5,8 @@ import { ScrollView, Text, AsyncStorage } from "react-native";
 // Custom React components
 import ConfirmationMessage from "../../UI/User-Form-Blocks/ConfirmationMessage";
 import ConfirmationAction from "../../UI/User-Form-Blocks/ConfirmationAction";
-import { MaterialDialog } from "react-native-material-dialog";
+import ResponseModal from "../../UI/Modals/ResponseModal";
+import ActionModal from "../../UI/Modals/ActionModal";
 
 // Promose based HTTP Requests library
 import axios from "axios";
@@ -211,38 +212,30 @@ export default class ConfirmationScreen extends Component {
       */
 
       <ScrollView contentContainerStyle={ConfirmationSection}>
-        {/* Error dialog */}
-        <MaterialDialog
+        <ResponseModal
           title="Error"
           visible={isErrorModalVisible}
           onOk={() =>
             this.setState({ isErrorModalVisible: !isErrorModalVisible })
           }
-          onCancel={() =>
+          onDismiss={() =>
             this.setState({ isErrorModalVisible: !isErrorModalVisible })
           }
-        >
-          <Text style={ModalBody}>
-            {/* error.error is the error data from the NodeJS API, if true use the message provided by the API false the user is unauthorized */}
-            {error.error ? error.error : "Unauthorized access, please logout"}
-          </Text>
-        </MaterialDialog>
+          text={error}
+        />
 
-        {/* Success dialog */}
-        <MaterialDialog
+        <ResponseModal
           title="Success"
           visible={isSuccessModalVisible}
           onOk={() => this.goToSearchScreens()}
-          onCancel={() =>
+          onDismiss={() =>
             this.setState({ isSuccessModalVisible: !isSuccessModalVisible })
           }
-        >
-          <Text style={ModalBody}>{success}</Text>
-        </MaterialDialog>
+          text={success}
+        />
 
-        {/* Update confirmation dialog */}
-        <MaterialDialog
-          title="Account update"
+        <ActionModal
+          title="Update profile"
           visible={isUpdateModalVisible}
           onOk={() =>
             this.updateData(
@@ -254,14 +247,18 @@ export default class ConfirmationScreen extends Component {
             )
           }
           onCancel={() =>
-            this.setState({ isUpdateModalVisible: !isUpdateModalVisible })
+            this.setState({
+              isUpdateModalVisible: !this.state.isUpdateModalVisible
+            })
           }
-        >
-          <Text style={ModalBody}>
-            Looks like you want to update your account, would you like to
-            continue?
-          </Text>
-        </MaterialDialog>
+          onDismiss={() =>
+            this.setState({
+              isUpdateModalVisible: !this.state.isUpdateModalVisible
+            })
+          }
+          text="Looks like you want to update your account, would you like to
+          continue?"
+        />
 
         <ConfirmationMessage text="Your details are ready to be updated." />
         <ConfirmationAction

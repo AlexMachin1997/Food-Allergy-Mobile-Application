@@ -5,6 +5,8 @@ import { Text, View, ScrollView, KeyboardAvoidingView } from "react-native";
 // ReactJS custom components
 import CustomButton from "../../UI/Button";
 import CustomInput from "../../UI/Form-Elements/TextInput";
+import ResponseModal from "../../UI/Modals/ResponseModal";
+import ActionModal from "../../UI/Modals/ActionModal";
 
 /* 
 Utility classes:

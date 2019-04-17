@@ -89,7 +89,7 @@ export default class HomeScreen extends Component {
 
         <View>
           <CustomButton
-            text="Login"
+            text="Log in"
             mode="contained"
             compact={true}
             styling={Button}

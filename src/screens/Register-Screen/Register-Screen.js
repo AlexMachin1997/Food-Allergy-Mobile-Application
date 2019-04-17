@@ -202,6 +202,7 @@ export default class RegisterScreen extends Component {
             values={values}
             addAllery={this.addAllergy}
             removeAllergy={this.removeAllergy}
+            title="Allergy setup"
           />
         );
 

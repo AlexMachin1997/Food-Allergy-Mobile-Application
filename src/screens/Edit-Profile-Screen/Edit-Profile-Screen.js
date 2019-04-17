@@ -1,19 +1,12 @@
 // React dependencies
 import React, { Component } from "react";
-import { AsyncStorage, ActivityIndicator, View } from "react-native";
+import { AsyncStorage } from "react-native";
 
 // Custom React components
 import EditProfile from "../../Components/Forms/Edit-User/Edit-Profile";
 import EditAllergies from "../../Components/Forms/Allergies";
 import Confirmation from "../../Components/Forms/Edit-User/Confirmation";
 import Spinner from "../../Components/UI/Spinner";
-
-/* 
-Utility classes:
-- To access util classes use the exported variable.
-- Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
-*/
-import { flex } from "../../styles/flex-utils";
 
 export default class EditProfileScreen extends Component {
   state = {
@@ -216,6 +209,7 @@ export default class EditProfileScreen extends Component {
             values={values}
             addAllery={this.addAllergy}
             removeAllergy={this.removeAllergy}
+            title="Editing allergies"
           />
         );
 

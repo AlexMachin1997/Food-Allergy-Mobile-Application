@@ -4,7 +4,7 @@ import { Text, View, ScrollView, KeyboardAvoidingView } from "react-native";
 
 // ReactJS custom components
 import CustomButton from "../../UI/Button";
-import CustomInput from "../../UI/Input";
+import CustomInput from "../../UI/Form-Elements/TextInput";
 
 /* 
 Utility classes:
@@ -15,43 +15,32 @@ import { buttons } from "../../../styles/buttons-utils";
 import { fonts } from "../../../styles/text-utils";
 import { flex } from "../../../styles/flex-utils";
 import { spacing } from "../../../styles/spacing-utils";
-import { border, radius, width } from "../../../styles/border";
+import styles from "../Styles";
 
-// Component specific styling
-import styles from "../styles";
-
-// Heading
+// Heading styles
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3];
 
-// Section
+// Section styles
 const Section = [spacing.smallBottom, spacing.smallTop];
 
-// Label
+// Label styles
 const FormLabel = [fonts.title3];
 
-// Input
-const Outline = radius.small;
-const OutlineColour = border.black;
-const OutlineWidth = width.small;
+// Input styles
+const Outline = { borderRadius: 5 };
+const OutlineColour = { borderColor: "black" };
+const OutlineWidth = { borderWidth: 1 };
 
-// Button
+// Button styles
 const Button = [buttons.large, styles.RegisterButtons];
 
 export default class ProfileSetup extends Component {
-  componentDidMount() {
-    console.log("The Profile Setup Componnt Has Mounted");
-    console.log("The avaliable values are:");
-    console.log(this.props.values);
-  }
-
-  /* 
-   goForward:
-   - Increments the step number
-   - Renders the next screen
-   */
   goForward = e => {
+    // Prevents the default behaviour
     e.preventDefault();
+
+    // Increments by one, renders the next component
     this.props.forward();
   };
 
@@ -60,37 +49,43 @@ export default class ProfileSetup extends Component {
     Destructuring status:
     - Destructuring the state and storing them in variables
     - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
-    - Destructuring the props so they can be refered to via indvidual variables
-    - Destructuring the values so they can be refered to via indvidual variables
+    
+    - Destructuring the props so they can be refered to via individual variables
+    - Destructuring the values from the prps so they can be refered to via individual variables
     */
     const { values, handleChange } = this.props;
     const { name, email, password } = values;
 
     return (
       /* 
-          Component overviews with resources:
-          
-          ScrollView:
-          - Allows content to be scrolled in the event the content exceeds the screen height.
-          - Often in very rare cases content will overflow the screen but not actually enable the functionlaity. To solve this add an additional view to the bottom with a fixed hieght
-          - For more information about this component visit https://facebook.github.io/react-native/docs/scrollview#docsNav
+      Component overviews with resources:
+        
+      ScrollView:
+      - Allows content to be scrolled in the event the content exceeds the screen height.
+      - Often in very rare cases content will overflow the screen but not actually enable the functionlaity. To solve this add an additional view to the bottom with a fixed hieght
+      - For more information about this component visit https://facebook.github.io/react-native/docs/scrollview#docsNav
 
-          KeyboardAvoid View:
-          - Enable the keyboard functionlaity to be controlled
-          - In Android/App/src/Main/AndroidManifest.xml the property android:windowSoftInputMode is set to "adjustPan" to prevent content being pushed off screen
-          - For more information about this component this visit https://facebook.github.io/react-native/docs/keyboardavoidingview#docsNav 
+      KeyboardAvoid View:
+      - Enable the keyboard functionlaity to be controlled
+      - In Android/App/src/Main/AndroidManifest.xml the property android:windowSoftInputMode is set to "adjustPan" to prevent content being pushed off screen
+      - For more information about this component this visit https://facebook.github.io/react-native/docs/keyboardavoidingview#docsNav 
 
-          View:
-          - Is the wrapper, it's the equivalent of a div tag in web development the only difference being React-Natives is more messy
-          - For more information about this component visit https://facebook.github.io/react-native/docs/view
-                    
-          Text:
-          - Renders a string of text, its the equivalent of a p tag in web development
-          - For more information about this component visit https://facebook.github.io/react-native/docs/text 
+      View:
+      - Is the wrapper, it's the equivalent of a div tag in web development the only difference being React-Natives is more messy
+      - For more information about this component visit https://facebook.github.io/react-native/docs/view
+                
+      Text:
+      - Renders a string of text, its the equivalent of a p tag in web development
+      - For more information about this component visit https://facebook.github.io/react-native/docs/text 
 
-          CustomInput
-          - Visit the component for more information
-        */
+      CustomInput:
+      - Renders a simple text-based input
+      - For information about this component visist it's location which is shown where it's imported
+
+      CustomButton:
+      - Renders a simple button component
+      - For information about this component visist it's location which is shown where it's imported
+      */
 
       <ScrollView
         contentContainerStyle={[

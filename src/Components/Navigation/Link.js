@@ -9,7 +9,7 @@ import {
   Text
 } from "react-native";
 
-// React-Native Vector Icons
+// React-Native material icon
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 /* 

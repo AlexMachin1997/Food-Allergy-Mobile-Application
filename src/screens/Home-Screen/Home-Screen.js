@@ -1,6 +1,6 @@
 // React dependencies
 import React, { Component } from "react";
-import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
+import { Text, View, Image, ScrollView } from "react-native";
 
 // Custom React components
 import CustomButton from "../../Components/UI/Button";
@@ -89,7 +89,7 @@ export default class HomeScreen extends Component {
 
         <View>
           <CustomButton
-            text="Login"
+            text="Log in"
             mode="contained"
             compact={true}
             styling={Button}

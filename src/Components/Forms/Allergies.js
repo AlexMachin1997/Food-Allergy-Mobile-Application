@@ -14,51 +14,47 @@ import { fonts } from "../../styles/text-utils";
 import { flex } from "../../styles/flex-utils";
 import { spacing } from "../../styles/spacing-utils";
 
-// Heading styled
+// Heading styles
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title2];
 
 // Section styles
 const Section = [spacing.smallBottom, spacing.smallTop];
 const AllergySection = [spacing.smallTop, spacing.smallBottom, flex.flex];
-
 const ConfirmationButtonsSection = [flex.justifyContentSpaceAround, flex.row];
 
+// Confirmation button styling
 const ConfirmationButtons = {
   padding: 10,
   width: 150
 };
 
 export default class Allergies extends Component {
-  componentDidMount() {
-    console.log(this.props.values);
-  }
-
-  /* 
-   goForward:
-   - Increments the step number
-   - Renders the next screen
-   */
   goForward = e => {
+    // Prevent the default behaviour
     e.preventDefault();
+
+    // Increment by one, render the next component
     this.props.forward();
   };
 
-  /* 
-  goBack:
-  - Decrement the step number
-  - Renders the next screen
-  */
   goBack = e => {
+    // Prevent the default behaviour
     e.preventDefault();
+
+    // Decrement by one, render the previous component
     this.props.back();
   };
 
   render() {
-    // Destructuring the state and storing them in variables
-    // More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-    // Desturcutre the props so they can be refered to via props
-    // Destrucutre the values object, the indvidual values within the object can be refered
+    /* 
+    Destructuring status:
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment     
+    
+    - Destructuring the props so they can be refered to via individual variables
+    - Destructuring the values from the props so they can be refered to via individual variables
+    */
     const { values } = this.props;
     const { allergies, avaliableAllergies } = values;
 
@@ -94,14 +90,27 @@ export default class Allergies extends Component {
       >
         <KeyboardAvoidingView behavior="padding">
           <View style={Section}>
-            <Text style={MainTitle}>Account setup</Text>
+            <Text style={MainTitle}>{this.props.title}</Text>
             <Text style={SubHeading}>
               Fill in the inputs below with the appropriate information
             </Text>
           </View>
 
           <View style={AllergySection}>
-            <Text style={SubHeading}> Your allergies </Text>
+            <Text style={SubHeading}>Your allergies</Text>
+
+            {allergies.length < 1 ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center"
+                }}
+              >
+                <Text style={SubHeading}>You have no allergies</Text>
+              </View>
+            ) : null}
+
             {allergies.map((allergy, index) => {
               return (
                 <View key={index} style={Section}>
@@ -123,7 +132,20 @@ export default class Allergies extends Component {
           </View>
 
           <View style={AllergySection}>
-            <Text style={SubHeading}> Avaliable allergies </Text>
+            <Text style={SubHeading}>Avaliable allergies</Text>
+
+            {avaliableAllergies.length < 1 ? (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10
+                }}
+              >
+                <Text style={SubHeading}>No allergies avaliable</Text>
+              </View>
+            ) : null}
+
             {avaliableAllergies.map((allergy, index) => {
               return (
                 <View key={index} style={Section}>

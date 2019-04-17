@@ -1,17 +1,21 @@
+// React dependencies
 import React from "react";
 import { View } from "react-native";
-import CustomButton from "./Button";
+
+// Custom React components
+import CustomButton from "../Button";
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import { flex } from "../../styles/flex-utils";
+import { flex } from "../../../styles/flex-utils";
 
-// Sections
+// Section styling
 const ConfirmationButtonsSection = [flex.justifyContentSpaceAround, flex.row];
 
+// ConfirmationButtons styling
 const ConfirmationButtons = {
   padding: 10,
   margin: 5,

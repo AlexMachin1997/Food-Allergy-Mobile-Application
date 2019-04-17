@@ -1,44 +1,40 @@
 // React dependencies
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  KeyboardAvoidingView,
-  Alert
-} from "react-native";
+import { Text, View, ScrollView, KeyboardAvoidingView } from "react-native";
 
-// Custom React components
-import CustomInput from "../../UI/Input";
+// ReactJS custom components
+import CustomButton from "../../UI/Button";
+import CustomInput from "../../UI/Form-Elements/TextInput";
+import ResponseModal from "../../UI/Modals/ResponseModal";
+import ActionModal from "../../UI/Modals/ActionModal";
 
 /* 
 Utility classes:
 - To access util classes use the exported variable.
 - Since the utils are objects you will need to access the properties like flex.justifyContentCenter or background.blue
 */
-import { buttons } from "../../../styles/buttons-utils";
 import { fonts } from "../../../styles/text-utils";
 import { flex } from "../../../styles/flex-utils";
 import { spacing } from "../../../styles/spacing-utils";
-import { border, radius, width } from "../../../styles/border";
-import styles from "../styles";
+import { buttons } from "../../../styles/buttons-utils";
+import styles from "../Styles";
 
-// Heading
+// Heading styles
 const MainTitle = [fonts.title1];
 const SubHeading = [fonts.title3];
 
-// Section
+// Section styles
 const Section = [spacing.smallBottom, spacing.smallTop];
 
-// Label
+// Label styles
 const FormLabel = [fonts.title3];
 
-// Input
-const Outline = radius.small;
-const OutlineColour = border.black;
-const OutlineWidth = width.small;
+// Input styles
+const Outline = { borderRadius: 5 };
+const OutlineColour = { borderColor: "black" };
+const OutlineWidth = { borderWidth: 1 };
 
-// Button
+// Button styles
 const Button = [buttons.large, styles.RegisterButtons];
 
 export default class EditProfile extends Component {
@@ -46,28 +42,28 @@ export default class EditProfile extends Component {
     console.log("The Edit Profile Component Has Mounted");
   }
 
-  /* 
-   goForward:
-   - Increments the step number
-   - Renders the next screen
-   */
   goForward = e => {
+    // Prevent the default action
     e.preventDefault();
+
+    // increment by one, render the next component
     this.props.forward();
   };
 
   render() {
     /* 
     Destructuring 
-    Destructuring the state and storing them in variables
-    More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    - Destructuring the state and storing them in variables
+    - More info : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment 
+    
+    - Destructuring the value and handleChange prop
+    - Destructuirng the name, email, phoneNumber values object which is passed down via props
     */
     const { values, handleChange } = this.props;
     const { name, email, phoneNumber } = values;
 
     return (
       /* 
-      
       Component overviews with resources:
         
       ScrollView:
@@ -88,8 +84,13 @@ export default class EditProfile extends Component {
       - Renders a string of text, its the equivalent of a p tag in web development
       - For more information about this component visit https://facebook.github.io/react-native/docs/text 
 
-      CustomInput and CustomButton:
-      - For information about each componnent visit them indvidually
+      CustomInput:
+      - Renders a simple text-based input
+      - For information about this component visist it's location which is shown where it's imported
+
+      CustomButton:
+      - Renders a simple button component
+      - For information about this component visist it's location which is shown where it's imported
       */
 
       <ScrollView

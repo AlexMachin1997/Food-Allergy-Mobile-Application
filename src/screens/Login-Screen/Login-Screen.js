@@ -45,9 +45,6 @@ const Outline = { borderRadius: 5 };
 const OutlineColour = { borderColor: "black" };
 const OutlineWidth = { borderWidth: 1 };
 
-//Modal
-const ModalBody = [fonts.body];
-
 // Promise based HTTP libarary
 import axios from "axios";
 
@@ -240,7 +237,7 @@ export default class LoginScreen extends Component {
               value={email}
               onChange={value => this.handleChange("email", value)}
               isSecure={false}
-              style={[Otline, OutlineColour, OutlineWidth]}
+              style={[Outline, OutlineColour, OutlineWidth]}
               Ismultiline={true}
               keyboardType="email-address"
             />

@@ -15,7 +15,7 @@ import { buttons } from "../../../styles/buttons-utils";
 import { fonts } from "../../../styles/text-utils";
 import { flex } from "../../../styles/flex-utils";
 import { spacing } from "../../../styles/spacing-utils";
-import styles from "../Styles";
+import styles from "../styles";
 
 // Heading styles
 const MainTitle = [fonts.title1];

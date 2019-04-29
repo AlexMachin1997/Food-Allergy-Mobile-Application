@@ -383,23 +383,9 @@ export default class BarcodeScreen extends Component {
         >
           <View>
             <Text style={[fonts.title3]}>
-              Looks like you don't want your camera to be access. Why not try
-              live search ?
+              Looks like you don't want your camera to be access. To enable this
+              feature allow this mobile app to access your camera.
             </Text>
-          </View>
-
-          <View>
-            <CustomButton
-              text="Go to Live Search"
-              mode="contained"
-              compact={true}
-              styling={{ marginTop: 30 }}
-              colour="#0277bd"
-              onClick={() => this.props.navigation.navigate("Feed")}
-              label="Navigate to the live search screen"
-              disabled={false}
-              style={{ padding: 50 }}
-            />
           </View>
         </View>
       );
